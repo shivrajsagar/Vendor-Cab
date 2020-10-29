@@ -4,9 +4,19 @@ import { Block, Button, theme, Icon, Text } from "galio-framework";
 
 import Theme from "../constants/Theme";
 
-const {width,height}=Dimensions.get("screen");
+const { width, height } = Dimensions.get("screen");
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default class Profile extends Component {
+  state = {
+    name: "",
+  };
+
+  async componentDidMount() {
+    const name = await AsyncStorage.getItem("Name");
+    this.setState({ name: name });
+  }
+
   render() {
     return (
       <Block flex safe style={styles.container}>
@@ -19,7 +29,7 @@ export default class Profile extends Component {
           </Block>
           <Block middle>
             <Text h4 color="white">
-              Suraj Prasad
+            {this.state.name}
             </Text>
             <Text h5 color="white">
               Status
@@ -67,18 +77,18 @@ const styles = StyleSheet.create({
   image: {
     width: 100,
     height: 100,
-    borderRadius:50,
+    borderRadius: 50,
     backgroundColor: "white",
     margin: 20,
   },
   card: {
     backgroundColor: "white",
     margin: 20,
-    justifyContent:"flex-start"
+    justifyContent: "flex-start",
   },
   heading: {
     color: Theme.COLORS.BUTTON,
-    margin:20,
+    margin: 20,
   },
   text: {
     textAlign: "center",

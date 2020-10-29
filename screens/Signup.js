@@ -9,7 +9,14 @@ import { Block, Button, Text, Input, theme, Icon } from "galio-framework";
 
 import Theme from "../constants/Theme";
 import {} from "react-native-gesture-handler";
-
+import { connect } from "react-redux";
+import {
+  nameChanged,
+  passwordChanged,
+  vehiclenameChanged,
+  vehiclenoChanged,
+  mobileChanged,
+} from "../redux/actions/authAction";
 const { width, height } = Dimensions.get("screen");
 
 const Signup = ({ navigation }) => {
@@ -28,7 +35,7 @@ const Signup = ({ navigation }) => {
           placeholderTextColor={Theme.COLORS.BUTTON2}
         />
         <Input
-        type="number-pad"
+          type="number-pad"
           placeholder="Mobile"
           left
           icon="mobile"
@@ -97,4 +104,12 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Signup;
+const mapStateToProps = (state) => ({});
+
+export default connect(null, {
+  nameChanged,
+  passwordChanged,
+  vehiclenameChanged,
+  vehiclenoChanged,
+  mobileChanged,
+})(Signup);

@@ -1,15 +1,23 @@
-import React from "react";
-import { Dimensions, StyleSheet, Image,ScrollView } from "react-native";
+import React, { useEffect, useState } from "react";
+import {
+  Dimensions,
+  StyleSheet,
+  Image,
+  ScrollView,
+  TouchableHighlight,
+} from "react-native";
 import { Block, Text, theme } from "galio-framework";
 
-import { useSafeAreaFrame, useSafeAreaInsets } from "react-native-safe-area-context";
+import {
+  useSafeAreaFrame,
+  useSafeAreaInsets,
+} from "react-native-safe-area-context";
 
-import {Drawer as DrawerCustomItem} from '../components'
+import { Drawer as DrawerCustomItem } from "../components";
 import Theme from "../constants/Theme";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const { width, height } = Dimensions.get("screen");
-
-
 
 export default function CustomDrawerContent({
   drawerPosition,
@@ -19,16 +27,30 @@ export default function CustomDrawerContent({
   focused,
   ...rest
 }) {
+  const [name, setName] = useState("");
 
-const insets=useSafeAreaInsets();
-const screens=[
-  "Dashboard",
-  "Profile",
-  "Transaction History",
-  "Pay Commision",
-  "Documentation",
-  "Help"
-]
+  const insets = useSafeAreaInsets();
+  const screens = [
+    "Dashboard",
+    "Profile",
+    "Transaction History",
+    "Pay Commision",
+    "Documentation",
+    "Help",
+  ];
+
+  useEffect(() => {
+    retrieveData();
+  }, [name]);
+
+  const retrieveData = async () => {
+    try {
+      const name = await AsyncStorage.getItem("Name");
+      setName(name);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <Block
@@ -40,8 +62,10 @@ const screens=[
           source={{ uri: profile.avatar }}
           style={{ width: 100, height: 100 }}
         />
-        <Text size={16} color="white" >{profile.name}</Text>
-        <Text size={16} color="white" >{profile.type}</Text>
+
+        <Text size={16} color="white">
+          {name}
+        </Text>
       </Block>
       <Block flex style={{ paddingLeft: 7, paddingRight: 14 }}>
         <ScrollView
@@ -49,8 +73,8 @@ const screens=[
             {
               paddingTop: insets.top * 0.4,
               paddingLeft: drawerPosition === "left" ? insets.left : 0,
-              paddingRight: drawerPosition === "right" ? insets.right : 0
-            }
+              paddingRight: drawerPosition === "right" ? insets.right : 0,
+            },
           ]}
           showsVerticalScrollIndicator={false}
         >
@@ -80,7 +104,7 @@ const screens=[
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor:Theme.COLORS.PRIMARY,
+    backgroundColor: Theme.COLORS.PRIMARY,
   },
   header: {
     backgroundColor: "#233545",
