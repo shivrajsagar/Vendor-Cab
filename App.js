@@ -12,13 +12,15 @@ const {width}=Dimensions.get("screen")
 import { enableScreens } from "react-native-screens";
 enableScreens();
 
+import {navigationRef} from './navigation/RootNavigation';
+
 import {Provider} from 'react-redux'
 import store from './redux/store'
 
 const App = () => {
   return (
     <Provider store={store}>
-    <NavigationContainer>
+    <NavigationContainer ref={navigationRef}>
       <GalioProvider theme={materialTheme}>
         <Block flex>
           {Platform.OS==="ios" && <StatusBar style="auto" />}

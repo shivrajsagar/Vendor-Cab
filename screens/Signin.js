@@ -1,52 +1,131 @@
-import React from "react";
-import { Dimensions, StyleSheet, TouchableOpacity } from "react-native";
-import { Block, Button, Input, Icon, theme, Text } from "galio-framework";
+import React, { Component } from "react";
+import { Dimensions, StyleSheet, TouchableOpacity, Alert } from "react-native";
+import { Block, Button, Input, theme, Text } from "galio-framework";
 
-const {width,height}=Dimensions.get("screen");
+const { width, height } = Dimensions.get("screen");
 
-import {materialTheme} from '../constants'
-const Signin = ({ navigation }) => {
-  return (
-    <Block safe flex middle style={styles.container}>
-      <Block card shadow shadowColor="gray" style={styles.card} >
-        <Input placeholder="Email" />
-        <Input placeholder="Password" />
-        <Button round>
-          Signin
+import {
+  mobileChanged,
+  passwordChanged,
+  loginUser,
+} from "../redux/actions/authAction";
+
+import Theme from "../constants/Theme";
+import { connect } from "react-redux";
+
+class Signin extends Component {
+  onMobileChange = (text) => {
+    this.props.mobileChanged(text);
+  };
+
+  onPasswordChange = (text) => {
+    this.props.passwordChanged(text);
+  };
+
+  onButtonPress = () => {
+    const { mobile, password } = this.props;
+    this.props.loginUser({ mobile, password });
+  };
+
+  renerError() {
+    if (this.props.error) {
+      return (
+        <Block>
+          <Text color="red">{this.props.error}</Text>
+        </Block>
+      );
+    }
+  }
+
+  render() {
+    const { navigation, user, error } = this.props;
+  
+    
+    return (
+      <Block middle style={styles.container}>
+        <Text size={20} color="white">
+          Sign In
+        </Text>
+        <Block card shadow shadowColor="gray" style={styles.card}>
+          {this.renerError()}
+          <Input
+            placeholder="Enter Mobile"
+            left
+            icon="mobile"
+            family="Entypo"
+            iconColor="#9900ff"
+            placeholderTextColor={Theme.COLORS.BUTTON2}
+            value={this.props.mobile}
+            onChangeText={this.onMobileChange.bind(this)}
+          />
+          <Input
+            placeholder="Enter Password"
+            left
+            icon="key"
+            family="Entypo"
+            iconColor="#9900ff"
+            placeholderTextColor={Theme.COLORS.BUTTON2}
+            value={this.props.password}
+            onChangeText={this.onPasswordChange.bind(this)}
+          />
+          <Button
+            round
+            color={Theme.COLORS.BUTTON2}
+            onPress={this.onButtonPress.bind(this)}
+          >
+            Signin
+          </Button>
+          <TouchableOpacity>
+            <Text style={styles.text}>Forgot Password</Text>
+          </TouchableOpacity>
+        </Block>
+        <TouchableOpacity onPress={() => navigation.navigate("Signup")}>
+          <Text color="white" style={styles.text}>
+            Not registered yet?
+          </Text>
+        </TouchableOpacity>
+        <Button
+          round
+          onPress={() => navigation.navigate("App")}
+          color={Theme.COLORS.BUTTON2}
+        >
+          Skip
         </Button>
-      <TouchableOpacity>
-        <Text style={styles.text}  >Forgot Password</Text>
-      </TouchableOpacity>
       </Block>
-      <TouchableOpacity onPress={()=>navigation.navigate("Signup")}>
-        <Text style={styles.text} >Not registered yet?</Text>
-      </TouchableOpacity>
-      <Button round onPress={() => navigation.navigate("App")}>Skip</Button>
-    </Block>
-  );
-};
+    );
+  }
+}
 
 const styles = StyleSheet.create({
   container: {
-    flex:1,
-    justifyContent:"center",
-    backgroundColor:"#233545",
+    backgroundColor: "#233545",
+    height: height,
   },
   card: {
-    width:width-theme.SIZES.BASE,
+    width: width - theme.SIZES.BASE,
     backgroundColor: "white",
     margin: 10,
-    padding:30,
-    textAlign:"center",
-    justifyContent:"center",
-    alignItems:"center",
+    padding: 30,
+    textAlign: "center",
+    justifyContent: "center",
+    alignItems: "center",
   },
-  text:{
-    color:"red",
-    margin:10,
-    padding:10,
-    fontSize:20,
-  }
+  text: {
+    margin: 10,
+    padding: 10,
+    fontSize: 20,
+  },
 });
 
-export default Signin;
+const mapStateToProps = (state) => ({
+  mobile: state.auth.mobile,
+  password: state.auth.password,
+  error: state.auth.error,
+  user: state.auth.user,
+});
+
+export default connect(mapStateToProps, {
+  mobileChanged,
+  passwordChanged,
+  loginUser,
+})(Signin);

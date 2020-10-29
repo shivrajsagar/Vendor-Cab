@@ -85,7 +85,7 @@ const Onboarding = ({ navigation }) => {
                 borderBottomLeftRadius: 30,
                 borderBottomRightRadius: 0,
                 borderTopRightRadius: 0,
-                backgroundColor: Theme.COLORS.BUTTON,
+                backgroundColor: Theme.COLORS.BUTTON2,
               }}
               onPress={() => {
                 navigation.navigate("Signin");
@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
   },
   dot: {
     borderRadius: 10,
-    backgroundColor: Theme.COLORS.BUTTON,
+    backgroundColor: Theme.COLORS.BUTTON2,
     marginHorizontal: 5,
   },
   textContainer: {
