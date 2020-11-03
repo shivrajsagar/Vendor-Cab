@@ -9,7 +9,6 @@ const INITIAL_STATE = {
   name: "",
   aadhar_no: "",
   Issue_Date: "",
-  status: "0",
   driver_id: "",
   loading: false,
   message: [],
@@ -24,19 +23,14 @@ export default (state = INITIAL_STATE, action) => {
   console.log(action.type);
   switch (action.type) {
     case LOADING:
-      return { ...state, loading: true, error: "" };
+      return { ...state, loading: true };
     case UPLOAD_DOCUMENT:
-      return {
-        ...state,
-        loading: false,
-        [action.payload.prop]: action.payload.value,
-      };
+      return { ...state, [action.payload.prop]: action.payload.value,loading:false,};
     case UPLOAD_DOCUMENT_FAIL:
-      return { ...state, error: action.payload, loading: false, error: "" };
+      return { ...state, error: action.payload, loading: false, };
     case UPLOAD_DOCUMENT_SUCCESS:
       return {
         ...state,
-        [action.payload.prop]: action.payload.value,
         message: action.payload,
         loading: false,
         error: "",

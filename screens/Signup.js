@@ -120,20 +120,7 @@ class Signup extends Component {
               this.props.registerUserValue({ prop: "password", value: text })
             }
           />
-          <Input
-            placeholder="Confirm Password"
-            left
-            icon="key"
-            family="Entypo"
-            iconColor="#9900ff"
-            placeholderTextColor={Theme.COLORS.BUTTON2}
-            password
-            viewPass
-            value={this.props.password}
-            onChangeText={(text) =>
-              this.props.registerUserValue({ prop: "password", value: text })
-            }
-          />
+          
           <Button
             round
             color={Theme.COLORS.BUTTON2}

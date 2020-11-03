@@ -23,7 +23,7 @@ class Savebid extends Component {
 
   render() {
     const { message } = this.props;
-    console.log(message);
+  
     return (
       <Block flex middle>
         <Text>{message}</Text>

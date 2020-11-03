@@ -19,7 +19,7 @@ const INITIAL_STATE = {
   error: "",
   loading: false,
   message: null,
-  successMessage:""
+  successMessage:"",
 };
 
 export default (state = INITIAL_STATE, action) => {

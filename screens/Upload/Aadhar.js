@@ -19,14 +19,13 @@ class Aadhar extends Component {
   };
 
   onSubmit() {
-    const { name, Issue_Date, status, driver_id, aadhar_no } = this.props;
+    const { name, Issue_Date, driver_id, aadhar_no } = this.props;
     const { aadhar_front_image, aadhar_back_image } = this.state;
     this.props.uploadAadhar({
       aadhar_front_image,
       aadhar_back_image,
       name,
       Issue_Date,
-      status,
       driver_id,
       aadhar_no,
     });
@@ -232,7 +231,6 @@ const mapStateToProps = (state) => ({
   name: state.document.name,
   Issue_Date: state.document.Issue_Date,
   aadhar_no: state.aadhar_no,
-  status: state.document.status,
   driver_id: state.document.driver_id,
   loading: state.document.loading,
   message: state.document.message,

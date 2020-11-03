@@ -19,14 +19,13 @@ class DrivingLicence extends Component {
   };
 
   onSubmit() {
-    const { name, mfd_date, status, license_no } = this.props;
+    const { name, mfd_date, license_no } = this.props;
     const { driving_license_front, driving_license_back } = this.state;
     this.props.uploadLicence({
       driving_license_front,
       driving_license_back,
       name,
       mfd_date,
-      status,
       license_no,
     });
   }
@@ -77,7 +76,8 @@ class DrivingLicence extends Component {
   }
 
   render() {
-    const { message } = this.props;
+    const { message, loading } = this.props;
+
     return (
       <Block style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
@@ -163,7 +163,7 @@ class DrivingLicence extends Component {
               family="Entypo"
               iconColor="red"
               left
-              value={this.props.aadhar_no}
+              value={this.props.license_no}
               onChangeText={(number) =>
                 this.props.uploadDocumentValue({
                   prop: "license_no",
@@ -195,7 +195,7 @@ class DrivingLicence extends Component {
               middle
               color="#009688"
               onPress={this.onSubmit.bind(this)}
-              loading={this.props.loading}
+              loading={loading}
             >
               Submit
             </Button>

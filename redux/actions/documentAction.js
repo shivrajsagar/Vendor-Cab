@@ -82,7 +82,7 @@ export const uploadAadhar = ({
         requestOptions,
       }
     );
-  
+
     response.data.error === true
       ? uploadFail(dispatch, response.data.message)
       : [
@@ -131,12 +131,12 @@ export const uploadLicence = ({
       name2,
       type,
     });
-    formdata.append("name", name);
-    formdata.append("mfd_date", mfd_date);
+    formdata.append("license_no", "342243423");
+    formdata.append("name", "Suraj");
+    formdata.append("mfd_date", "11112020");
     formdata.append("status", "0");
-    formdata.append("driver_id", driverid);
-    formdata.append("license_no", license_no);
-
+    formdata.append("driver_id", "23");
+    
     var requestOptions = {
       method: "POST",
       body: formdata,
@@ -150,8 +150,8 @@ export const uploadLicence = ({
         requestOptions,
       }
     );
-    console.log(response.data);
-    response.data.error === true
+  
+    response.data.error === false
       ? uploadFail(dispatch, response.data.message)
       : [
           uploadSuccess(dispatch, response.data.message),
