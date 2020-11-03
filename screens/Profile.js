@@ -9,12 +9,15 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default class Profile extends Component {
   state = {
+    book_id:"",
     name: "",
   };
 
   async componentDidMount() {
     const name = await AsyncStorage.getItem("Name");
-    this.setState({ name: name });
+    const jsonValue = await AsyncStorage.getItem('book_id')
+     const data=JSON.parse(jsonValue);
+    this.setState({ name: name ,book_id:data});
   }
 
   render() {
@@ -29,7 +32,7 @@ export default class Profile extends Component {
           </Block>
           <Block middle>
             <Text h4 color="white">
-            {this.state.name}
+            {this.state.name}{this.state.book_id}
             </Text>
             <Text h5 color="white">
               Status

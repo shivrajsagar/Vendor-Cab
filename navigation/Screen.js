@@ -4,14 +4,12 @@ import { Dimensions } from "react-native";
 import { Icon, theme } from "galio-framework";
 import { Header } from "../components";
 import CustomDrawerContent from "./Menu";
-import { materialTheme } from "../constants";
 
 const { width, height } = Dimensions.get("screen");
 
 //naviagtion libraries
 import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 
 //screens
 import HomeScreen from "../screens/Home";
@@ -19,21 +17,19 @@ import Transaction from "../screens/Transaction";
 import Commision from "../screens/Commision";
 import Documentation from "../screens/Documentation";
 import Help from "../screens/Help";
-import Current from "../screens/Current";
-import Upcoming from "../screens/Upcoming";
-import Completed from "../screens/Completed";
 import Onboarding from "../screens/Onboarding";
 import SplashScreen from "../screens/SplashScreen";
 import Profile from "../screens/Profile";
 import Signin from "../screens/Signin";
 import Signup from "../screens/Signup";
-import Savebid from "../screens/Savebid";
-import Theme from "../constants/Theme";
+import Aadhar from '../screens/Upload/Aadhar';
+import DrivingLicense from "../screens/Upload/DrivingLicense";
+
+
 
 //naviagtor
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
-const Top = createMaterialTopTabNavigator();
 
 const profile = {
   avatar: "https://source.unsplash.com/840x840/?car",
@@ -41,29 +37,12 @@ const profile = {
   type: "Seller",
 };
 
-function TopStack(props) {
-  return (
-    <Top.Navigator
-      tabBarOptions={{
-        showIcon: true,
-        indicatorStyle: { backgroundColor: Theme.COLORS.BUTTON },
-        style:{backgroundColor:Theme.COLORS.COLOR1},
-        activeTintColor:"white"
-      }}
-    >
-      <Top.Screen name="Current" component={Current} />
-      <Top.Screen name="Upcoming" component={Upcoming} />
-      <Top.Screen name="Completed" component={Completed} />
-    </Top.Navigator>
-  );
-}
-
 function HomeStack(props) {
   return (
     <Stack.Navigator headerMode="screen" mode="card">
       <Stack.Screen
         name="Dashboard"
-        component={TopStack}
+        component={HomeScreen}
         options={{
           header: ({ navigation, scene }) => (
             <Header
@@ -74,6 +53,7 @@ function HomeStack(props) {
               navigation={navigation}
             />
           ),
+          gestureEnabled: false,
         }}
       />
     </Stack.Navigator>
@@ -92,6 +72,7 @@ function ProfileStack(props) {
               title="Profile"
               transparent
               white
+              back
               scene={scene}
               navigation={navigation}
             />
@@ -158,6 +139,38 @@ function DocumentStack(props) {
               transparent
               white
               title="Documentation"
+              scene={scene}
+              navigation={navigation}
+            />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="Aadhar"
+        component={Aadhar}
+        options={{
+          header: ({scene,navigation}) => (
+            <Header
+              transparent
+              white
+              back
+              title="Aadhar Upload"
+              scene={scene}
+              navigation={navigation}
+            />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="Licence"
+        component={DrivingLicense}
+        options={{
+          header: ({scene,navigation}) => (
+            <Header
+              transparent
+              white
+              back
+              title="Driving Licence Upload"
               scene={scene}
               navigation={navigation}
             />
@@ -274,11 +287,41 @@ function AppStack(props) {
 export default function OnboardingStack() {
   return (
     <Stack.Navigator mode="card" headerMode="none">
-      <Stack.Screen name="SlashScreen" component={SplashScreen} />
-      <Stack.Screen name="Onboarding" component={Onboarding} />
-      <Stack.Screen name="App" component={AppStack} />
-      <Stack.Screen name="Signin" component={Signin} />
-      <Stack.Screen name="Signup" component={Signup} />
+      <Stack.Screen
+        name="SlashScreen"
+        component={SplashScreen}
+        options={{
+          gestureEnabled: false,
+        }}
+      />
+      <Stack.Screen
+        name="Onboarding"
+        component={Onboarding}
+        options={{
+          gestureEnabled: false,
+        }}
+      />
+      <Stack.Screen
+        name="App"
+        component={AppStack}
+        options={{
+          gestureEnabled: false,
+        }}
+      />
+      <Stack.Screen
+        name="Signin"
+        component={Signin}
+        options={{
+          gestureEnabled: false,
+        }}
+      />
+      <Stack.Screen
+        name="Signup"
+        component={Signup}
+        options={{
+          gestureEnabled: false,
+        }}
+      />
     </Stack.Navigator>
   );
 }

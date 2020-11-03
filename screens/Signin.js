@@ -1,5 +1,10 @@
 import React, { Component } from "react";
-import { Dimensions, StyleSheet, TouchableOpacity, Alert } from "react-native";
+import {
+  Dimensions,
+  StyleSheet,
+  TouchableOpacity,
+  BackHandler,
+} from "react-native";
 import { Block, Button, Input, theme, Text } from "galio-framework";
 
 const { width, height } = Dimensions.get("screen");
@@ -14,6 +19,22 @@ import Theme from "../constants/Theme";
 import { connect } from "react-redux";
 
 class Signin extends Component {
+  disableBackButton = () => {
+    BackHandler.exitApp();
+    return true;
+  };
+
+  componentDidMount() {
+    BackHandler.addEventListener("hardwareBackPress", this.disableBackButton);
+  }
+
+  componentWillUnmount() {
+    BackHandler.removeEventListener(
+      "hardwareBackPress",
+      this.disableBackButton
+    );
+  }
+
   onMobileChange = (text) => {
     this.props.mobileChanged(text);
   };
@@ -39,8 +60,7 @@ class Signin extends Component {
 
   render() {
     const { navigation, user, error } = this.props;
-  
-    
+
     return (
       <Block middle style={styles.container}>
         <Text size={20} color="white">
@@ -49,6 +69,7 @@ class Signin extends Component {
         <Block card shadow shadowColor="gray" style={styles.card}>
           {this.renerError()}
           <Input
+            type="number-pad"
             placeholder="Enter Mobile"
             left
             icon="mobile"
@@ -72,6 +93,7 @@ class Signin extends Component {
             round
             color={Theme.COLORS.BUTTON2}
             onPress={this.onButtonPress.bind(this)}
+            loading={this.props.loading}
           >
             Signin
           </Button>
@@ -122,6 +144,7 @@ const mapStateToProps = (state) => ({
   password: state.auth.password,
   error: state.auth.error,
   user: state.auth.user,
+  loading: state.auth.loading,
 });
 
 export default connect(mapStateToProps, {

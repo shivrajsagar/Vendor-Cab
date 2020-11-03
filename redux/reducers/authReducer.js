@@ -4,17 +4,26 @@ import {
   LOGIN_USER_SUCCESS,
   LOGIN_USER_FAIL,
   LOGIN_USER,
+  REGISTER_USER,
+  REGISTER_USER_FAIL,
+  REGISTER_USER_SUCCESS,
 } from "../actions/types";
 
 const INITIAL_STATE = {
+  name: "",
   mobile: "",
+  vehicle_name: "",
+  vehicle_no: "",
   password: "",
   user: null,
   error: "",
   loading: false,
+  message: null,
+  successMessage:""
 };
 
 export default (state = INITIAL_STATE, action) => {
+  
   switch (action.type) {
     case MOBILE_CHANGED:
       return { ...state, mobile: action.payload };
@@ -37,6 +46,25 @@ export default (state = INITIAL_STATE, action) => {
         error: "Authentication failed",
         password: "",
         loading: false,
+      };
+      case REGISTER_USER:
+        return { ...state, loading: true, error: "" };
+    case REGISTER_USER_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
+      };
+    case REGISTER_USER_SUCCESS:
+      return {
+        ...state,
+        message: action.payload,
+        [action.payload.prop]: action.payload.value,
+        loading:false,
+        mobile:"",
+        password:"",
+        error:"",
+        successMessage:"Congrats ! "
       };
     default:
       return state;

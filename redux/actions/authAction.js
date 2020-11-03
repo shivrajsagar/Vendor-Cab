@@ -4,13 +4,12 @@ import * as RootNavigation from "../../navigation/RootNavigation";
 import {
   MOBILE_CHANGED,
   PASSWORD_CHANGED,
-  NAME_CHANGED,
-  VEHICLE_NAME_CHANGED,
-  VEHICLE_NO_CHANGED,
-  IMAGED_CHANGED,
   LOGIN_USER_SUCCESS,
   LOGIN_USER_FAIL,
   LOGIN_USER,
+  REGISTER_USER,
+  REGISTER_USER_FAIL,
+  REGISTER_USER_SUCCESS,
 } from "../actions/types";
 
 export const mobileChanged = (text) => {
@@ -27,29 +26,16 @@ export const passwordChanged = (text) => {
   };
 };
 
-export const nameChanged = (text) => {
+export const registerUserValue = ({ prop, value }) => {
   return {
-    type: NAME_CHANGED,
-    payload: text,
-  };
-};
-
-export const vehiclenameChanged = (text) => {
-  return {
-    type: VEHICLE_NAME_CHANGED,
-    payload: text,
-  };
-};
-
-export const vehiclenoChanged = (text) => {
-  return {
-    type: VEHICLE_NO_CHANGED,
-    payload: text,
+    type: REGISTER_USER_SUCCESS,
+    payload: { prop, value },
   };
 };
 
 export const loginUser = ({ mobile, password }) => async (dispatch) => {
   try {
+    dispatch({type:LOGIN_USER})
     var formdata = new FormData();
     formdata.append("mobile_no", `${mobile}`);
     formdata.append("password", `${password}`);
@@ -68,20 +54,30 @@ export const loginUser = ({ mobile, password }) => async (dispatch) => {
       : loginUserSuccess(dispatch, response.data);
     RootNavigation.navigate("App");
     await AsyncStorage.setItem("Name", response.data.driver.name);
+    const jsonValue = JSON.stringify(response.data.driver.id)
+    await AsyncStorage.setItem("book_id",jsonValue);
+
   } catch (err) {
     loginUserFail(dispatch);
   }
 };
 
-export const registerUser = () => async (dispatch) => {
+export const registerUser = ({
+  name,
+  mobile,
+  vehicle_no,
+  vehicle_name,
+  password,
+}) => async (dispatch) => {
   try {
+    dispatch({ type: REGISTER_USER });
     var formdata = new FormData();
-    formdata.append("image", "suraj");
-    formdata.append("name", "suraj");
-    formdata.append("vehicle_name", "23423456");
-    formdata.append("vehicle_no", "23423");
-    formdata.append("mobile_no", "7355219891");
-    formdata.append("password", "123");
+    formdata.append("image", "");
+    formdata.append("name", `${name}`);
+    formdata.append("vehicle_name", `${vehicle_name}`);
+    formdata.append("vehicle_no", `${vehicle_no}`);
+    formdata.append("mobile_no", `${mobile}`);
+    formdata.append("password", `${password}`);
 
     var requestOptions = {
       method: "POST",
@@ -89,15 +85,21 @@ export const registerUser = () => async (dispatch) => {
       redirect: "follow",
     };
 
-    fetch(
-      "http://expresscab.in/CarDriving/driver_Info.php?apicall=driverprofile",
-      requestOptions
-    )
-      .then((response) => response.text())
-      .then((result) => console.log(result))
-      .catch((error) => console.log("error", error));
+    const response = await axios.post(
+      "/driver_Info.php?apicall=driverprofile",
+      formdata,
+      { requestOptions }
+    );
+
+    console.log(response.data);
+    response.data.error === true
+      ? registerUserFail(dispatch, response.data.message)
+      : [
+          registerUserSuccess(dispatch, response.data.message),
+          RootNavigation.navigate("Signin"),
+        ];
   } catch (err) {
-    console.log(err);
+    loginUserFail(dispatch);
   }
 };
 
@@ -112,5 +114,18 @@ const loginUserSuccess = (dispatch, user) => {
   dispatch({
     type: LOGIN_USER_SUCCESS,
     payload: user,
+  });
+};
+const registerUserFail = (dispatch, error) => {
+  dispatch({
+    type: REGISTER_USER_FAIL,
+    payload: error,
+  });
+};
+
+const registerUserSuccess = (dispatch, message) => {
+  dispatch({
+    type: REGISTER_USER_SUCCESS,
+    payload: message,
   });
 };

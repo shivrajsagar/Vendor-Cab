@@ -3,11 +3,13 @@ import { StyleSheet, Image, ScrollView, Dimensions } from "react-native";
 import { Block, Button, Text, Input, Icon } from "galio-framework";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
+import Theme from "../constants/Theme";
 
-const {width}=Dimensions.get("screen");
+const { width } = Dimensions.get("screen");
 
 export default class Documentation extends Component {
   render() {
+    const { navigation } = this.props;
     return (
       <ScrollView
         showsVerticalScrollIndicator={false}
@@ -23,21 +25,21 @@ export default class Documentation extends Component {
           </Block>
           <Block style={styles.cards}>
             <Block card shadow shadowColor="#233545">
-              <Text h5 color="white" style={styles.text}>
-                <Icon name="man" family="entypo" size="30" color="white" />
+              <Text color="white" style={styles.text}>
+                <Icon name="man" family="entypo" size={30} color="white" />
                 Driver Details
               </Text>
               <Block row space="between" style={styles.border}>
-                <TouchableOpacity>
-                  <Text h5 color="white" size={20}>
+                <TouchableOpacity onPress={() => navigation.navigate("Aadhar")}>
+                  <Text color="white" size={20}>
                     Aadhar Card
                   </Text>
                 </TouchableOpacity>
                 <Icon name="right" family="AntDesign" size={20} color="white" />
               </Block>
               <Block row space="between" style={styles.border}>
-                <TouchableOpacity>
-                  <Text h5 color="white" size={20}>
+                <TouchableOpacity onPress={()=>navigation.navigate("Licence")} >
+                  <Text color="white" size={20}>
                     Driving Licence
                   </Text>
                 </TouchableOpacity>
@@ -45,7 +47,7 @@ export default class Documentation extends Component {
               </Block>
               <Block row space="between" style={styles.border}>
                 <TouchableOpacity>
-                  <Text h4 color="white" size={20}>
+                  <Text color="white" size={20}>
                     Photo
                   </Text>
                 </TouchableOpacity>
@@ -54,13 +56,13 @@ export default class Documentation extends Component {
             </Block>
 
             <Block card>
-              <Text h5 color="white" style={styles.text}>
+              <Text color="white" style={styles.text}>
                 <Icon name="car" family="AntDesign" size={30} color="white" />
                 Cab Details
               </Text>
               <Block row space="between" style={styles.border}>
                 <TouchableOpacity>
-                  <Text h4 color="white" size={20}>
+                  <Text color="white" size={20}>
                     Rc Document
                   </Text>
                 </TouchableOpacity>
@@ -68,7 +70,7 @@ export default class Documentation extends Component {
               </Block>
               <Block row space="between" style={styles.border}>
                 <TouchableOpacity>
-                  <Text h4 color="white" size={20}>
+                  <Text color="white" size={20}>
                     Taxi Insurance
                   </Text>
                 </TouchableOpacity>
@@ -76,7 +78,7 @@ export default class Documentation extends Component {
               </Block>
               <Block row space="between" style={styles.border}>
                 <TouchableOpacity>
-                  <Text h4 color="white" size={20}>
+                  <Text color="white" size={20}>
                     Fitness Certificate
                   </Text>
                 </TouchableOpacity>
@@ -84,7 +86,7 @@ export default class Documentation extends Component {
               </Block>
               <Block row space="between" style={styles.border}>
                 <TouchableOpacity>
-                  <Text h4 color="white" size={20}>
+                  <Text color="white" size={20}>
                     Taxi Photos
                   </Text>
                 </TouchableOpacity>
@@ -98,7 +100,7 @@ export default class Documentation extends Component {
               </Text>
               <Block row space="between" style={styles.border}>
                 <TouchableOpacity>
-                  <Text h4 color="white" size={20}>
+                  <Text color="white" size={20}>
                     Account Details
                   </Text>
                 </TouchableOpacity>
@@ -106,7 +108,7 @@ export default class Documentation extends Component {
               </Block>
               <Block row space="between" style={styles.border}>
                 <TouchableOpacity>
-                  <Text h4 color="white" size={20}>
+                  <Text color="white" size={20}>
                     Pan Card
                   </Text>
                 </TouchableOpacity>
@@ -122,7 +124,7 @@ export default class Documentation extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#233545",
+    backgroundColor: Theme.COLORS.PRIMARY,
   },
   image: {
     alignItems: "center",
