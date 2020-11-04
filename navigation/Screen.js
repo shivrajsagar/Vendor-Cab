@@ -22,10 +22,11 @@ import SplashScreen from "../screens/SplashScreen";
 import Profile from "../screens/Profile";
 import Signin from "../screens/Signin";
 import Signup from "../screens/Signup";
-import Aadhar from '../screens/Upload/Aadhar';
+import Aadhar from "../screens/Upload/Aadhar";
+import PanCard from "../screens/Upload/PanCard";
 import DrivingLicense from "../screens/Upload/DrivingLicense";
-
-
+import RcDocument from "../screens/Upload/RcDocument";
+import TaxiInsurance from "../screens/Upload/TaxiInsurance";
 
 //naviagtor
 const Stack = createStackNavigator();
@@ -149,7 +150,7 @@ function DocumentStack(props) {
         name="Aadhar"
         component={Aadhar}
         options={{
-          header: ({scene,navigation}) => (
+          header: ({ scene, navigation }) => (
             <Header
               transparent
               white
@@ -165,12 +166,60 @@ function DocumentStack(props) {
         name="Licence"
         component={DrivingLicense}
         options={{
-          header: ({scene,navigation}) => (
+          header: ({ scene, navigation }) => (
             <Header
               transparent
               white
               back
               title="Driving Licence Upload"
+              scene={scene}
+              navigation={navigation}
+            />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="RcDocument"
+        component={RcDocument}
+        options={{
+          header: ({ scene, navigation }) => (
+            <Header
+              transparent
+              white
+              back
+              title="Rc Document Upload"
+              scene={scene}
+              navigation={navigation}
+            />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="PanCard"
+        component={PanCard}
+        options={{
+          header: ({ scene, navigation }) => (
+            <Header
+              transparent
+              white
+              back
+              title="Pancard Document Upload"
+              scene={scene}
+              navigation={navigation}
+            />
+          ),
+        }}
+      />
+       <Stack.Screen
+        name="TaxiInsurance"
+        component={TaxiInsurance}
+        options={{
+          header: ({ scene, navigation }) => (
+            <Header
+              transparent
+              white
+              back
+              title="Taxi Insurance Document Upload"
               scene={scene}
               navigation={navigation}
             />

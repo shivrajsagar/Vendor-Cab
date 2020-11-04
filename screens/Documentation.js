@@ -61,7 +61,7 @@ export default class Documentation extends Component {
                 Cab Details
               </Text>
               <Block row space="between" style={styles.border}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={()=>navigation.navigate("RcDocument")} >
                   <Text color="white" size={20}>
                     Rc Document
                   </Text>
@@ -69,7 +69,7 @@ export default class Documentation extends Component {
                 <Icon name="right" family="AntDesign" size={20} color="white" />
               </Block>
               <Block row space="between" style={styles.border}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={()=>navigation.navigate("TaxiInsurance")} >
                   <Text color="white" size={20}>
                     Taxi Insurance
                   </Text>
@@ -107,7 +107,7 @@ export default class Documentation extends Component {
                 <Icon name="right" family="AntDesign" size={20} color="white" />
               </Block>
               <Block row space="between" style={styles.border}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={()=>navigation.navigate("PanCard")} >
                   <Text color="white" size={20}>
                     Pan Card
                   </Text>

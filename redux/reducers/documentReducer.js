@@ -11,12 +11,18 @@ const INITIAL_STATE = {
   Issue_Date: "",
   driver_id: "",
   loading: false,
-  message: [],
+  message: "",
   error: "",
   isShow: true,
   //licence stuff
-  license_no:"",
-  mfd_date:"",
+  license_no: "",
+  mfd_date: "",
+
+  //rc document stuff
+  rc_no: "",
+
+  //pan card stuff
+  pan_no:"",
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -25,9 +31,13 @@ export default (state = INITIAL_STATE, action) => {
     case LOADING:
       return { ...state, loading: true };
     case UPLOAD_DOCUMENT:
-      return { ...state, [action.payload.prop]: action.payload.value,loading:false,};
+      return {
+        ...state,
+        [action.payload.prop]: action.payload.value,
+        loading: false,
+      };
     case UPLOAD_DOCUMENT_FAIL:
-      return { ...state, error: action.payload, loading: false, };
+      return { ...state, error: action.payload, loading: false };
     case UPLOAD_DOCUMENT_SUCCESS:
       return {
         ...state,
@@ -38,8 +48,9 @@ export default (state = INITIAL_STATE, action) => {
         name: "",
         aadhar_no: "",
         Issue_Date: "",
-        license_no:"",
-        mfd_date:"",
+        license_no: "",
+        mfd_date: "",
+        rc_no: "",
       };
     default:
       return state;

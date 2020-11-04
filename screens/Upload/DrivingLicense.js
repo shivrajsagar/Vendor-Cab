@@ -77,7 +77,6 @@ class DrivingLicence extends Component {
 
   render() {
     const { message, loading } = this.props;
-
     return (
       <Block style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>

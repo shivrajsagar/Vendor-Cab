@@ -96,6 +96,83 @@ export const uploadAadhar = ({
   }
 };
 
+
+
+
+/// pan card upload
+
+
+
+export const uploadPan = ({
+  pan_front,
+  pan_back,
+  name,
+  pan_no,
+  mfd_date,
+}) => async (dispatch) => {
+  try {
+    dispatch({ type: LOADING });
+    const name2 = `picture.jpg`;
+    let localUri1 = pan_front;
+    let filename1 = localUri1.split("/").pop();
+
+    let localUri2 = pan_back;
+    let filename2 = localUri2.split("/").pop();
+
+    let match = /\.(\w+)$/.exec(filename1, filename2);
+    let type = match ? `image/${match[1]}` : `image`;
+
+    const jsonValue = await AsyncStorage.getItem("book_id");
+    const driverid = JSON.parse(jsonValue);
+
+    var formdata = new FormData();
+    formdata.append("pan_front", {
+      uri: pan_front,
+      name2,
+      type,
+    });
+    formdata.append("pan_back", {
+      uri: pan_back,
+      name2,
+      type,
+    });
+    formdata.append("name", name);
+    formdata.append("mfd_date", mfd_date);
+    formdata.append("exp_date","");
+    formdata.append("status", "0");
+    formdata.append("driver_id", driverid);
+    formdata.append("pan_no", pan_no);
+
+    var requestOptions = {
+      method: "POST",
+      body: formdata,
+      redirect: "follow",
+    };
+
+    const response = await axios.post(
+      "/driver_Info.php?apicall=PANCardDetails",
+      formdata,
+      {
+        requestOptions,
+      }
+    );
+
+    response.data.error === true
+      ? uploadFail(dispatch, response.data.message)
+      : [
+          uploadSuccess(dispatch, response.data.message),
+          setTimeout(() => {
+            RootNavigation.navigate("Documentation");
+          }, 5000),
+        ];
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+
+
+
 // Licence Upload Document////
 
 export const uploadLicence = ({
@@ -131,12 +208,12 @@ export const uploadLicence = ({
       name2,
       type,
     });
-    formdata.append("license_no", "342243423");
-    formdata.append("name", "Suraj");
-    formdata.append("mfd_date", "11112020");
+    formdata.append("license_no", license_no);
+    formdata.append("name", name);
+    formdata.append("mfd_date", mfd_date);
     formdata.append("status", "0");
-    formdata.append("driver_id", "23");
-    
+    formdata.append("driver_id", driverid);
+
     var requestOptions = {
       method: "POST",
       body: formdata,
@@ -150,7 +227,152 @@ export const uploadLicence = ({
         requestOptions,
       }
     );
-  
+
+    response.data.error === false
+      ? uploadFail(dispatch, response.data.message)
+      : [
+          uploadSuccess(dispatch, response.data.message),
+          setTimeout(() => {
+            RootNavigation.navigate("Documentation");
+          }, 5000),
+        ];
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+///Upload Rc document
+
+export const uploadRc = ({
+  rc_front,
+  rc_back,
+  name,
+  mfd_date,
+  rc_no,
+}) => async (dispatch) => {
+  try {
+    dispatch({ type: LOADING });
+    const name2 = `picture.jpg`;
+    let localUri1 = rc_front;
+    let filename1 = localUri1.split("/").pop();
+
+    let localUri2 = rc_back;
+    let filename2 = localUri2.split("/").pop();
+
+    let match = /\.(\w+)$/.exec(filename1, filename2);
+    let type = match ? `image/${match[1]}` : `image`;
+
+    const jsonValue = await AsyncStorage.getItem("book_id");
+    const driverid = JSON.parse(jsonValue);
+
+    var formdata = new FormData();
+    formdata.append("rc_front", {
+      uri: rc_front,
+      name2,
+      type,
+    });
+    formdata.append("rc_back", {
+      uri: rc_back,
+      name2,
+      type,
+    });
+    formdata.append("rc_no", rc_no);
+    formdata.append("name", name);
+    formdata.append("mfd_date", mfd_date);
+    formdata.append("status", "0");
+    formdata.append("driver_id", driverid);
+
+    var requestOptions = {
+      method: "POST",
+      body: formdata,
+      redirect: "follow",
+    };
+
+    const response = await axios.post(
+      "/driver_Info.php?apicall=DriverRcDetails",
+      formdata,
+      {
+        requestOptions,
+      }
+    );
+
+    console.log(response.data);
+    response.data.error === false
+      ? uploadFail(dispatch, response.data.message)
+      : [
+          uploadSuccess(dispatch, response.data.message),
+          setTimeout(() => {
+            RootNavigation.navigate("Documentation");
+          }, 5000),
+        ];
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+
+
+
+//upload Taxi Insurance
+
+
+
+
+export const uploadTaxiInsurance = ({
+  insurance_front,
+  insurance_back,
+  name,
+  mfd_date,
+  insurance_no,
+}) => async (dispatch) => {
+  try {
+    dispatch({ type: LOADING });
+    const name2 = `picture.jpg`;
+    let localUri1 = insurance_front;
+    let filename1 = localUri1.split("/").pop();
+
+    let localUri2 = insurance_back;
+    let filename2 = localUri2.split("/").pop();
+
+    let match = /\.(\w+)$/.exec(filename1, filename2);
+    let type = match ? `image/${match[1]}` : `image`;
+
+    const jsonValue = await AsyncStorage.getItem("book_id");
+    const driverid = JSON.parse(jsonValue);
+
+    var formdata = new FormData();
+    formdata.append("insurance_front", {
+      uri: insurance_front,
+      name2,
+      type,
+    });
+    formdata.append("insurance_back", {
+      uri: insurance_back,
+      name2,
+      type,
+    });
+    formdata.append("insurance_no", insurance_no);
+    formdata.append("name", name);
+    formdata.append("mfd_date", mfd_date);
+    formdata.append("exp_date", "");
+    formdata.append("status", "0");
+    formdata.append("driver_id", driverid);
+
+    var requestOptions = {
+      method: "POST",
+      body: formdata,
+      redirect: "follow",
+    };
+
+    const response = await axios.post(
+      "/driver_Info.php?apicall=DriverTaxiInsuranceDetails",
+      formdata,
+      {
+        requestOptions,
+      }
+    );
+
+    console.log(response.data);
     response.data.error === false
       ? uploadFail(dispatch, response.data.message)
       : [
