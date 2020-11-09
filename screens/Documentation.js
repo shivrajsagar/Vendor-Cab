@@ -48,7 +48,9 @@ export default class Documentation extends Component {
                 <Icon name="right" family="AntDesign" size={20} color="white" />
               </Block>
               <Block row space="between" style={styles.border}>
-                <TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => navigation.navigate("DriverPhoto")}
+                >
                   <Text color="white" size={20}>
                     Photo
                   </Text>
@@ -93,7 +95,9 @@ export default class Documentation extends Component {
                 <Icon name="right" family="AntDesign" size={20} color="white" />
               </Block>
               <Block row space="between" style={styles.border}>
-                <TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => navigation.navigate("TaxiPhoto")}
+                >
                   <Text color="white" size={20}>
                     Taxi Photos
                   </Text>
