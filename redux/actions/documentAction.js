@@ -96,12 +96,7 @@ export const uploadAadhar = ({
   }
 };
 
-
-
-
 /// pan card upload
-
-
 
 export const uploadPan = ({
   pan_front,
@@ -138,7 +133,7 @@ export const uploadPan = ({
     });
     formdata.append("name", name);
     formdata.append("mfd_date", mfd_date);
-    formdata.append("exp_date","");
+    formdata.append("exp_date", "");
     formdata.append("status", "0");
     formdata.append("driver_id", driverid);
     formdata.append("pan_no", pan_no);
@@ -169,9 +164,6 @@ export const uploadPan = ({
     console.log(err);
   }
 };
-
-
-
 
 // Licence Upload Document////
 
@@ -310,13 +302,7 @@ export const uploadRc = ({
   }
 };
 
-
-
-
 //upload Taxi Insurance
-
-
-
 
 export const uploadTaxiInsurance = ({
   insurance_front,
@@ -374,6 +360,126 @@ export const uploadTaxiInsurance = ({
 
     console.log(response.data);
     response.data.error === false
+      ? uploadFail(dispatch, response.data.message)
+      : [
+          uploadSuccess(dispatch, response.data.message),
+          setTimeout(() => {
+            RootNavigation.navigate("Documentation");
+          }, 5000),
+        ];
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+//upload Taxi Insurance
+
+export const uploadAccountDetail = ({
+  bank_name,
+  account_type,
+  bank_IFSC,
+  account_no,
+  mobile_no,
+  name,
+  id,
+}) => async (dispatch) => {
+  try {
+    dispatch({ type: LOADING });
+
+    const jsonValue = await AsyncStorage.getItem("book_id");
+    const driverid = JSON.parse(jsonValue);
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    var raw = JSON.stringify({
+      bank_name,
+      account_type,
+      bank_IFSC,
+      account_no,
+      mobile_no,
+      name,
+      driver_id: driverid,
+      id,
+    });
+
+    var requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+
+    fetch(
+      "http://demo.expresscab.in/expressc_api/expressc/api/account_detail/create.php",
+      requestOptions
+    )
+      .then((response) => response.text())
+      .then((result) => console.log(result))
+      .catch((error) => console.log("error", error));
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+
+
+/// fitness detail ///
+
+export const uploadFitnessCertificate = ({
+  certificate_front,
+  certificate_back,
+  name,
+  certificate_no,
+  mfd_date,
+}) => async (dispatch) => {
+  try {
+    dispatch({ type: LOADING });
+    const name2 = `picture.jpg`;
+    let localUri1 = certificate_front;
+    let filename1 = localUri1.split("/").pop();
+
+    let localUri2 = certificate_back;
+    let filename2 = localUri2.split("/").pop();
+
+    let match = /\.(\w+)$/.exec(filename1, filename2);
+    let type = match ? `image/${match[1]}` : `image`;
+
+    const jsonValue = await AsyncStorage.getItem("book_id");
+    const driverid = JSON.parse(jsonValue);
+
+    var formdata = new FormData();
+    formdata.append("certificate_front", {
+      uri: certificate_front,
+      name2,
+      type,
+    });
+    formdata.append("certificate_back", {
+      uri: certificate_back,
+      name2,
+      type,
+    });
+    formdata.append("name", name);
+    formdata.append("mfd_date", mfd_date);
+    formdata.append("xpi_date", "112232223");
+    formdata.append("status", "0");
+    formdata.append("driver_id", driverid);
+    formdata.append("certificate_no", certificate_no);
+
+    var requestOptions = {
+      method: "POST",
+      body: formdata,
+      redirect: "follow",
+    };
+
+    const response = await axios.post(
+      "/driver_Info.php?apicall=DriverFitnessDetails",
+      formdata,
+      {
+        requestOptions,
+      }
+    );
+
+    response.data.error === true
       ? uploadFail(dispatch, response.data.message)
       : [
           uploadSuccess(dispatch, response.data.message),

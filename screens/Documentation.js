@@ -38,7 +38,9 @@ export default class Documentation extends Component {
                 <Icon name="right" family="AntDesign" size={20} color="white" />
               </Block>
               <Block row space="between" style={styles.border}>
-                <TouchableOpacity onPress={()=>navigation.navigate("Licence")} >
+                <TouchableOpacity
+                  onPress={() => navigation.navigate("Licence")}
+                >
                   <Text color="white" size={20}>
                     Driving Licence
                   </Text>
@@ -61,7 +63,9 @@ export default class Documentation extends Component {
                 Cab Details
               </Text>
               <Block row space="between" style={styles.border}>
-                <TouchableOpacity onPress={()=>navigation.navigate("RcDocument")} >
+                <TouchableOpacity
+                  onPress={() => navigation.navigate("RcDocument")}
+                >
                   <Text color="white" size={20}>
                     Rc Document
                   </Text>
@@ -69,7 +73,9 @@ export default class Documentation extends Component {
                 <Icon name="right" family="AntDesign" size={20} color="white" />
               </Block>
               <Block row space="between" style={styles.border}>
-                <TouchableOpacity onPress={()=>navigation.navigate("TaxiInsurance")} >
+                <TouchableOpacity
+                  onPress={() => navigation.navigate("TaxiInsurance")}
+                >
                   <Text color="white" size={20}>
                     Taxi Insurance
                   </Text>
@@ -77,7 +83,9 @@ export default class Documentation extends Component {
                 <Icon name="right" family="AntDesign" size={20} color="white" />
               </Block>
               <Block row space="between" style={styles.border}>
-                <TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => navigation.navigate("FitnessCertificate")}
+                >
                   <Text color="white" size={20}>
                     Fitness Certificate
                   </Text>
@@ -99,7 +107,9 @@ export default class Documentation extends Component {
                 Bank Details
               </Text>
               <Block row space="between" style={styles.border}>
-                <TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => navigation.navigate("AccountDetail")}
+                >
                   <Text color="white" size={20}>
                     Account Details
                   </Text>
@@ -107,7 +117,9 @@ export default class Documentation extends Component {
                 <Icon name="right" family="AntDesign" size={20} color="white" />
               </Block>
               <Block row space="between" style={styles.border}>
-                <TouchableOpacity onPress={()=>navigation.navigate("PanCard")} >
+                <TouchableOpacity
+                  onPress={() => navigation.navigate("PanCard")}
+                >
                   <Text color="white" size={20}>
                     Pan Card
                   </Text>

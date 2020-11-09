@@ -27,6 +27,9 @@ import PanCard from "../screens/Upload/PanCard";
 import DrivingLicense from "../screens/Upload/DrivingLicense";
 import RcDocument from "../screens/Upload/RcDocument";
 import TaxiInsurance from "../screens/Upload/TaxiInsurance";
+import AccountDetail from '../screens/Upload/AccountDetail';
+import FitnessCertificate from '../screens/Upload/FitnessCertificate';
+
 
 //naviagtor
 const Stack = createStackNavigator();
@@ -220,6 +223,38 @@ function DocumentStack(props) {
               white
               back
               title="Taxi Insurance Document Upload"
+              scene={scene}
+              navigation={navigation}
+            />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="FitnessCertificate"
+        component={FitnessCertificate}
+        options={{
+          header: ({ scene, navigation }) => (
+            <Header
+              transparent
+              white
+              back
+              title="Fitness Certificate Detail"
+              scene={scene}
+              navigation={navigation}
+            />
+          ),
+        }}
+      />
+        <Stack.Screen
+        name="AccountDetail"
+        component={AccountDetail}
+        options={{
+          header: ({ scene, navigation }) => (
+            <Header
+              transparent
+              white
+              back
+              title="Account Detail"
               scene={scene}
               navigation={navigation}
             />

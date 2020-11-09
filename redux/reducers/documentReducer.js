@@ -22,7 +22,17 @@ const INITIAL_STATE = {
   rc_no: "",
 
   //pan card stuff
-  pan_no:"",
+  pan_no: "",
+
+  //bank account detail stuff
+  bank_name: "",
+  account_type: "",
+  bank_IFSC: "",
+  account_no: "",
+  mobile_no: "",
+
+  //driver fitness certificate
+  certificate_no: "",
 };
 
 export default (state = INITIAL_STATE, action) => {
