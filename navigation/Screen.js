@@ -23,17 +23,26 @@ import Profile from "../screens/Profile";
 
 import Signin from "../screens/Signin";
 import Signup from "../screens/Signup";
+<<<<<<< HEAD
 
 import Logout from "../screens/Logout";
 import ResolveAuthScreen from "../screens/ResolveAuthScreen";
 
+=======
+>>>>>>> b995370880bdb2fecff832c4b575131de126e5e4
 import Aadhar from "../screens/Upload/Aadhar";
 import PanCard from "../screens/Upload/PanCard";
 import DrivingLicense from "../screens/Upload/DrivingLicense";
 import RcDocument from "../screens/Upload/RcDocument";
 import TaxiInsurance from "../screens/Upload/TaxiInsurance";
+<<<<<<< HEAD
 import AccountDetail from "../screens/Upload/AccountDetail";
 import FitnessCertificate from "../screens/Upload/FitnessCertificate";
+=======
+import AccountDetail from '../screens/Upload/AccountDetail';
+import FitnessCertificate from '../screens/Upload/FitnessCertificate';
+
+>>>>>>> b995370880bdb2fecff832c4b575131de126e5e4
 
 //naviagtor
 const Stack = createStackNavigator();
@@ -45,6 +54,7 @@ const profile = {
   type: "Seller",
 };
 
+<<<<<<< HEAD
 function LoginFlow() {
   return (
     <Stack.Navigator mode="card" headerMode="none">
@@ -66,6 +76,8 @@ function LoginFlow() {
   );
 }
 
+=======
+>>>>>>> b995370880bdb2fecff832c4b575131de126e5e4
 function HomeStack(props) {
   return (
     <Stack.Navigator headerMode="screen" mode="card">
@@ -101,6 +113,7 @@ function ProfileStack(props) {
               title="Profile"
               transparent
               white
+              back
               scene={scene}
               navigation={navigation}
             />
@@ -181,6 +194,10 @@ function DocumentStack(props) {
             <Header
               transparent
               white
+<<<<<<< HEAD
+=======
+              back
+>>>>>>> b995370880bdb2fecff832c4b575131de126e5e4
               title="Aadhar Upload"
               scene={scene}
               navigation={navigation}
@@ -196,6 +213,10 @@ function DocumentStack(props) {
             <Header
               transparent
               white
+<<<<<<< HEAD
+=======
+              back
+>>>>>>> b995370880bdb2fecff832c4b575131de126e5e4
               title="Driving Licence Upload"
               scene={scene}
               navigation={navigation}
@@ -211,6 +232,10 @@ function DocumentStack(props) {
             <Header
               transparent
               white
+<<<<<<< HEAD
+=======
+              back
+>>>>>>> b995370880bdb2fecff832c4b575131de126e5e4
               title="Rc Document Upload"
               scene={scene}
               navigation={navigation}
@@ -226,6 +251,10 @@ function DocumentStack(props) {
             <Header
               transparent
               white
+<<<<<<< HEAD
+=======
+              back
+>>>>>>> b995370880bdb2fecff832c4b575131de126e5e4
               title="Pancard Document Upload"
               scene={scene}
               navigation={navigation}
@@ -233,7 +262,11 @@ function DocumentStack(props) {
           ),
         }}
       />
+<<<<<<< HEAD
       <Stack.Screen
+=======
+       <Stack.Screen
+>>>>>>> b995370880bdb2fecff832c4b575131de126e5e4
         name="TaxiInsurance"
         component={TaxiInsurance}
         options={{
@@ -241,6 +274,10 @@ function DocumentStack(props) {
             <Header
               transparent
               white
+<<<<<<< HEAD
+=======
+              back
+>>>>>>> b995370880bdb2fecff832c4b575131de126e5e4
               title="Taxi Insurance Document Upload"
               scene={scene}
               navigation={navigation}
@@ -256,6 +293,10 @@ function DocumentStack(props) {
             <Header
               transparent
               white
+<<<<<<< HEAD
+=======
+              back
+>>>>>>> b995370880bdb2fecff832c4b575131de126e5e4
               title="Fitness Certificate Detail"
               scene={scene}
               navigation={navigation}
@@ -263,7 +304,11 @@ function DocumentStack(props) {
           ),
         }}
       />
+<<<<<<< HEAD
       <Stack.Screen
+=======
+        <Stack.Screen
+>>>>>>> b995370880bdb2fecff832c4b575131de126e5e4
         name="AccountDetail"
         component={AccountDetail}
         options={{
@@ -271,7 +316,11 @@ function DocumentStack(props) {
             <Header
               transparent
               white
+<<<<<<< HEAD
               headerMode="Documentation"
+=======
+              back
+>>>>>>> b995370880bdb2fecff832c4b575131de126e5e4
               title="Account Detail"
               scene={scene}
               navigation={navigation}
@@ -413,8 +462,13 @@ export default function OnboardingStack() {
   return (
     <Stack.Navigator mode="card" headerMode="none">
       <Stack.Screen
+<<<<<<< HEAD
         name="ResolveAuth"
         component={ResolveAuthScreen}
+=======
+        name="SlashScreen"
+        component={SplashScreen}
+>>>>>>> b995370880bdb2fecff832c4b575131de126e5e4
         options={{
           gestureEnabled: false,
         }}
@@ -426,8 +480,32 @@ export default function OnboardingStack() {
           gestureEnabled: false,
         }}
       />
+<<<<<<< HEAD
       <Stack.Screen name="LoginFlow" component={LoginFlow} />
       <Stack.Screen name="App" component={AppStack} />
+=======
+      <Stack.Screen
+        name="App"
+        component={AppStack}
+        options={{
+          gestureEnabled: false,
+        }}
+      />
+      <Stack.Screen
+        name="Signin"
+        component={Signin}
+        options={{
+          gestureEnabled: false,
+        }}
+      />
+      <Stack.Screen
+        name="Signup"
+        component={Signup}
+        options={{
+          gestureEnabled: false,
+        }}
+      />
+>>>>>>> b995370880bdb2fecff832c4b575131de126e5e4
     </Stack.Navigator>
   );
 }

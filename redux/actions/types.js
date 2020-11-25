@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 export const FETCH_CURRENT_DATA = "FETCH_CURRENT_DATA";
 export const FETCH_UPCOMING_DATA = "FETCH_UPCOMING_DATA";
 export const FETCH_COMPLETED_DATA = "FETCH_COMPLETED_DATA";
@@ -17,3 +18,23 @@ export const UPLOAD_DOCUMENT = "UPLOAD_DOCUMENT";
 export const UPLOAD_DOCUMENT_FAIL = "UPLOAD_DOCUMENT_FAIL";
 export const UPLOAD_DOCUMENT_SUCCESS = "UPLOAD_DOCUMENT_SUCCESSS";
 export const LOGOUT = "LOGOUT";
+=======
+export const FETCH_CURRENT_DATA = "FETCH_CURRENT_DATA";
+export const FETCH_UPCOMING_DATA = "FETCH_UPCOMING_DATA";
+export const FETCH_COMPLETED_DATA = "FETCH_COMPLETED_DATA";
+export const MOBILE_CHANGED = "mobile_changed";
+export const PASSWORD_CHANGED = "password_changed";
+export const LOGIN_USER_SUCCESS = "login_user_success";
+export const LOGIN_USER_FAIL = "login_user_fail";
+export const LOGIN_USER = "login_user";
+export const REGISTER_USER="register_user";
+export const REGISTER_USER_FAIL="register_user_fail";
+export const REGISTER_USER_SUCCESS="register_user_successs";
+export const LOADING = "LOADING";
+export const SUCCESS = "SUCCESS";
+export const ERROR = "ERROR";
+export const SAVE_BID = "SAVE_BID";
+export const UPLOAD_DOCUMENT="UPLOAD_DOCUMENT";
+export const UPLOAD_DOCUMENT_FAIL="UPLOAD_DOCUMENT_FAIL";
+export const UPLOAD_DOCUMENT_SUCCESS="UPLOAD_DOCUMENT_SUCCESSS"
+>>>>>>> b995370880bdb2fecff832c4b575131de126e5e4
