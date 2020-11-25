@@ -9,5 +9,5 @@ export const fetchCurrentData = () => async (dispatch) => {
     "http://demo.expresscab.in/expressc_api/expressc/api/booking/currentread.php"
   );
 
-  dispatch({ type: FETCH_CURRENT_DATA, payload: response.data.current_list, loading: false });
+  dispatch({ type: FETCH_CURRENT_DATA, payload: response.data.current_list });
 };

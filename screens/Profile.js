@@ -1,65 +1,62 @@
 import React, { Component } from "react";
 import { StyleSheet, Dimensions, Image } from "react-native";
-import { Block, Button, theme, Icon, Text } from "galio-framework";
+import { Block, Button, Icon, Text } from "galio-framework";
 
 import Theme from "../constants/Theme";
 
 const { width, height } = Dimensions.get("screen");
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export default class Profile extends Component {
+class Profile extends Component {
   state = {
-    name: "",
+    data: [],
   };
 
   async componentDidMount() {
-    const name = await AsyncStorage.getItem("Name");
-    this.setState({ name: name });
+    const driver = await AsyncStorage.getItem("driver");
+    const value = JSON.parse(driver);
+    this.setState({ data: value });
   }
 
   render() {
+    const { data } = this.state;
     return (
       <Block flex safe style={styles.container}>
         <Block row>
-          <Block middle>
-            <Image
-              source={require("../assets/images/avatar.png")}
-              style={styles.image}
-            />
-          </Block>
-          <Block middle>
-            <Text h4 color="white">
-            {this.state.name}
+          <Image
+            source={require("../assets/images/avatar.png")}
+            style={styles.image}
+          />
+          <Block middle left>
+            <Text h4 bold color="white">
+              {data.name}
             </Text>
-            <Text h5 color="white">
-              Status
-            </Text>
-            <Text h6 color="white">
-              Active
+            <Text size={20} color="white">
+              {data.mobile_no}
             </Text>
           </Block>
         </Block>
-        <Block card flex middle style={styles.card}>
+        <Block card flex left style={styles.card}>
           <Block>
-            <Text h4 style={styles.heading}>
-              Vehicle Number
+            <Text h6 style={styles.heading}>
+              Vehicle Name
             </Text>
-            <Text style={styles.text}>UP 62 AQ 3018</Text>
+            <Text style={styles.text}>{data.vehicle_name}</Text>
           </Block>
           <Block>
-            <Text h4 style={styles.heading}>
-              Vehicle Model
+            <Text h6 style={styles.heading}>
+              Vehicle No
             </Text>
-            <Text style={styles.text}>Redon Safari</Text>
+            <Text style={styles.text}>{data.vehicle_no}</Text>
           </Block>
           <Block>
-            <Text h4 style={styles.heading}>
+            <Text h6 style={styles.heading}>
               Aadhar NO.
             </Text>
             <Text style={styles.text}>567255862861</Text>
           </Block>
           <Block>
-            <Text h4 style={styles.heading}>
+            <Text h6 style={styles.heading}>
               Pan No.
             </Text>
             <Text style={styles.text}>Driving Licence No</Text>
@@ -82,16 +79,21 @@ const styles = StyleSheet.create({
     margin: 20,
   },
   card: {
-    backgroundColor: "white",
+    backgroundColor: Theme.COLORS.PRIMARY,
     margin: 20,
     justifyContent: "flex-start",
   },
   heading: {
-    color: Theme.COLORS.BUTTON,
+    color: "white",
     margin: 20,
+    marginBottom: 10,
   },
   text: {
-    textAlign: "center",
-    color: Theme.COLORS.DEFAULT,
+    textAlign: "left",
+    marginLeft: 20,
+    fontSize: 18,
+    color: "white",
   },
 });
+
+export default Profile;

@@ -2,15 +2,15 @@ import { FETCH_CURRENT_DATA, LOADING } from "../actions/types";
 
 const initialState = {
   currentitem: [],
-  loading: false,
+  currentloading: false,
 };
 
 export default function (state = initialState, action) {
   switch (action.type) {
     case LOADING:
-      return { ...state, loading: true };
+      return { ...state, currentloading: true };
     case FETCH_CURRENT_DATA:
-      return { ...state, currentitem: action.payload, loading: false };
+      return { ...state, currentitem: action.payload, currentloading: false };
     default:
       return state;
   }

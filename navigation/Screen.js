@@ -4,14 +4,12 @@ import { Dimensions } from "react-native";
 import { Icon, theme } from "galio-framework";
 import { Header } from "../components";
 import CustomDrawerContent from "./Menu";
-import { materialTheme } from "../constants";
 
-const { width, height } = Dimensions.get("screen");
+const { width } = Dimensions.get("screen");
 
 //naviagtion libraries
 import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 
 //screens
 import HomeScreen from "../screens/Home";
@@ -19,21 +17,27 @@ import Transaction from "../screens/Transaction";
 import Commision from "../screens/Commision";
 import Documentation from "../screens/Documentation";
 import Help from "../screens/Help";
-import Current from "../screens/Current";
-import Upcoming from "../screens/Upcoming";
-import Completed from "../screens/Completed";
 import Onboarding from "../screens/Onboarding";
 import SplashScreen from "../screens/SplashScreen";
 import Profile from "../screens/Profile";
+
 import Signin from "../screens/Signin";
 import Signup from "../screens/Signup";
-import Savebid from "../screens/Savebid";
-import Theme from "../constants/Theme";
+
+import Logout from "../screens/Logout";
+import ResolveAuthScreen from "../screens/ResolveAuthScreen";
+
+import Aadhar from "../screens/Upload/Aadhar";
+import PanCard from "../screens/Upload/PanCard";
+import DrivingLicense from "../screens/Upload/DrivingLicense";
+import RcDocument from "../screens/Upload/RcDocument";
+import TaxiInsurance from "../screens/Upload/TaxiInsurance";
+import AccountDetail from "../screens/Upload/AccountDetail";
+import FitnessCertificate from "../screens/Upload/FitnessCertificate";
 
 //naviagtor
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
-const Top = createMaterialTopTabNavigator();
 
 const profile = {
   avatar: "https://source.unsplash.com/840x840/?car",
@@ -41,20 +45,24 @@ const profile = {
   type: "Seller",
 };
 
-function TopStack(props) {
+function LoginFlow() {
   return (
-    <Top.Navigator
-      tabBarOptions={{
-        showIcon: true,
-        indicatorStyle: { backgroundColor: Theme.COLORS.BUTTON },
-        style:{backgroundColor:Theme.COLORS.COLOR1},
-        activeTintColor:"white"
-      }}
-    >
-      <Top.Screen name="Current" component={Current} />
-      <Top.Screen name="Upcoming" component={Upcoming} />
-      <Top.Screen name="Completed" component={Completed} />
-    </Top.Navigator>
+    <Stack.Navigator mode="card" headerMode="none">
+      <Stack.Screen
+        name="Signin"
+        component={Signin}
+        options={{
+          gestureEnabled: false,
+        }}
+      />
+      <Stack.Screen
+        name="Signup"
+        component={Signup}
+        options={{
+          gestureEnabled: false,
+        }}
+      />
+    </Stack.Navigator>
   );
 }
 
@@ -63,7 +71,7 @@ function HomeStack(props) {
     <Stack.Navigator headerMode="screen" mode="card">
       <Stack.Screen
         name="Dashboard"
-        component={TopStack}
+        component={HomeScreen}
         options={{
           header: ({ navigation, scene }) => (
             <Header
@@ -74,6 +82,7 @@ function HomeStack(props) {
               navigation={navigation}
             />
           ),
+          gestureEnabled: false,
         }}
       />
     </Stack.Navigator>
@@ -113,7 +122,7 @@ function TransactionStack(props) {
             <Header
               transparent
               white
-              title="Transaction"
+              title="Transaction History"
               scene={scene}
               navigation={navigation}
             />
@@ -135,7 +144,7 @@ function CommisionStack(props) {
             <Header
               transparent
               white
-              title="Commision"
+              title="Pay Commision"
               scene={scene}
               navigation={navigation}
             />
@@ -158,6 +167,112 @@ function DocumentStack(props) {
               transparent
               white
               title="Documentation"
+              scene={scene}
+              navigation={navigation}
+            />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="Aadhar"
+        component={Aadhar}
+        options={{
+          header: ({ scene, navigation }) => (
+            <Header
+              transparent
+              white
+              title="Aadhar Upload"
+              scene={scene}
+              navigation={navigation}
+            />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="Licence"
+        component={DrivingLicense}
+        options={{
+          header: ({ scene, navigation }) => (
+            <Header
+              transparent
+              white
+              title="Driving Licence Upload"
+              scene={scene}
+              navigation={navigation}
+            />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="RcDocument"
+        component={RcDocument}
+        options={{
+          header: ({ scene, navigation }) => (
+            <Header
+              transparent
+              white
+              title="Rc Document Upload"
+              scene={scene}
+              navigation={navigation}
+            />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="PanCard"
+        component={PanCard}
+        options={{
+          header: ({ scene, navigation }) => (
+            <Header
+              transparent
+              white
+              title="Pancard Document Upload"
+              scene={scene}
+              navigation={navigation}
+            />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="TaxiInsurance"
+        component={TaxiInsurance}
+        options={{
+          header: ({ scene, navigation }) => (
+            <Header
+              transparent
+              white
+              title="Taxi Insurance Document Upload"
+              scene={scene}
+              navigation={navigation}
+            />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="FitnessCertificate"
+        component={FitnessCertificate}
+        options={{
+          header: ({ scene, navigation }) => (
+            <Header
+              transparent
+              white
+              title="Fitness Certificate Detail"
+              scene={scene}
+              navigation={navigation}
+            />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="AccountDetail"
+        component={AccountDetail}
+        options={{
+          header: ({ scene, navigation }) => (
+            <Header
+              transparent
+              white
+              headerMode="Documentation"
+              title="Account Detail"
               scene={scene}
               navigation={navigation}
             />
@@ -189,6 +304,15 @@ function HelpStack(props) {
     </Stack.Navigator>
   );
 }
+
+function LogoutStack() {
+  return (
+    <Stack.Navigator headerMode="none" mode="modal">
+      <Stack.Screen name="Logout" component={Logout} />
+    </Stack.Navigator>
+  );
+}
+
 function AppStack(props) {
   return (
     <Drawer.Navigator
@@ -267,6 +391,20 @@ function AppStack(props) {
           drawerIcon: () => <Icon name="help" family="Entypo" size={16} />,
         }}
       />
+      <Drawer.Screen
+        name="Logout"
+        component={LogoutStack}
+        options={{
+          drawerIcon: ({ focused }) => (
+            <Icon
+              size={16}
+              name="ios-log-out"
+              family="ionicon"
+              color={focused ? "white" : materialTheme.COLORS.MUTED}
+            />
+          ),
+        }}
+      />
     </Drawer.Navigator>
   );
 }
@@ -274,11 +412,22 @@ function AppStack(props) {
 export default function OnboardingStack() {
   return (
     <Stack.Navigator mode="card" headerMode="none">
-      <Stack.Screen name="SlashScreen" component={SplashScreen} />
-      <Stack.Screen name="Onboarding" component={Onboarding} />
+      <Stack.Screen
+        name="ResolveAuth"
+        component={ResolveAuthScreen}
+        options={{
+          gestureEnabled: false,
+        }}
+      />
+      <Stack.Screen
+        name="Onboarding"
+        component={Onboarding}
+        options={{
+          gestureEnabled: false,
+        }}
+      />
+      <Stack.Screen name="LoginFlow" component={LoginFlow} />
       <Stack.Screen name="App" component={AppStack} />
-      <Stack.Screen name="Signin" component={Signin} />
-      <Stack.Screen name="Signup" component={Signup} />
     </Stack.Navigator>
   );
 }

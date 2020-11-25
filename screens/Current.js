@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { StyleSheet, Dimensions, FlatList } from "react-native";
-import { Block, Button, Text } from "galio-framework";
+import { StyleSheet, Dimensions, ActivityIndicator } from "react-native";
+
+import { Block } from "galio-framework";
 
 import Theme from "../constants/Theme";
 import { Card } from "../components";
@@ -9,7 +10,7 @@ import { connect } from "react-redux";
 import { fetchCurrentData } from "../redux/actions/currentAction";
 import { ScrollView } from "react-native-gesture-handler";
 
-const { width } = Dimensions.get("screen");
+const { width, height } = Dimensions.get("screen");
 
 class Current extends Component {
   componentDidMount() {
@@ -17,14 +18,28 @@ class Current extends Component {
   }
 
   render() {
-    const { item } = this.props;
+    const { item, loading } = this.props;
     return (
       <ScrollView showsVerticalScrollIndicator={false}>
-        <Block safe  style={styles.container}>
-          {item.map((item) => (
-            <Card item={item} bookingid name mobile pickupaddress dropaddress status />
-          ))}
-        </Block>
+        {loading === true ? (
+          <Block flex middle style={styles.loading}>
+            <ActivityIndicator animating={true} color="#efeved" />
+          </Block>
+        ) : (
+          <Block safe flex style={styles.container}>
+            {item.map((item) => (
+              <Card
+                item={item}
+                bookingid
+                name
+                mobile
+                pickupaddress
+                dropaddress
+                status
+              />
+            ))}
+          </Block>
+        )}
       </ScrollView>
     );
   }
@@ -33,12 +48,19 @@ class Current extends Component {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: Theme.COLORS.PRIMARY,
-    alignItems:"center"
+    alignItems: "center",
+  },
+  loading: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    height: height / 1.5,
   },
 });
 
 const mapStateToProps = (state) => ({
   item: state.current.currentitem,
+  loading: state.current.currentloading,
 });
 
 export default connect(mapStateToProps, { fetchCurrentData })(Current);

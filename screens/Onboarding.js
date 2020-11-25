@@ -88,7 +88,7 @@ const Onboarding = ({ navigation }) => {
                 backgroundColor: Theme.COLORS.BUTTON2,
               }}
               onPress={() => {
-                navigation.navigate("Signin");
+                navigation.navigate("LoginFlow");
               }}
             >
               <Text color="white">{completed ? "Let's Go" : "Skip"}</Text>

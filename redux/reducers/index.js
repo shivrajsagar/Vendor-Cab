@@ -4,6 +4,8 @@ import upcomingReducer from "./upcomingReducer";
 import completedReducer from "./completedReducer";
 import bidReducer from "./bidReducer";
 import authReducer from "./authReducer";
+import documentReducer from './documentReducer';
+
 
 export default combineReducers({
   current: currentReducer,
@@ -11,4 +13,5 @@ export default combineReducers({
   completed: completedReducer,
   savebid: bidReducer,
   auth: authReducer,
+  document:documentReducer,
 });

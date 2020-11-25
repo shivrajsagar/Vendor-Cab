@@ -2,12 +2,14 @@ import axios from "axios";
 
 import { SAVE_BID, LOADING, ERROR } from "./types";
 
-export const saveBidData = ({book_id,booking_id, amount}) => async (dispatch) => {
+export const saveBidData = ({ book_id, booking_id, amount }) => async (
+  dispatch
+) => {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 
   var raw = JSON.stringify({
-    book_id:book_id,
+    book_id: book_id,
     booking_id: booking_id,
     vendor_id: "E1245",
     amount: "2000",

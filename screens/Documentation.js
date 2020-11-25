@@ -3,11 +3,13 @@ import { StyleSheet, Image, ScrollView, Dimensions } from "react-native";
 import { Block, Button, Text, Input, Icon } from "galio-framework";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
+import Theme from "../constants/Theme";
 
-const {width}=Dimensions.get("screen");
+const { width,height } = Dimensions.get("screen");
 
 export default class Documentation extends Component {
   render() {
+    const { navigation } = this.props;
     return (
       <ScrollView
         showsVerticalScrollIndicator={false}
@@ -23,95 +25,158 @@ export default class Documentation extends Component {
           </Block>
           <Block style={styles.cards}>
             <Block card shadow shadowColor="#233545">
-              <Text h5 color="white" style={styles.text}>
-                <Icon name="man" family="entypo" size="30" color="white" />
-                Driver Details
-              </Text>
-              <Block row space="between" style={styles.border}>
-                <TouchableOpacity>
-                  <Text h5 color="white" size={20}>
+              <Block middle row>
+                <Icon name="man" family="Entypo" size={30} color="white" />
+                <Text color="white" style={styles.text}>
+                  Driver Details
+                </Text>
+              </Block>
+              <TouchableOpacity onPress={() => navigation.navigate("Aadhar")}>
+                <Block row space="between" style={styles.border}>
+                  <Text color="white" size={20}>
                     Aadhar Card
                   </Text>
-                </TouchableOpacity>
-                <Icon name="right" family="AntDesign" size={20} color="white" />
-              </Block>
-              <Block row space="between" style={styles.border}>
-                <TouchableOpacity>
-                  <Text h5 color="white" size={20}>
+                  <Icon
+                    name="right"
+                    family="AntDesign"
+                    size={20}
+                    color="white"
+                  />
+                </Block>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => navigation.navigate("Licence")}>
+                <Block row space="between" style={styles.border}>
+                  <Text color="white" size={20}>
                     Driving Licence
                   </Text>
-                </TouchableOpacity>
-                <Icon name="right" family="AntDesign" size={20} color="white" />
-              </Block>
-              <Block row space="between" style={styles.border}>
-                <TouchableOpacity>
-                  <Text h4 color="white" size={20}>
+                  <Icon
+                    name="right"
+                    family="AntDesign"
+                    size={20}
+                    color="white"
+                  />
+                </Block>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => navigation.navigate("DriverPhoto")}
+              >
+                <Block row space="between" style={styles.border}>
+                  <Text color="white" size={20}>
                     Photo
                   </Text>
-                </TouchableOpacity>
-                <Icon name="right" family="AntDesign" size={20} color="white" />
-              </Block>
+                  <Icon
+                    name="right"
+                    family="AntDesign"
+                    size={20}
+                    color="white"
+                  />
+                </Block>
+              </TouchableOpacity>
             </Block>
 
             <Block card>
-              <Text h5 color="white" style={styles.text}>
+              <Block middle row>
                 <Icon name="car" family="AntDesign" size={30} color="white" />
-                Cab Details
-              </Text>
-              <Block row space="between" style={styles.border}>
-                <TouchableOpacity>
-                  <Text h4 color="white" size={20}>
+                <Text color="white" style={styles.text}>
+                  Car Details
+                </Text>
+              </Block>
+              <TouchableOpacity
+                onPress={() => navigation.navigate("RcDocument")}
+              >
+                <Block row space="between" style={styles.border}>
+                  <Text color="white" size={20}>
                     Rc Document
                   </Text>
-                </TouchableOpacity>
-                <Icon name="right" family="AntDesign" size={20} color="white" />
-              </Block>
-              <Block row space="between" style={styles.border}>
-                <TouchableOpacity>
-                  <Text h4 color="white" size={20}>
+                  <Icon
+                    name="right"
+                    family="AntDesign"
+                    size={20}
+                    color="white"
+                  />
+                </Block>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => navigation.navigate("TaxiInsurance")}
+              >
+                <Block row space="between" style={styles.border}>
+                  <Text color="white" size={20}>
                     Taxi Insurance
                   </Text>
-                </TouchableOpacity>
-                <Icon name="right" family="AntDesign" size={20} color="white" />
-              </Block>
-              <Block row space="between" style={styles.border}>
-                <TouchableOpacity>
-                  <Text h4 color="white" size={20}>
+                  <Icon
+                    name="right"
+                    family="AntDesign"
+                    size={20}
+                    color="white"
+                  />
+                </Block>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => navigation.navigate("FitnessCertificate")}
+              >
+                <Block row space="between" style={styles.border}>
+                  <Text color="white" size={20}>
                     Fitness Certificate
                   </Text>
-                </TouchableOpacity>
-                <Icon name="right" family="AntDesign" size={20} color="white" />
-              </Block>
-              <Block row space="between" style={styles.border}>
-                <TouchableOpacity>
-                  <Text h4 color="white" size={20}>
+                  <Icon
+                    name="right"
+                    family="AntDesign"
+                    size={20}
+                    color="white"
+                  />
+                </Block>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => navigation.navigate("TaxiPhoto")}
+              >
+                <Block row space="between" style={styles.border}>
+                  <Text color="white" size={20}>
                     Taxi Photos
                   </Text>
-                </TouchableOpacity>
-                <Icon name="right" family="AntDesign" size={20} color="white" />
-              </Block>
+                  <Icon
+                    name="right"
+                    family="AntDesign"
+                    size={20}
+                    color="white"
+                  />
+                </Block>
+              </TouchableOpacity>
             </Block>
             <Block card>
-              <Text h5 color="white" style={styles.text}>
+              <Block middle row>
                 <Icon name="bank" family="AntDesign" size={30} color="white" />
-                Bank Details
-              </Text>
-              <Block row space="between" style={styles.border}>
-                <TouchableOpacity>
-                  <Text h4 color="white" size={20}>
+                <Text color="white" style={styles.text}>
+                  Bank Details
+                </Text>
+              </Block>
+              <TouchableOpacity
+                onPress={() => navigation.navigate("AccountDetail")}
+              >
+                <Block row space="between" style={styles.border}>
+                  <Text color="white" size={20}>
                     Account Details
                   </Text>
-                </TouchableOpacity>
-                <Icon name="right" family="AntDesign" size={20} color="white" />
-              </Block>
-              <Block row space="between" style={styles.border}>
-                <TouchableOpacity>
-                  <Text h4 color="white" size={20}>
+                  <Icon
+                    name="right"
+                    family="AntDesign"
+                    size={20}
+                    color="white"
+                  />
+                </Block>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => navigation.navigate("PanCard")}>
+                <Block row space="between" style={styles.border}>
+                  <Text color="white" size={20}>
                     Pan Card
                   </Text>
-                </TouchableOpacity>
-                <Icon name="right" family="AntDesign" size={20} color="white" />
-              </Block>
+                  <Icon
+                    name="right"
+                    family="AntDesign"
+                    size={20}
+                    color="white"
+                  />
+                </Block>
+              </TouchableOpacity>
             </Block>
           </Block>
         </Block>
@@ -122,7 +187,7 @@ export default class Documentation extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#233545",
+    backgroundColor: Theme.COLORS.PRIMARY,
   },
   image: {
     alignItems: "center",

@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { StyleSheet,Dimensions } from "react-native";
 import { Block, Button, Text } from "galio-framework";
 
+
+import Theme from '../constants/Theme';
 const {width}=Dimensions.get("screen");
 
 
@@ -31,7 +33,7 @@ export default class Help extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor:"#233545"
+    backgroundColor:Theme.COLORS.PRIMARY,
   },
   textStyle: {
     backgroundColor: "#233545",

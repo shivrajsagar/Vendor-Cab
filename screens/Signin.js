@@ -1,5 +1,10 @@
 import React, { Component } from "react";
-import { Dimensions, StyleSheet, TouchableOpacity, Alert } from "react-native";
+import {
+  Dimensions,
+  StyleSheet,
+  TouchableOpacity,
+  BackHandler,
+} from "react-native";
 import { Block, Button, Input, theme, Text } from "galio-framework";
 
 const { width, height } = Dimensions.get("screen");
@@ -39,8 +44,7 @@ class Signin extends Component {
 
   render() {
     const { navigation, user, error } = this.props;
-  
-    
+
     return (
       <Block middle style={styles.container}>
         <Text size={20} color="white">
@@ -49,6 +53,7 @@ class Signin extends Component {
         <Block card shadow shadowColor="gray" style={styles.card}>
           {this.renerError()}
           <Input
+            type="number-pad"
             placeholder="Enter Mobile"
             left
             icon="mobile"
@@ -60,6 +65,8 @@ class Signin extends Component {
           />
           <Input
             placeholder="Enter Password"
+            password
+            viewPass
             left
             icon="key"
             family="Entypo"
@@ -81,16 +88,9 @@ class Signin extends Component {
         </Block>
         <TouchableOpacity onPress={() => navigation.navigate("Signup")}>
           <Text color="white" style={styles.text}>
-            Not registered yet?
+            Not registered yet? SignUp
           </Text>
         </TouchableOpacity>
-        <Button
-          round
-          onPress={() => navigation.navigate("App")}
-          color={Theme.COLORS.BUTTON2}
-        >
-          Skip
-        </Button>
       </Block>
     );
   }
@@ -122,6 +122,7 @@ const mapStateToProps = (state) => ({
   password: state.auth.password,
   error: state.auth.error,
   user: state.auth.user,
+  loading: state.auth.authloading,
 });
 
 export default connect(mapStateToProps, {

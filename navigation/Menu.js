@@ -1,17 +1,8 @@
 import React, { useEffect, useState } from "react";
-import {
-  Dimensions,
-  StyleSheet,
-  Image,
-  ScrollView,
-  TouchableHighlight,
-} from "react-native";
+import { Dimensions, StyleSheet, Image, ScrollView } from "react-native";
 import { Block, Text, theme } from "galio-framework";
 
-import {
-  useSafeAreaFrame,
-  useSafeAreaInsets,
-} from "react-native-safe-area-context";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { Drawer as DrawerCustomItem } from "../components";
 import Theme from "../constants/Theme";
