@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { SAVE_BID, LOADING, ERROR } from "./types";
+import { SAVE_BID, LOADING,} from "./types";
 
 export const saveBidData = ({ book_id, booking_id, amount }) => async (
   dispatch
