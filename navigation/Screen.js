@@ -11,22 +11,23 @@ const { width } = Dimensions.get("screen");
 import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 
-//screens
+// draweer screens
 import HomeScreen from "../screens/Home";
 import Transaction from "../screens/Transaction";
 import Commision from "../screens/Commision";
 import Documentation from "../screens/Documentation";
 import Help from "../screens/Help";
 import Onboarding from "../screens/Onboarding";
-import SplashScreen from "../screens/SplashScreen";
 import Profile from "../screens/Profile";
 
+//login screens
 import Signin from "../screens/Signin";
 import Signup from "../screens/Signup";
-
 import Logout from "../screens/Logout";
 import ResolveAuthScreen from "../screens/ResolveAuthScreen";
+import PasswordReset from "../screens/PasswordReset";
 
+//document screens
 import Aadhar from "../screens/Upload/Aadhar";
 import PanCard from "../screens/Upload/PanCard";
 import DrivingLicense from "../screens/Upload/DrivingLicense";
@@ -101,8 +102,21 @@ function ProfileStack(props) {
               title="Profile"
               transparent
               white
-              back
               scene={scene}
+              navigation={navigation}
+            />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="Password"
+        component={PasswordReset}
+        options={{
+          header: ({ scene, navigation }) => (
+            <Header
+              title="Reset Password"
+              transparent
+              white
               navigation={navigation}
             />
           ),
@@ -428,7 +442,13 @@ export default function OnboardingStack() {
         }}
       />
       <Stack.Screen name="LoginFlow" component={LoginFlow} />
-      <Stack.Screen name="App" component={AppStack} />
+      <Stack.Screen
+        name="App"
+        component={AppStack}
+        options={{
+          gestureEnabled: false,
+        }}
+      />
     </Stack.Navigator>
   );
 }

@@ -1,4 +1,4 @@
-import { FETCH_CURRENT_DATA, LOADING, ERROR } from "./types";
+import { FETCH_CURRENT_DATA, LOADING } from "./types";
 
 import axios from "axios";
 

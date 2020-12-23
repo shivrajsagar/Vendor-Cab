@@ -1,6 +1,6 @@
-import React, { Component, useEffect, useState } from "react";
-import { StyleSheet, ScrollView, Image, Dimensions, Alert } from "react-native";
-import { Block, Button, Icon, Input, Text, Toast } from "galio-framework";
+import React, { Component } from "react";
+import { StyleSheet, ScrollView, Image, Dimensions } from "react-native";
+import { Block, Button, Icon, Input, Text } from "galio-framework";
 import * as ImagePicker from "expo-image-picker";
 
 import Theme from "../../constants/Theme";
@@ -10,25 +10,31 @@ import {
   uploadDocumentValue,
 } from "../../redux/actions/documentAction";
 
-const { width, height } = Dimensions.get("screen");
 
 class TaxiInsurance extends Component {
   state = {
     insurance_front: null,
     insurance_back: null,
+    errorMessage: null,
   };
 
   onSubmit() {
-    const { name, Issue_Date, driver_id, aadhar_no } = this.props;
+    const { name, Issue_Date } = this.props;
     const { insurance_front, insurance_back } = this.state;
-    this.props.uploadAadhar({
-      insurance_front,
-      insurance_back,
-      name,
-      Issue_Date,
-      driver_id,
-      insurance_no,
-    });
+    if (!name || !Issue_Date || !insurance_back||!insurance_front) {
+      this.setState({ errorMessage: "Please fill in all fields" });
+      setTimeout(() => {
+        this.setState({ errorMessage: null });
+      }, 3000);
+    } else {
+      this.props.uploadAadhar({
+        insurance_front,
+        insurance_back,
+        name,
+        Issue_Date,
+        insurance_no,
+      });
+    }
   }
 
   frontImage = async () => {
@@ -92,6 +98,11 @@ class TaxiInsurance extends Component {
             {message ? (
               <Text size={20} color="green">
                 {message}
+              </Text>
+            ) : null}
+            {this.state.errorMessage ? (
+              <Text size={20} center color="red">
+                {this.state.errorMessage}
               </Text>
             ) : null}
             <Text size={18} color="#00ccff">
@@ -170,6 +181,7 @@ class TaxiInsurance extends Component {
                   value: number,
                 })
               }
+              maxLength={12}
             />
             <Text size={18} color="#00ccff">
               Issue Date
@@ -189,6 +201,7 @@ class TaxiInsurance extends Component {
                   value: number,
                 })
               }
+              maxLength={8}
             />
             <Button
               round
@@ -231,7 +244,7 @@ const mapStateToProps = (state) => ({
   name: state.document.name,
   mfd_date: state.document.mfd_date,
   insurance_no: state.document.insurance_no,
-  loading: state.document.loading,
+  loading: state.document.documentloading,
   message: state.document.message,
   error: state.document.error,
   isShow: state.document.isShow,

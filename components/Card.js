@@ -4,7 +4,7 @@ import { Block, Button, Text, Icon } from "galio-framework";
 import { withNavigation } from "@react-navigation/compat";
 import Theme from "../constants/Theme";
 
-import { saveBidData } from "../redux/actions/bidAction";
+import { saveBidData, closeModal, openModal } from "../redux/actions/bidAction";
 import ModalComponent from "./Modal";
 import { connect } from "react-redux";
 
@@ -16,16 +16,8 @@ class Card extends Component {
   };
 
   onDecline = () => {
-    this.setState({ showModal: false });
+    this.props.closeModal();
   };
-
-  onSubmit=()=> {
-    const data = {
-      book_id: "242ds",
-      booking_id: "wqwew",
-    };
-    this.props.saveBidData(data);
-  }
 
   render() {
     const {
@@ -37,13 +29,16 @@ class Card extends Component {
       mobile,
       pickupaddress,
       dropaddress,
+      pickuplocation,
+      droplocation,
       pickupdatetime,
       dropdatetime,
       amount,
       payment,
       status,
       bid,
-      message
+      message,
+      showModal,
     } = this.props;
     return (
       <Block
@@ -52,6 +47,7 @@ class Card extends Component {
         shadow
         shadowColor={Theme.COLORS.NAVBAR_TITLE}
         style={styles.container}
+        key={(item, index) => "Key" + index}
       >
         <Block middle style={styles.heading}>
           <Text size={20} color="white">
@@ -112,6 +108,41 @@ class Card extends Component {
             </Block>
           </Block>
         ) : null}
+
+        {pickuplocation ? (
+          <Block row space="around" style={styles.text}>
+            <Block row>
+              <Icon
+                name="location-pin"
+                family="Entypo"
+                size={20}
+                color="#007acc"
+              />
+              <Text color="blue">Pickup Location</Text>
+            </Block>
+            <Block>
+              <Text>{item.pickup_location}</Text>
+            </Block>
+          </Block>
+        ) : null}
+
+        {droplocation ? (
+          <Block row space="around" style={styles.text}>
+            <Block row>
+              <Icon
+                name="location-pin"
+                family="Entypo"
+                size={20}
+                color="#007acc"
+              />
+              <Text color="blue">Drop Location</Text>
+            </Block>
+            <Block>
+              <Text>{item.drop_location}</Text>
+            </Block>
+          </Block>
+        ) : null}
+
         {pickupaddress ? (
           <Block style={styles.text}>
             <Block row>
@@ -205,7 +236,11 @@ class Card extends Component {
               <Text color="blue">Status</Text>
             </Block>
             <Block>
-              <Text>{item.status}</Text>
+              {item.status == 1 ? (
+                <Text color="green">Active</Text>
+              ) : (
+                <Text color="red">Inactive</Text>
+              )}
             </Block>
           </Block>
         ) : null}
@@ -214,7 +249,7 @@ class Card extends Component {
           <Block row style={styles.text}>
             <Block flex middle>
               <ModalComponent
-                visible={this.state.showModal}
+                visible={showModal}
                 onDecline={this.onDecline}
                 onSubmit={this.onSubmit}
                 item={item}
@@ -224,9 +259,7 @@ class Card extends Component {
                 middle
                 round
                 color="#009688"
-                onPress={() =>
-                  this.setState({ showModal: !this.state.showModal })
-                }
+                onPress={() => this.props.openModal()}
               >
                 Bid To accept
               </Button>
@@ -241,9 +274,9 @@ class Card extends Component {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: Theme.COLORS.WHITE,
-    marginTop: Theme.SIZES.BASE,
-    marginBottom: Theme.SIZES.BASE,
-    borderRadius: Theme.SIZES.BASE * 2,
+    marginTop: 6,
+    marginBottom: Theme.SIZES.BASE - 6,
+    borderRadius: Theme.SIZES.BASE,
     padding: 2,
     borderTopRightRadius: 0,
     borderBottomLeftRadius: 0,
@@ -254,7 +287,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     padding: 10,
     backgroundColor: "#006699",
-    borderTopLeftRadius: Theme.SIZES.BASE * 2,
+    borderTopLeftRadius: Theme.SIZES.BASE,
   },
   text: {
     padding: 10,
@@ -266,6 +299,9 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => ({
   message: state.savebid.message,
+  showModal: state.savebid.showModal,
 });
 
-export default connect(mapStateToProps, { saveBidData })(Card);
+export default connect(mapStateToProps, { saveBidData, openModal, closeModal })(
+  Card
+);

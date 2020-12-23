@@ -13,19 +13,19 @@ class DrawerItem extends Component {
     const { title, focused } = this.props;
     switch (title) {
       case "Dashboard":
-        return <Icon name="home" family="Entypo" size={25} color="white" />;
+        return <Icon name="home" family="Entypo" size={20} color="white" />;
       case "Profile":
-        return <Icon name="user" family="Entypo" size={25} color="white"/>;
+        return <Icon name="user" family="Entypo" size={20} color="white"/>;
       case "Transaction History":
-        return <Icon name="select-arrows" family="Entypo" size={25} color="white" />;
+        return <Icon name="select-arrows" family="Entypo" size={20} color="white" />;
       case "Pay Commision":
-        return <Icon name="calculator" family="Entypo" size={25} color="white"/>;
+        return <Icon name="calculator" family="Entypo" size={20} color="white"/>;
       case "Documentation":
-        return <Icon name="documents" family="Entypo" size={25} color="white"/>;
+        return <Icon name="documents" family="Entypo" size={20} color="white"/>;
       case "Help":
-        return <Icon name="help" family="Entypo" size={25} color="white"/>;
+        return <Icon name="help" family="Entypo" size={20} color="white"/>;
       case "Logout":
-        return <Icon name="logout" family="AntDesign" size={25} color="white"/>;
+        return <Icon name="logout" family="AntDesign" size={20} color="white"/>;
     }
   };
 
@@ -39,10 +39,10 @@ class DrawerItem extends Component {
         }}
       >
         <Block flex row style={[styles.defaultStyle, focused ? [styles.activeStyle, styles.shadow] : null]}>
-          <Block middle flex={0.1} style={{ marginRight: 28 }}>
+          <Block middle flex={0.2} style={{ marginRight: 20 }}>
             {this.renderIcon()}
           </Block>
-          <Block row center flex={0.9}>
+          <Block row center flex={0.8}>
             <Text size={18} color={focused?"white":"white"}>
               {title}
             </Text>

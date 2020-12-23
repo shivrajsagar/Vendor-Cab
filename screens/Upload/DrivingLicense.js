@@ -3,6 +3,8 @@ import { StyleSheet, ScrollView, Image, Dimensions, Alert } from "react-native";
 import { Block, Button, Icon, Input, Text, Toast } from "galio-framework";
 import * as ImagePicker from "expo-image-picker";
 
+import { TextInputMask } from "react-native-masked-text";
+
 import Theme from "../../constants/Theme";
 import { connect } from "react-redux";
 import {
@@ -16,18 +18,33 @@ class DrivingLicence extends Component {
   state = {
     driving_license_front: null,
     driving_license_back: null,
+    errorMessage: null,
   };
 
   onSubmit() {
     const { name, mfd_date, license_no } = this.props;
     const { driving_license_front, driving_license_back } = this.state;
-    this.props.uploadLicence({
-      driving_license_front,
-      driving_license_back,
-      name,
-      mfd_date,
-      license_no,
-    });
+
+    if (
+      !name ||
+      !mfd_date ||
+      !license_no ||
+      !driving_license_front ||
+      !driving_license_back
+    ) {
+      this.setState({ errorMessage: "Please fill in all fields" });
+      setTimeout(() => {
+        this.setState({ errorMessage: null });
+      }, 3000);
+    } else {
+      this.props.uploadLicence({
+        driving_license_front,
+        driving_license_back,
+        name,
+        mfd_date,
+        license_no,
+      });
+    }
   }
 
   frontImage = async () => {
@@ -91,6 +108,11 @@ class DrivingLicence extends Component {
             {message ? (
               <Text size={20} color="green">
                 {message}
+              </Text>
+            ) : null}
+            {this.state.errorMessage ? (
+              <Text size={20} color="red" center>
+                {this.state.errorMessage}
               </Text>
             ) : null}
             <Text size={18} color="#00ccff">
@@ -169,12 +191,12 @@ class DrivingLicence extends Component {
                   value: number,
                 })
               }
+              maxLength={12}
             />
             <Text size={18} color="#00ccff">
               Issue Date
             </Text>
-            <Input
-              type="calendar"
+           {/**  <Input
               placeholder="Issue Date"
               placeholderTextColor={Theme.COLORS.PRIMARY}
               icon="calendar"
@@ -188,7 +210,25 @@ class DrivingLicence extends Component {
                   value: number,
                 })
               }
-            />
+              maxLength={8}
+            />*/}
+            <Block row style={styles.calendar}>
+              <Icon name="calendar" family="Entypo" color="red" />
+              <TextInputMask
+                style={styles.calendarinput}
+                type={"datetime"}
+                options={{
+                  format: "DD-MM-YYYY",
+                }}
+                value={this.props.mfd_date}
+                onChangeText={(number) =>
+                  this.props.uploadDocumentValue({
+                    prop: "mfd_date",
+                    value: number,
+                  })
+                }
+              />
+            </Block>
             <Button
               round
               middle
@@ -224,13 +264,27 @@ const styles = StyleSheet.create({
   image: {
     justifyContent: "space-around",
   },
+  calendar: {
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: "grey",
+    height: Theme.SIZES.BASE * 2.5,
+    alignItems: "center",
+    paddingLeft: Theme.SIZES.BASE,
+  },
+  calendarinput: {
+    justifyContent: "center",
+    borderColor: "grey",
+    width: "100%",
+    paddingLeft: Theme.SIZES.BASE,
+  },
 });
 
 const mapStateToProps = (state) => ({
   name: state.document.name,
   mfd_date: state.document.mfd_date,
   license_no: state.document.license_no,
-  loading: state.document.loading,
+  loading: state.document.documentloading,
   message: state.document.message,
   error: state.document.error,
 });

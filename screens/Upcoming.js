@@ -16,10 +16,18 @@ class Upcoming extends Component {
   render() {
     const { item } = this.props;
     return (
-      <ScrollView showsVerticalScrollIndicator={false} >
+      <ScrollView showsVerticalScrollIndicator={false}>
         <Block style={styles.container}>
           {item.map((item) => (
-            <Card item={item} bookingid pickupaddress dropaddress  pickupdatetime dropdatetime bid />
+            <Card
+              item={item}
+              bookingid
+              pickuplocation
+              droplocation
+              pickupdatetime
+              dropdatetime
+              bid
+            />
           ))}
         </Block>
       </ScrollView>
@@ -30,7 +38,7 @@ class Upcoming extends Component {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: Theme.COLORS.PRIMARY,
-    alignItems:"center"
+    alignItems: "center",
   },
 });
 

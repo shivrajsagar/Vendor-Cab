@@ -13,18 +13,42 @@ import {
 const { width, height } = Dimensions.get("screen");
 
 class AccountDetail extends Component {
-  onSubmit() {
-    const { name, bank_name, account_no,bank_IFSC,account_type, mobile_no,} = this.props;
+  state = {
+    errorMessage: null,
+  };
 
-    this.props.uploadAccountDetail({
+  onSubmit() {
+    const {
       name,
       bank_name,
-      account_type,
-      bank_IFSC,
       account_no,
+      bank_IFSC,
+      account_type,
       mobile_no,
-      id,
-    });
+    } = this.props;
+
+    if (
+      !name ||
+      !bank_name ||
+      !account_no ||
+      !bank_IFSC ||
+      !account_type ||
+      !mobile_no
+    ) {
+      this.setState({ errorMessage: "Please fill all fields" });
+      setTimeout(() => {
+        this.setState({ errorMessage: null });
+      }, 2000);
+    } else {
+      this.props.uploadAccountDetail({
+        name,
+        bank_name,
+        account_type,
+        bank_IFSC,
+        account_no,
+        mobile_no,
+      });
+    }
   }
 
   frontImage = async () => {
@@ -60,20 +84,9 @@ class AccountDetail extends Component {
     }
   }
 
-  renderError() {
-    if (this.props.error) {
-      return (
-        <Block>
-          <Text size={18} color="red">
-            {this.props.error}
-          </Text>
-        </Block>
-      );
-    }
-  }
-
   render() {
-    const { message } = this.props;
+    const { message, error } = this.props;
+    console.log(error);
     return (
       <Block style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
@@ -84,10 +97,19 @@ class AccountDetail extends Component {
             />
           </Block>
           <Block flex card shadow shadowColor="gray" style={styles.card}>
-            {this.renderError()}
             {message ? (
               <Text size={20} color="green">
                 {message}
+              </Text>
+            ) : null}
+            {error ? (
+              <Text size={20} color="red">
+                {error}
+              </Text>
+            ) : null}
+            {this.state.errorMessage ? (
+              <Text size={20} center color="red">
+                {this.state.errorMessage}
               </Text>
             ) : null}
             <Text size={20} color="#00ccff">
@@ -177,6 +199,7 @@ class AccountDetail extends Component {
                   value: number,
                 })
               }
+              maxLength={14}
             />
             <Text size={20} color="#00ccff">
               Mobile Number
@@ -195,6 +218,7 @@ class AccountDetail extends Component {
                   value: number,
                 })
               }
+              maxLength={10}
             />
             <Button
               round
@@ -235,11 +259,12 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => ({
   name: state.document.name,
+  bank_name: state.document.bank_name,
   bank_IFSC: state.document.bank_IFSC,
   account_type: state.document.account_type,
   account_no: state.document.account_no,
   mobile_no: state.document.mobile_no,
-  loading: state.document.loading,
+  loading: state.document.documentloading,
   message: state.document.message,
   error: state.document.error,
   isShow: state.document.isShow,

@@ -1,10 +1,9 @@
 import React, { Component } from "react";
-import { StyleSheet, Dimensions, Image } from "react-native";
-import { Block, Button, Icon, Text } from "galio-framework";
+import { StyleSheet, Image, ScrollView } from "react-native";
+import { Block, Button, Text } from "galio-framework";
 
 import Theme from "../constants/Theme";
 
-const { width, height } = Dimensions.get("screen");
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 class Profile extends Component {
@@ -19,9 +18,10 @@ class Profile extends Component {
   }
 
   render() {
+    const { navigation } = this.props;
     const { data } = this.state;
     return (
-      <Block flex safe style={styles.container}>
+      <ScrollView style={styles.container}>
         <Block row>
           <Image
             source={require("../assets/images/avatar.png")}
@@ -36,7 +36,7 @@ class Profile extends Component {
             </Text>
           </Block>
         </Block>
-        <Block card flex left style={styles.card}>
+        <Block card style={styles.card}>
           <Block>
             <Text h6 style={styles.heading}>
               Vehicle Name
@@ -53,16 +53,31 @@ class Profile extends Component {
             <Text h6 style={styles.heading}>
               Aadhar NO.
             </Text>
-            <Text style={styles.text}>567255862861</Text>
+            <Text style={styles.text}>12345</Text>
           </Block>
           <Block>
             <Text h6 style={styles.heading}>
               Pan No.
             </Text>
-            <Text style={styles.text}>Driving Licence No</Text>
+            <Text style={styles.text}>12345</Text>
+          </Block>
+          <Block>
+            <Text h6 style={styles.heading}>
+              Driving Licence No
+            </Text>
+            <Text style={styles.text}>12345</Text>
           </Block>
         </Block>
-      </Block>
+        <Block middle>
+          <Button
+            color={Theme.COLORS.BUTTON}
+            onPress={() => navigation.navigate("Password")}
+            style={styles.button}
+          >
+            Reset Password
+          </Button>
+        </Block>
+      </ScrollView>
     );
   }
 }
@@ -76,23 +91,30 @@ const styles = StyleSheet.create({
     height: 100,
     borderRadius: 50,
     backgroundColor: "white",
-    margin: 20,
+    margin: 15,
   },
   card: {
     backgroundColor: Theme.COLORS.PRIMARY,
-    margin: 20,
-    justifyContent: "flex-start",
+    margin: 15,
+    padding: 10,
+    paddingBottom: 10,
   },
   heading: {
     color: "white",
-    margin: 20,
-    marginBottom: 10,
+    margin: 10,
+    marginBottom: 5,
   },
   text: {
     textAlign: "left",
-    marginLeft: 20,
+    marginLeft: 10,
     fontSize: 18,
     color: "white",
+  },
+  button: {
+    justifyContent: "center",
+    alignItems: "center",
+    margin: 10,
+    padding: 10,
   },
 });
 

@@ -1,15 +1,8 @@
-import React, { Component, useEffect, useState } from "react";
-import {
-  StyleSheet,
-  ScrollView,
-  Image,
-  Dimensions,
-  TouchableOpacity,
-} from "react-native";
-import { Block, Button, Icon, Input, Text, Toast } from "galio-framework";
+import React, { Component } from "react";
+import { StyleSheet, ScrollView, Image } from "react-native";
+import { Block, Button, Icon, Input, Text } from "galio-framework";
 import * as ImagePicker from "expo-image-picker";
-import DateTimePicker from "@react-native-community/datetimepicker";
-
+import { TextInputMask } from "react-native-masked-text";
 import Theme from "../../constants/Theme";
 import { connect } from "react-redux";
 import {
@@ -17,14 +10,11 @@ import {
   uploadDocumentValue,
 } from "../../redux/actions/documentAction";
 
-const { width, height } = Dimensions.get("screen");
-
 class Aadhar extends Component {
   state = {
     aadhar_front_image: null,
     aadhar_back_image: null,
-    date: new Date(),
-    show: false,
+    errorMessage: null,
   };
   onChange = (event, selectedDate) => {
     currentDate = selectedDate || date;
@@ -35,14 +25,28 @@ class Aadhar extends Component {
   onSubmit() {
     const { name, Issue_Date, driver_id, aadhar_no } = this.props;
     const { aadhar_front_image, aadhar_back_image } = this.state;
-    this.props.uploadAadhar({
-      aadhar_front_image,
-      aadhar_back_image,
-      name,
-      Issue_Date,
-      driver_id,
-      aadhar_no,
-    });
+
+    if (
+      !name ||
+      !Issue_Date ||
+      !aadhar_no ||
+      !aadhar_back_image ||
+      !aadhar_front_image
+    ) {
+      this.setState({ errorMessage: "Please insert in all fields" });
+      setTimeout(() => {
+        this.setState({ errorMessage: null });
+      }, 2000);
+    } else {
+      this.props.uploadAadhar({
+        aadhar_front_image,
+        aadhar_back_image,
+        name,
+        Issue_Date,
+        driver_id,
+        aadhar_no,
+      });
+    }
   }
 
   frontImage = async () => {
@@ -92,7 +96,6 @@ class Aadhar extends Component {
 
   render() {
     const { message, loading } = this.props;
-    console.log(loading);
     return (
       <Block style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
@@ -107,6 +110,11 @@ class Aadhar extends Component {
             {message ? (
               <Text size={20} color="green">
                 {message}
+              </Text>
+            ) : null}
+            {this.state.errorMessage ? (
+              <Text size={20} color="red" center>
+                {this.state.errorMessage}
               </Text>
             ) : null}
             <Text size={18} color="#00ccff">
@@ -185,36 +193,44 @@ class Aadhar extends Component {
                   value: number,
                 })
               }
+              maxLength={12}
             />
             <Text size={18} color="#00ccff">
               Issue Date
             </Text>
-            <Block flex safe style={styles.issuedatestyle}>
-              <Block card row middle round height={45}>
-                <TouchableOpacity onPress={() => this.setState({ show: true })}>
-                  <Block row marginLeft={25}>
-                    <Icon
-                      name="calendar"
-                      family="Entypo"
-                      size={20}
-                      color="red"
-                    />
-                    <Text  style={styles.text}>
-                      {this.state.date.toLocaleDateString()}
-                    </Text>
-                  </Block>
-                </TouchableOpacity>
-              </Block>
-              {this.state.show && (
-                <DateTimePicker
-                  testID="dateTimePicker"
-                  value={this.state.date}
-                  mode="date"
-                  is24Hour={true}
-                  display="spinner"
-                  onChange={this.onChange}
-                />
-              )}
+            {/**<Input
+              type="number-pad"
+              placeholder="Issue Date"
+              placeholderTextColor={Theme.COLORS.PRIMARY}
+              icon="calendar"
+              family="Entypo"
+              iconColor="red"
+              left
+              value={this.props.Issue_Date}
+              onChangeText={(number) =>
+                this.props.uploadDocumentValue({
+                  prop: "Issue_Date",
+                  value: number,
+                })
+              }
+              maxLength={8}
+            />*/}
+            <Block row style={styles.calendar}>
+              <Icon name="calendar" family="Entypo" color="red" />
+              <TextInputMask
+                style={styles.calendarinput}
+                type={"datetime"}
+                options={{
+                  format: "DD-MM-YYYY",
+                }}
+                value={this.props.Issue_Date}
+                onChangeText={(number) =>
+                  this.props.uploadDocumentValue({
+                    prop: "Issue_Date",
+                    value: number,
+                  })
+                }
+              />
             </Block>
             <Button
               round
@@ -250,24 +266,37 @@ const styles = StyleSheet.create({
   image: {
     justifyContent: "space-around",
   },
-  issuedatestyle:{
+  issuedatestyle: {
     marginTop: 8,
-    borderColor:Theme.COLORS.PRIMARY,
-    
-  },text: {
+    borderColor: Theme.COLORS.PRIMARY,
+  },
+  text: {
     marginTop: 2,
     marginLeft: 3,
     width: 300,
     alignItems: "center",
-    color:Theme.COLORS.PRIMARY,
+    color: Theme.COLORS.PRIMARY,
+  },
+  calendar: {
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: "grey",
+    height: Theme.SIZES.BASE * 2.5,
+    alignItems: "center",
+    paddingLeft: Theme.SIZES.BASE,
+  },
+  calendarinput: {
+    justifyContent: "center",
+    borderColor: "grey",
+    width: "100%",
+    paddingLeft: Theme.SIZES.BASE,
   },
 });
 
 const mapStateToProps = (state) => ({
   name: state.document.name,
   Issue_Date: state.document.Issue_Date,
-  aadhar_no: state.aadhar_no,
-  driver_id: state.document.driver_id,
+  aadhar_no: state.document.aadhar_no,
   loading: state.document.documentloading,
   message: state.document.message,
   error: state.document.error,

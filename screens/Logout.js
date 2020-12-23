@@ -1,21 +1,21 @@
 import React, { Component } from "react";
 
+import { StyleSheet } from "react-native";
+
 import { Block, Button, Text } from "galio-framework";
 import { connect } from "react-redux";
-import  materialTheme  from "../constants/Theme";
+import materialTheme from "../constants/Theme";
 import { logout } from "../redux/actions/authAction";
+import Theme from "../constants/Theme";
 
 class Logout extends Component {
-
   render() {
     const { navigation } = this.props;
     return (
-      <Block
-        flex
-        middle
-        style={{ backgroundColor: materialTheme.COLORS.WHITE }}
-      >
-        <Text>Are you sure want to logout</Text>
+      <Block flex middle style={styles.container}>
+        <Text size={20} color="white">
+          Are you sure want to logout
+        </Text>
         <Block row>
           <Button
             color={materialTheme.COLORS.SUCCESS}
@@ -34,4 +34,11 @@ class Logout extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: Theme.COLORS.PRIMARY,
+  },
+});
+
 export default connect(null, { logout })(Logout);

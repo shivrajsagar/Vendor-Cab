@@ -1,24 +1,18 @@
 import React, { Component } from "react";
-import {
-  Dimensions,
-  StyleSheet,
-  TouchableOpacity,
-  BackHandler,
-} from "react-native";
+import { Dimensions, StyleSheet, TouchableOpacity } from "react-native";
 import { Block, Button, Input, theme, Text } from "galio-framework";
 
 const { width, height } = Dimensions.get("screen");
 
-import {
-  mobileChanged,
-  passwordChanged,
-  loginUser,
-} from "../redux/actions/authAction";
+import { mobileChanged, passwordChanged, loginUser } from "../redux/actions/authAction";
 
 import Theme from "../constants/Theme";
 import { connect } from "react-redux";
 
 class Signin extends Component {
+  state = {
+    errorMessage: null,
+  };
   onMobileChange = (text) => {
     this.props.mobileChanged(text);
   };
@@ -29,21 +23,20 @@ class Signin extends Component {
 
   onButtonPress = () => {
     const { mobile, password } = this.props;
-    this.props.loginUser({ mobile, password });
+
+    if (!mobile || !password) {
+      console.log(!password);
+      this.setState({ errorMessage: "Please insert all fields" });
+      setTimeout(() => {
+        this.setState({ errorMessage: null });
+      }, 3000);
+    } else {
+      this.props.loginUser({ mobile, password });
+    }
   };
 
-  renerError() {
-    if (this.props.error) {
-      return (
-        <Block>
-          <Text color="red">{this.props.error}</Text>
-        </Block>
-      );
-    }
-  }
-
   render() {
-    const { navigation, user, error } = this.props;
+    const { navigation, password, mobile, user, error } = this.props;
 
     return (
       <Block middle style={styles.container}>
@@ -51,7 +44,16 @@ class Signin extends Component {
           Sign In
         </Text>
         <Block card shadow shadowColor="gray" style={styles.card}>
-          {this.renerError()}
+          {error ? (
+            <Text color="red" center>
+              {error}
+            </Text>
+          ) : null}
+          {this.state.errorMessage ? (
+            <Text size={20} color="red" center>
+              {this.state.errorMessage}
+            </Text>
+          ) : null}
           <Input
             type="number-pad"
             placeholder="Enter Mobile"
@@ -60,8 +62,9 @@ class Signin extends Component {
             family="Entypo"
             iconColor="#9900ff"
             placeholderTextColor={Theme.COLORS.BUTTON2}
-            value={this.props.mobile}
+            value={mobile}
             onChangeText={this.onMobileChange.bind(this)}
+            maxLength={10}
           />
           <Input
             placeholder="Enter Password"
@@ -72,14 +75,10 @@ class Signin extends Component {
             family="Entypo"
             iconColor="#9900ff"
             placeholderTextColor={Theme.COLORS.BUTTON2}
-            value={this.props.password}
+            value={password}
             onChangeText={this.onPasswordChange.bind(this)}
           />
-          <Button
-            round
-            color={Theme.COLORS.BUTTON2}
-            onPress={this.onButtonPress.bind(this)}
-          >
+          <Button round color={Theme.COLORS.BUTTON2} onPress={this.onButtonPress.bind(this)}>
             Signin
           </Button>
           <TouchableOpacity>
@@ -120,7 +119,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => ({
   mobile: state.auth.mobile,
   password: state.auth.password,
-  error: state.auth.error,
+  error: state.auth.loginError,
   user: state.auth.user,
   loading: state.auth.authloading,
 });

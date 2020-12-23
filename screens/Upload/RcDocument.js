@@ -2,6 +2,7 @@ import React, { Component, useEffect, useState } from "react";
 import { StyleSheet, ScrollView, Image, Dimensions, Alert } from "react-native";
 import { Block, Button, Icon, Input, Text, Toast } from "galio-framework";
 import * as ImagePicker from "expo-image-picker";
+import { TextInputMask } from "react-native-masked-text";
 
 import Theme from "../../constants/Theme";
 import { connect } from "react-redux";
@@ -170,12 +171,12 @@ class RcDocument extends Component {
                   value: number,
                 })
               }
+              maxLength={12}
             />
             <Text size={18} color="#00ccff">
               Issue Date
             </Text>
-            <Input
-              type="calendar"
+            {/**<Input
               placeholder="Issue Date"
               placeholderTextColor={Theme.COLORS.PRIMARY}
               icon="calendar"
@@ -189,7 +190,25 @@ class RcDocument extends Component {
                   value: number,
                 })
               }
-            />
+              maxLength={9}
+            />*/}
+            <Block row style={styles.calendar}>
+              <Icon name="calendar" family="Entypo" color="red" />
+              <TextInputMask
+                style={styles.calendarinput}
+                type={"datetime"}
+                options={{
+                  format: "DD-MM-YYYY",
+                }}
+                value={this.props.mfd_date}
+                onChangeText={(number) =>
+                  this.props.uploadDocumentValue({
+                    prop: "mfd_date",
+                    value: number,
+                  })
+                }
+              />
+            </Block>
             <Button
               round
               middle
@@ -225,13 +244,27 @@ const styles = StyleSheet.create({
   image: {
     justifyContent: "space-around",
   },
+  calendar: {
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: "grey",
+    height: Theme.SIZES.BASE * 2.5,
+    alignItems: "center",
+    paddingLeft: Theme.SIZES.BASE,
+  },
+  calendarinput: {
+    justifyContent: "center",
+    borderColor: "grey",
+    width: "100%",
+    paddingLeft: Theme.SIZES.BASE,
+  },
 });
 
 const mapStateToProps = (state) => ({
   name: state.document.name,
   mfd_date: state.document.mfd_date,
   rc_no: state.document.rc_no,
-  loading: state.document.loading,
+  loading: state.document.documentloading,
   message: state.document.message,
   error: state.document.error,
 });

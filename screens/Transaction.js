@@ -48,7 +48,7 @@ export default class Transaction extends Component {
             value={this.state.date}
             mode="date"
             is24Hour={true}
-            display="default"
+            display="calendar"
             onChange={this.onChange}
           />
         )}

@@ -1,7 +1,8 @@
-import React, { Component} from "react";
+import React, { Component } from "react";
 import { StyleSheet, ScrollView, Image, Dimensions, Alert } from "react-native";
 import { Block, Button, Icon, Input, Text, Toast } from "galio-framework";
 import * as ImagePicker from "expo-image-picker";
+import { TextInputMask } from "react-native-masked-text";
 
 import Theme from "../../constants/Theme";
 import { connect } from "react-redux";
@@ -16,18 +17,26 @@ class PanCard extends Component {
   state = {
     pan_front: null,
     pan_back: null,
+    errorMessage: null,
   };
 
   onSubmit() {
     const { name, mfd_date, pan_no } = this.props;
     const { pan_front, pan_back } = this.state;
-    this.props.uploadPan({
-      pan_front,
-      pan_back,
-      name,
-      mfd_date,
-      pan_no,
-    });
+    if (!name || !mfd_date || !pan_no || !pan_front || !pan_back) {
+      this.setState({ errorMessage: "Please fill in all fields" });
+      setTimeout(() => {
+        this.setState({ errorMessage: null });
+      }, 3000);
+    } else {
+      this.props.uploadPan({
+        pan_front,
+        pan_back,
+        name,
+        mfd_date,
+        pan_no,
+      });
+    }
   }
 
   frontImage = async () => {
@@ -91,6 +100,11 @@ class PanCard extends Component {
             {message ? (
               <Text size={20} color="green">
                 {message}
+              </Text>
+            ) : null}
+            {this.state.errorMessage ? (
+              <Text size={20} center color="red">
+                {this.state.errorMessage}
               </Text>
             ) : null}
             <Text size={18} color="#00ccff">
@@ -169,11 +183,12 @@ class PanCard extends Component {
                   value: number,
                 })
               }
+              maxLength={10}
             />
             <Text size={18} color="#00ccff">
               Issue Date
             </Text>
-            <Input
+            {/**  <Input
               type="calendar"
               placeholder="Issue Date"
               placeholderTextColor={Theme.COLORS.PRIMARY}
@@ -188,7 +203,25 @@ class PanCard extends Component {
                   value: number,
                 })
               }
-            />
+              maxLength={8}
+            />*/}
+            <Block row style={styles.calendar}>
+              <Icon name="calendar" family="Entypo" color="red" />
+              <TextInputMask
+                style={styles.calendarinput}
+                type={"datetime"}
+                options={{
+                  format: "DD-MM-YYYY",
+                }}
+                value={this.props.mfd_date}
+                onChangeText={(number) =>
+                  this.props.uploadDocumentValue({
+                    prop: "mfd_date",
+                    value: number,
+                  })
+                }
+              />
+            </Block>
             <Button
               round
               middle
@@ -224,13 +257,27 @@ const styles = StyleSheet.create({
   image: {
     justifyContent: "space-around",
   },
+  calendar: {
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: "grey",
+    height: Theme.SIZES.BASE * 2.5,
+    alignItems: "center",
+    paddingLeft: Theme.SIZES.BASE,
+  },
+  calendarinput: {
+    justifyContent: "center",
+    borderColor: "grey",
+    width: "100%",
+    paddingLeft: Theme.SIZES.BASE,
+  },
 });
 
 const mapStateToProps = (state) => ({
   name: state.document.name,
   mfd_date: state.document.mfd_date,
-  pan_no: state.pan_no,
-  loading: state.document.loading,
+  pan_no: state.document.pan_no,
+  loading: state.document.documentloading,
   message: state.document.message,
   error: state.document.error,
   isShow: state.document.isShow,

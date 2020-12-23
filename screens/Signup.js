@@ -9,15 +9,27 @@ import { registerUserValue, registerUser } from "../redux/actions/authAction";
 const { width, height } = Dimensions.get("screen");
 
 class Signup extends Component {
+  state = {
+    errorMessage: null,
+  };
+
   onSubmit() {
     const { name, mobile, vehicle_no, vehicle_name, password } = this.props;
-    this.props.registerUser({
-      name,
-      mobile,
-      vehicle_no,
-      vehicle_name,
-      password,
-    });
+    if (!name || !mobile || !vehicle_name || !vehicle_no || !password) {
+      console.log("mesage");
+      this.setState({ errorMessage: "Please insert in all fields" });
+      setTimeout(() => {
+        this.setState({ errorMessage: null });
+      }, 3000);
+    } else {
+      this.props.registerUser({
+        name,
+        mobile,
+        vehicle_no,
+        vehicle_name,
+        password,
+      });
+    }
   }
 
   renderError() {
@@ -32,19 +44,28 @@ class Signup extends Component {
     }
     if (this.props.success) {
       Alert.alert(`${this.props.success}`);
-      console.log(this.props.success);
     }
   }
 
   renderSuccess() {}
   render() {
-    const { navigation } = this.props;
+    const { navigation ,error} = this.props;
     return (
       <Block middle style={styles.container}>
         <Text h5 color="white">
           New Around Here ?
         </Text>
         <Block card shadow shadowColor="gray" middle style={styles.card}>
+          {this.state.errorMessage ? (
+            <Text size={20} center color="red">
+              {this.state.errorMessage}
+            </Text>
+          ) : null}
+           {error ? (
+            <Text color="red" center>
+              {error}
+            </Text>
+          ) : null}
           <Input
             placeholder="Name"
             left
@@ -81,6 +102,7 @@ class Signup extends Component {
             onChangeText={(text) =>
               this.props.registerUserValue({ prop: "vehicle_no", value: text })
             }
+            maxLength={10}
           />
           <Input
             placeholder="Enter Vehicle Name"

@@ -3,6 +3,7 @@ import {
   UPLOAD_DOCUMENT,
   UPLOAD_DOCUMENT_FAIL,
   UPLOAD_DOCUMENT_SUCCESS,
+  REFRESH_MESSAGE,
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -33,6 +34,7 @@ const INITIAL_STATE = {
 
   //driver fitness certificate
   certificate_no: "",
+  xpi_date: "",
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -46,7 +48,12 @@ export default (state = INITIAL_STATE, action) => {
         documentloading: false,
       };
     case UPLOAD_DOCUMENT_FAIL:
-      return { ...state, error: action.payload, documentloading: false };
+      return {
+        ...state,
+        error: action.payload,
+        documentloading: false,
+        message: "",
+      };
     case UPLOAD_DOCUMENT_SUCCESS:
       return {
         ...state,
@@ -59,8 +66,16 @@ export default (state = INITIAL_STATE, action) => {
         Issue_Date: "",
         license_no: "",
         mfd_date: "",
+        xpi_date: "",
         rc_no: "",
+        bank_name: "",
+        account_type: "",
+        bank_IFSC: "",
+        account_no: "",
+        mobile_no: "",
       };
+      case REFRESH_MESSAGE:
+      return { ...state, ...INITIAL_STATE };
     default:
       return state;
   }

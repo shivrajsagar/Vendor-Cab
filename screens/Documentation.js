@@ -5,17 +5,13 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 
 import Theme from "../constants/Theme";
 
-const { width,height } = Dimensions.get("screen");
+const { width, height } = Dimensions.get("screen");
 
 export default class Documentation extends Component {
   render() {
     const { navigation } = this.props;
     return (
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        contentInset={{ top: 0 }}
-        endFillColor="black"
-      >
+      <ScrollView showsVerticalScrollIndicator={false}>
         <Block flex safe style={styles.container} scrollbehaviour>
           <Block middle>
             <Image
@@ -48,21 +44,6 @@ export default class Documentation extends Component {
                 <Block row space="between" style={styles.border}>
                   <Text color="white" size={20}>
                     Driving Licence
-                  </Text>
-                  <Icon
-                    name="right"
-                    family="AntDesign"
-                    size={20}
-                    color="white"
-                  />
-                </Block>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => navigation.navigate("DriverPhoto")}
-              >
-                <Block row space="between" style={styles.border}>
-                  <Text color="white" size={20}>
-                    Photo
                   </Text>
                   <Icon
                     name="right"
@@ -126,9 +107,7 @@ export default class Documentation extends Component {
                   />
                 </Block>
               </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => navigation.navigate("TaxiPhoto")}
-              >
+              <TouchableOpacity>
                 <Block row space="between" style={styles.border}>
                   <Text color="white" size={20}>
                     Taxi Photos
@@ -188,6 +167,7 @@ export default class Documentation extends Component {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: Theme.COLORS.PRIMARY,
+    height: height,
   },
   image: {
     alignItems: "center",

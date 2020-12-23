@@ -1,21 +1,30 @@
-import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import { SAVE_BID, LOADING,} from "./types";
+import {
+  SAVE_BID_SUCCESS,
+  BID_ERROR,
+  REFRESH_MESSAGE,
+  OPEN_MODAL,
+  CLOSE_MODAL,
+} from "./types";
 
 export const saveBidData = ({ book_id, booking_id, amount }) => async (
   dispatch
 ) => {
-  var myHeaders = new Headers();
+  const driver_id = await AsyncStorage.getItem("driver_id");
+
+  const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 
-  var raw = JSON.stringify({
+  const raw = JSON.stringify({
     book_id: book_id,
     booking_id: booking_id,
-    vendor_id: "E1245",
-    amount: "2000",
+    vendor_id: driver_id,
+    amount: amount,
   });
 
-  var requestOptions = {
+  
+  const requestOptions = {
     method: "POST",
     headers: myHeaders,
     body: raw,
@@ -27,12 +36,39 @@ export const saveBidData = ({ book_id, booking_id, amount }) => async (
     requestOptions
   )
     .then((response) => response.json())
-    .then((result) => dispatch({ type: SAVE_BID, payload: result.message }))
-    .catch((error) => console.log("error", error));
+    .then((result) => [
+      //dispatch({ type: SAVE_BID, payload: result.message }),
+      bidSuccess(dispatch, result.message),
+      console.log(result),
+    ])
+    .catch((error) => bidError(dispatch, error));
+};
 
-  /**  const response = await axios.post(
-    "http://demo.expresscab.in/expressc_api/expressc/api/booking/savebid.php"
-  );
-  dispatch({ type: SAVE_BID, payload:response });
- */
+const bidError = (dispatch, error) => {
+  dispatch({
+    type: BID_ERROR,
+    payload: error,
+  });
+};
+
+const bidSuccess = (dispatch, message) => {
+  dispatch({
+    type: SAVE_BID_SUCCESS,
+    payload: message,
+  });
+  setTimeout(() => {
+    dispatch({ type: REFRESH_MESSAGE });
+  }, 2000);
+};
+
+export const openModal = () => (dispatch) => {
+  dispatch({
+    type: OPEN_MODAL,
+  });
+};
+
+export const closeModal = () => (dispatch) => {
+  dispatch({
+    type: CLOSE_MODAL,
+  });
 };
