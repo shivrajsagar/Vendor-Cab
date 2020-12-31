@@ -8,7 +8,7 @@ import { NavigationContainer } from "@react-navigation/native";
 
 import { materialTheme } from "./constants/";
 
-// Before rendering any navigation stack
+// Before rendering any navigation stack sssss
 import { enableScreens } from "react-native-screens";
 enableScreens();
 
