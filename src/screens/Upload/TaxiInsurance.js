@@ -103,12 +103,6 @@ class TaxiInsurance extends Component {
     return (
       <Block style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
-          {/* <Block middle>
-            <Image
-              source={require("../../assets/images/avatar.png")}
-              style={styles.avatar}
-            />
-          </Block> */}
           <Block flex card shadow shadowColor="gray" style={styles.card}>
             {this.renderError()}
             {message ? (
@@ -247,7 +241,7 @@ class TaxiInsurance extends Component {
               middle
               color="#009688"
               onPress={this.onSubmit.bind(this)}
-              loading={this.props.loading}
+              loading={loading}
             >
               Submit
             </Button>
@@ -273,7 +267,7 @@ const styles = StyleSheet.create({
     padding: 10,
     margin: 20,
     justifyContent: "space-evenly",
-    marginTop: 100,
+    marginTop: 20,
   },
   image: {
     justifyContent: "space-around",

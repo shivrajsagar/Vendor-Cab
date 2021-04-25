@@ -3,11 +3,11 @@ import {
   PASSWORD_CHANGED,
   LOGIN_USER_SUCCESS,
   LOGIN_USER_FAIL,
-  LOGIN_USER,
-  REGISTER_USER,
   REGISTER_USER_FAIL,
   REGISTER_USER_SUCCESS,
   LOGOUT,
+  AUTH_LOADING,
+  USER_VALUE,
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -26,12 +26,19 @@ const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case AUTH_LOADING:
+      return { ...state, authloading: true };
     case MOBILE_CHANGED:
       return { ...state, mobile: action.payload };
     case PASSWORD_CHANGED:
       return { ...state, password: action.payload };
-    case LOGIN_USER:
-      return { ...state, authloading: true, error: "" };
+
+    case USER_VALUE:
+      return {
+        ...state,
+        [action.payload.prop]: action.payload.value,
+        authloading: false,
+      };
     case LOGIN_USER_SUCCESS:
       return {
         ...state,
@@ -48,8 +55,7 @@ export default (state = INITIAL_STATE, action) => {
         password: "",
         authloading: false,
       };
-    case REGISTER_USER:
-      return { ...state, loading: true, error: "" };
+
     case REGISTER_USER_FAIL:
       return {
         ...state,

@@ -1,13 +1,8 @@
 import React, { Component } from "react";
-
 import { ActivityIndicator, StyleSheet, Dimensions } from "react-native";
-
 import { Block } from "galio-framework";
-
 import Theme from "../constants/Theme";
-
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
 const { height } = Dimensions.get("screen");
 
 class ResolveAuthScreen extends Component {

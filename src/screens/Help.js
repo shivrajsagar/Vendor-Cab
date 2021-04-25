@@ -1,21 +1,19 @@
 import React, { Component } from "react";
-import { StyleSheet,Dimensions } from "react-native";
-import { Block, Button, Text } from "galio-framework";
+import { StyleSheet, Dimensions } from "react-native";
+import { Block, Text } from "galio-framework";
 
-
-import Theme from '../constants/Theme';
-const {width}=Dimensions.get("screen");
-
+import Theme from "../constants/Theme";
+const { width } = Dimensions.get("screen");
 
 export default class Help extends Component {
   render() {
     return (
-      <Block flex card  style={styles.container}>
-      <Block safe  middle >
-         <Text h5  color="red">
-          Help and Support
-        </Text>
-        </Block> 
+      <Block flex card style={styles.container}>
+        <Block safe middle>
+          <Text h5 color="red">
+            Help and Support
+          </Text>
+        </Block>
         <Text h6 p style={styles.textStyle}>
           Get help 24 hours a day. 7 days a week right in the app. To speak with
           an agent , go to Help in your Driver app, then call tap Call Support.
@@ -33,12 +31,12 @@ export default class Help extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor:Theme.COLORS.PRIMARY,
+    backgroundColor: Theme.COLORS.PRIMARY,
   },
   textStyle: {
     backgroundColor: "#233545",
     color: "white",
-    padding:10,
-    margin:10,
+    padding: 10,
+    margin: 10,
   },
 });

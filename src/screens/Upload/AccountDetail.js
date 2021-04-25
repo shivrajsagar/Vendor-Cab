@@ -251,7 +251,7 @@ const styles = StyleSheet.create({
     padding: 10,
     margin: 20,
     justifyContent: "space-evenly",
-    marginTop: 80,
+    marginTop: 20,
   },
   image: {
     justifyContent: "space-around",

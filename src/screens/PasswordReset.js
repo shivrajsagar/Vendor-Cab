@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-
 import { StyleSheet } from "react-native";
 import { Block, Button, Input, Text } from "galio-framework";
 import Theme from "../constants/Theme";
@@ -9,7 +8,6 @@ import {
   resetPassword,
   resetPasswordChanged,
 } from "../redux/actions/authAction";
-import { ScrollView } from "react-native-gesture-handler";
 
 class PasswordReset extends Component {
   state = {

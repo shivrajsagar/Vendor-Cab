@@ -4,6 +4,7 @@ import {
   UPLOAD_DOCUMENT_FAIL,
   UPLOAD_DOCUMENT_SUCCESS,
   REFRESH_MESSAGE,
+  DOCUMENT_LOADING,
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -39,7 +40,7 @@ const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case LOADING:
+    case DOCUMENT_LOADING:
       return { ...state, documentloading: true };
     case UPLOAD_DOCUMENT:
       return {

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, Alert, Image } from "react-native";
+import { StyleSheet, Alert, Image, Dimensions } from "react-native";
 import { Block, Button, Text } from "galio-framework";
 import * as ImagePicker from "expo-image-picker";
 
@@ -7,13 +7,19 @@ import Theme from "../../constants/Theme";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 import defaultImage from "../../assets/images/avatar.png";
-const ImageUri = Image.resolveAssetSource(defaultImage).uri;
 
+//redux
+import { TaxiPhoto } from "../../redux/actions/documentAction";
+import { connect } from "react-redux";
+
+const ImageUri = Image.resolveAssetSource(defaultImage).uri;
+const { height } = Dimensions.get("window");
 class Taxiphoto extends Component {
   state = {
     TexiImage: null,
     errorMessage: null,
   };
+
   onSubmit() {
     const { TexiImage } = this.state;
     if (!TexiImage) {
@@ -23,8 +29,8 @@ class Taxiphoto extends Component {
         this.setState({ errorMessage: null });
       }, 2000);
     } else {
-      this.props.registerUser({
-        profileimage,
+      this.props.TaxiPhoto({
+        TexiImage,
       });
     }
   }
@@ -37,7 +43,7 @@ class Taxiphoto extends Component {
     });
 
     if (!result.cancelled) {
-      this.setState({ profileimage: result.uri });
+      this.setState({ TexiImage: result.uri });
     }
   };
   async componentDidMount() {
@@ -65,40 +71,50 @@ class Taxiphoto extends Component {
   }
 
   render() {
-    const { navigation, error } = this.props;
+    const { navigation, error, message, loading } = this.props;
     const { TexiImage, errorMessage } = this.state;
     return (
       <Block style={styles.container}>
-        {errorMessage && (
-          <Text size={20} center color="red">
-            {errorMessage}
-          </Text>
-        )}
-        {error ? (
-          <Text color="red" center>
-            {error}
-          </Text>
-        ) : null}
-
-        <Block row style={styles.image}>
-          <Block middle>
-            <TouchableOpacity onPress={this.Texiphoto}>
-              <Image
-                source={{
-                  uri: TexiImage != null ? TexiImage : ImageUri,
-                }}
-                style={{ width: 300, height: 300, borderRadius: 300 }}
-              />
-            </TouchableOpacity>
+        <Block style={styles.card}>
+          {errorMessage && (
+            <Text size={20} center color="red">
+              {errorMessage}
+            </Text>
+          )}
+          {error ? (
+            <Text color="red" center>
+              {error}
+            </Text>
+          ) : null}
+          {message ? (
+            <Text color="green" center>
+              {message}
+            </Text>
+          ) : null}
+          <Block row style={styles.image}>
+            <Block middle>
+              <TouchableOpacity onPress={this.Texiphoto}>
+                <Image
+                  source={{
+                    uri: TexiImage != null ? TexiImage : ImageUri,
+                  }}
+                  style={{ width: 200, height: 200, borderRadius: 200 }}
+                />
+              </TouchableOpacity>
+            </Block>
+          </Block>
+          <Block center>
+            <Button
+              center
+              round
+              loading={loading}
+              color={Theme.COLORS.BUTTON2}
+              onPress={this.onSubmit.bind(this)}
+            >
+              UpLoad Taxi Photo
+            </Button>
           </Block>
         </Block>
-        <Button
-          round
-          color={Theme.COLORS.BUTTON2}
-          onPress={this.onSubmit.bind(this)}
-        >
-          Signup
-        </Button>
       </Block>
     );
   }
@@ -109,13 +125,23 @@ const styles = StyleSheet.create({
     backgroundColor: Theme.COLORS.PRIMARY,
   },
   card: {
-    margin: 10,
+    margin: 20,
     padding: 10,
+    marginTop: 20,
     backgroundColor: Theme.COLORS.WHITE,
+    borderRadius: 20,
+    height: height * 0.45,
+    justifyContent: "space-between",
   },
   image: {
     justifyContent: "space-around",
   },
 });
 
-export default Taxiphoto;
+const mapStateToProps = (state) => ({
+  loading: state.document.documentloading,
+  error: state.document.error,
+  message: state.document.message,
+});
+
+export default connect(mapStateToProps, { TaxiPhoto })(Taxiphoto);

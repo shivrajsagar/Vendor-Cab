@@ -222,7 +222,7 @@ const styles = StyleSheet.create({
     backgroundColor: Theme.COLORS.WHITE,
     padding: 10,
     margin: 20,
-    marginTop: 100,
+    marginTop: 20,
     justifyContent: "space-evenly",
   },
   image: {

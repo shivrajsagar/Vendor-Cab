@@ -6,6 +6,7 @@ export const FETCH_COMPLETED_DATA = "FETCH_COMPLETED_DATA";
 //login
 export const MOBILE_CHANGED = "mobile_changed";
 export const PASSWORD_CHANGED = "password_changed";
+export const USER_VALUE = "user_value";
 export const LOGIN_USER_SUCCESS = "login_user_success";
 export const LOGIN_USER_FAIL = "login_user_fail";
 export const LOGIN_USER = "login_user";
@@ -22,6 +23,9 @@ export const REGISTER_USER_SUCCESS = "register_user_successs";
 
 //bid
 export const LOADING = "LOADING";
+export const AUTH_LOADING = "auth_loading";
+export const DOCUMENT_LOADING = "document_loading";
+export const BID_LOADING = "bid_loading";
 export const SUCCESS = "SUCCESS";
 export const BID_ERROR = "BID_ERROR";
 export const SAVE_BID = "SAVE_BID";

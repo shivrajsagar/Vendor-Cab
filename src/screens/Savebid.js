@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import {} from "react-native";
 import { Block, Button, Text } from "galio-framework";
-import { connect } from "react-redux";
 
+//redux
+import { connect } from "react-redux";
 import { saveBidData } from "../redux/actions/bidAction";
 
 class Savebid extends Component {
@@ -17,13 +17,11 @@ class Savebid extends Component {
     const data = {
       amount: this.state.amount,
     };
-    
     this.props.saveBidData(data);
   }
 
   render() {
     const { message } = this.props;
-  
     return (
       <Block flex middle>
         <Text>{message}</Text>

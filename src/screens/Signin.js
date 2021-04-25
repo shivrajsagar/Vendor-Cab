@@ -4,7 +4,11 @@ import { Block, Button, Input, theme, Text } from "galio-framework";
 
 const { width, height } = Dimensions.get("screen");
 
-import { mobileChanged, passwordChanged, loginUser } from "../redux/actions/authAction";
+import {
+  mobileChanged,
+  passwordChanged,
+  loginUser,
+} from "../redux/actions/authAction";
 
 import Theme from "../constants/Theme";
 import { connect } from "react-redux";
@@ -36,9 +40,7 @@ class Signin extends Component {
   };
 
   render() {
-    const { navigation, password, mobile, user, error } = this.props;
-
-    console.log(user);
+    const { navigation, password, mobile, user, error, loading } = this.props;
 
     return (
       <Block middle style={styles.container}>
@@ -85,7 +87,12 @@ class Signin extends Component {
             value={password}
             onChangeText={this.onPasswordChange.bind(this)}
           />
-          <Button round color={Theme.COLORS.BUTTON2} onPress={this.onButtonPress.bind(this)}>
+          <Button
+            round
+            loading={loading}
+            color={Theme.COLORS.BUTTON2}
+            onPress={this.onButtonPress.bind(this)}
+          >
             Signin
           </Button>
           <TouchableOpacity>

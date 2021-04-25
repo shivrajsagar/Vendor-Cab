@@ -14,18 +14,19 @@ class ModalComponent extends Component {
   };
 
   onSubmit = () => {
-    const { item } = this.props;
+    const { book_id, booking_id } = this.props;
+
     const { amount } = this.state;
     const data = {
-      book_id: item.id,
-      booking_id: item.booking_id,
+      book_id,
+      booking_id,
       amount: amount,
     };
     this.props.saveBidData(data);
   };
 
   render() {
-    const { visible, onDecline, onSubmit, item, message, isShow } = this.props;
+    const { visible, onDecline, message, loading } = this.props;
     const { amount } = this.state;
 
     return (
@@ -67,9 +68,11 @@ class ModalComponent extends Component {
                 bottomHelp
                 value={amount}
                 onChangeText={(number) => this.setState({ amount: number })}
+                maxLength={5}
               />
               <Button
                 round
+                loading={loading}
                 color={Theme.COLORS.BUTTON2}
                 onPress={this.onSubmit}
               >
@@ -93,6 +96,9 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => ({
   message: state.savebid.message,
   isShow: state.savebid.isShow,
+  book_id: state.savebid.book_id,
+  booking_id: state.savebid.booking_id,
+  loading: state.savebid.bidloading,
 });
 
 export default connect(mapStateToProps, { saveBidData })(ModalComponent);

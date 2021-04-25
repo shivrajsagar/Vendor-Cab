@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Animated, Dimensions, StatusBar, Image, TouchableOpacity } from "react-native";
-import { Block, Text, Button, theme } from "galio-framework";
+import {
+  StyleSheet,
+  Animated,
+  Dimensions,
+  StatusBar,
+  Image,
+  TouchableOpacity,
+} from "react-native";
+import { Block, Text, theme } from "galio-framework";
 import Theme from "../constants/Theme";
 
 const { width, height } = Dimensions.get("screen");
@@ -48,12 +55,24 @@ const Onboarding = ({ navigation }) => {
         scrollEventThrottle={16}
         snapToAlignment="center"
         showsHorizontalScrollIndicator={false}
-        onScroll={Animated.event([{ nativeEvent: { contentOffset: { x: scrollX } } }], { useNativeDriver: false })}
+        onScroll={Animated.event(
+          [{ nativeEvent: { contentOffset: { x: scrollX } } }],
+          { useNativeDriver: false }
+        )}
       >
         {onBoardings.map((item, index) => (
           <Block flex key={`img-${index}`} style={styles.imageAndTextContainer}>
-            <Block middle shadow shadowColor="green" style={styles.imageContainer}>
-              <Image source={item.img} resizeMode="cover" style={styles.image} />
+            <Block
+              middle
+              shadow
+              shadowColor="green"
+              style={styles.imageContainer}
+            >
+              <Image
+                source={item.img}
+                resizeMode="cover"
+                style={styles.image}
+              />
             </Block>
             <Block middle style={styles.textContainer}>
               <Text h4 color="white">

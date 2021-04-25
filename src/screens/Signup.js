@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import { StyleSheet, Alert, Image } from "react-native";
-import { Block, Button, Text, Input, Icon } from "galio-framework";
+import { Block, Button, Text, Input } from "galio-framework";
 import * as ImagePicker from "expo-image-picker";
 
 import Theme from "../constants/Theme";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { connect } from "react-redux";
-import { registerUserValue, registerUser } from "../redux/actions/authAction";
+import { userValue, registerUser } from "../redux/actions/authAction";
 
 import defaultImage from "../assets/images/avatar.png";
 
@@ -82,7 +82,7 @@ class Signup extends Component {
   }
 
   render() {
-    const { navigation, error } = this.props;
+    const { navigation, error, loading } = this.props;
     const { profileimage, errorMessage } = this.state;
     return (
       <Block middle style={styles.container}>
@@ -122,7 +122,7 @@ class Signup extends Component {
             placeholderTextColor={Theme.COLORS.BUTTON2}
             value={this.props.name}
             onChangeText={(text) =>
-              this.props.registerUserValue({ prop: "name", value: text })
+              this.props.userValue({ prop: "name", value: text })
             }
           />
           <Input
@@ -135,7 +135,7 @@ class Signup extends Component {
             placeholderTextColor={Theme.COLORS.BUTTON2}
             value={this.props.mobile}
             onChangeText={(text) =>
-              this.props.registerUserValue({ prop: "mobile", value: text })
+              this.props.userValue({ prop: "mobile", value: text })
             }
           />
           <Input
@@ -147,7 +147,7 @@ class Signup extends Component {
             placeholderTextColor={Theme.COLORS.BUTTON2}
             value={this.props.vehicle_no}
             onChangeText={(text) =>
-              this.props.registerUserValue({ prop: "vehicle_no", value: text })
+              this.props.userValue({ prop: "vehicle_no", value: text })
             }
             maxLength={10}
           />
@@ -160,7 +160,7 @@ class Signup extends Component {
             placeholderTextColor={Theme.COLORS.BUTTON2}
             value={this.props.vehicle_name}
             onChangeText={(text) =>
-              this.props.registerUserValue({
+              this.props.userValue({
                 prop: "vehicle_name",
                 value: text,
               })
@@ -177,12 +177,13 @@ class Signup extends Component {
             viewPass
             value={this.props.password}
             onChangeText={(text) =>
-              this.props.registerUserValue({ prop: "password", value: text })
+              this.props.userValue({ prop: "password", value: text })
             }
           />
 
           <Button
             round
+            loading={loading}
             color={Theme.COLORS.BUTTON2}
             onPress={this.onSubmit.bind(this)}
           >
@@ -220,11 +221,11 @@ const mapStateToProps = (state) => ({
   password: state.auth.password,
   message: state.auth.message,
   error: state.auth.error,
-  loading: state.auth.loading,
+  loading: state.auth.authloading,
   success: state.auth.successMessage,
 });
 
 export default connect(mapStateToProps, {
-  registerUserValue,
+  userValue,
   registerUser,
 })(Signup);

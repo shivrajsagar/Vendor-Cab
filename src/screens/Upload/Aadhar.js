@@ -91,9 +91,6 @@ class Aadhar extends Component {
     return (
       <Block style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
-          {/* <Block middle>
-            <Image source={require("../../assets/images/avatar.png")} style={styles.avatar} />
-          </Block> */}
           <Block flex card shadow shadowColor="gray" style={styles.card}>
             {this.renderError()}
             {message ? (
@@ -183,28 +180,9 @@ class Aadhar extends Component {
                 })
               }
               maxLength={12}
+              type="numeric"
             />
-            {/* <Text size={18} color="#00ccff">
-              Issue Date
-            </Text> */}
 
-            {/* <Block row style={styles.calendar}>
-              <Icon name="calendar" family="Entypo" color="red" />
-              <TextInputMask
-                style={styles.calendarinput}
-                type={"datetime"}
-                options={{
-                  format: "DD-MM-YYYY",
-                }}
-                value={this.props.Issue_Date}
-                onChangeText={(number) =>
-                  this.props.uploadDocumentValue({
-                    prop: "Issue_Date",
-                    value: number,
-                  })
-                }
-              />
-            </Block> */}
             <Button
               round
               middle
@@ -235,7 +213,7 @@ const styles = StyleSheet.create({
     backgroundColor: Theme.COLORS.WHITE,
     padding: 10,
     margin: 20,
-    marginTop: 100,
+    marginTop: 20,
     justifyContent: "center",
   },
   image: {

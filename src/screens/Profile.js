@@ -24,7 +24,7 @@ class Profile extends Component {
       <ScrollView style={styles.container}>
         <Block row>
           <Image
-            source={require("../assets/images/avatar.png")}
+            source={{ uri: `https://expresscab.in/${data.profileImage}` }}
             style={styles.image}
           />
           <Block middle left>

@@ -19,6 +19,7 @@ export default function CustomDrawerContent({
   ...rest
 }) {
   const [name, setName] = useState("");
+  const [image, setImage] = useState("");
 
   const insets = useSafeAreaInsets();
   const screens = [
@@ -32,12 +33,14 @@ export default function CustomDrawerContent({
 
   useEffect(() => {
     retrieveData();
-  }, [name, retrieveData]);
+  }, [name, Image, retrieveData]);
 
   const retrieveData = async () => {
     try {
       const name = await AsyncStorage.getItem("Name");
       setName(name);
+      const Image = await AsyncStorage.getItem("image");
+      setImage(Image);
     } catch (error) {
       console.log(error);
     }
@@ -50,8 +53,8 @@ export default function CustomDrawerContent({
     >
       <Block flex={0.25} style={styles.header}>
         <Image
-          source={{ uri: profile.avatar }}
-          style={{ width: 100, height: 100 }}
+          source={{ uri: `https://expresscab.in/${image}` }}
+          style={{ width: 100, height: 100, borderRadius: 10, marginBottom: 5 }}
         />
 
         <Text size={16} color="white">

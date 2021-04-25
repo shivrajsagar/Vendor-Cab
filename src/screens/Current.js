@@ -10,7 +10,7 @@ import { connect } from "react-redux";
 import { fetchCurrentData } from "../redux/actions/currentAction";
 import { ScrollView } from "react-native-gesture-handler";
 
-const { width, height } = Dimensions.get("screen");
+const { height } = Dimensions.get("screen");
 
 class Current extends Component {
   componentDidMount() {
@@ -27,7 +27,7 @@ class Current extends Component {
           </Block>
         ) : (
           <Block safe flex style={styles.container}>
-            {item.map((item) => (
+            {item.map((item, index) => (
               <Card
                 item={item}
                 bookingid
@@ -36,6 +36,7 @@ class Current extends Component {
                 pickupaddress
                 dropaddress
                 status
+                key={index}
               />
             ))}
           </Block>

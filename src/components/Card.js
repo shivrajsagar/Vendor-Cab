@@ -1,14 +1,13 @@
 import React, { Component } from "react";
 import { StyleSheet, Dimensions } from "react-native";
 import { Block, Button, Text, Icon } from "galio-framework";
-import { withNavigation } from "@react-navigation/compat";
 import Theme from "../constants/Theme";
 
 import { saveBidData, closeModal, openModal } from "../redux/actions/bidAction";
 import ModalComponent from "./Modal";
 import { connect } from "react-redux";
 
-const { width, height } = Dimensions.get("screen");
+const { width } = Dimensions.get("screen");
 
 class Card extends Component {
   state = {
@@ -22,7 +21,6 @@ class Card extends Component {
   render() {
     const {
       item,
-      navigation,
       date,
       bookingid,
       name,
@@ -73,6 +71,7 @@ class Card extends Component {
             </Block>
           </Block>
         ) : null}
+
         {bookingid ? (
           <Block row style={styles.text}>
             <Block row>
