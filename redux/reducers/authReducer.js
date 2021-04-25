@@ -20,12 +20,11 @@ const INITIAL_STATE = {
   error: "",
   authloading: false,
   message: null,
-  successMessage:"",
-  diver_id:"",
+  successMessage: "",
+  diver_id: "",
 };
 
 export default (state = INITIAL_STATE, action) => {
-  
   switch (action.type) {
     case MOBILE_CHANGED:
       return { ...state, mobile: action.payload };
@@ -49,8 +48,8 @@ export default (state = INITIAL_STATE, action) => {
         password: "",
         authloading: false,
       };
-      case REGISTER_USER:
-        return { ...state, loading: true, error: "" };
+    case REGISTER_USER:
+      return { ...state, loading: true, error: "" };
     case REGISTER_USER_FAIL:
       return {
         ...state,
@@ -62,13 +61,13 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         message: action.payload,
         [action.payload.prop]: action.payload.value,
-        authloading:false,
-        error:"",
-        successMessage:"Congrats ! "
+        authloading: false,
+        error: "",
+        successMessage: "Congrats ! ",
       };
-      case LOGOUT:
+    case LOGOUT:
       return { ...state, token: null, loginmessage: null, INITIAL_STATE };
-    
+
     default:
       return state;
   }

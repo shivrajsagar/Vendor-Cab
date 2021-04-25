@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { StyleSheet, ScrollView, Image, Dimensions, Alert } from "react-native";
 import { Block, Button, Icon, Input, Text, Toast } from "galio-framework";
 import * as ImagePicker from "expo-image-picker";
-import { TextInputMask } from "react-native-masked-text";
 
 import Theme from "../../constants/Theme";
 import { connect } from "react-redux";
@@ -21,9 +20,9 @@ class PanCard extends Component {
   };
 
   onSubmit() {
-    const { name, mfd_date, pan_no } = this.props;
+    const { name, pan_no } = this.props;
     const { pan_front, pan_back } = this.state;
-    if (!name || !mfd_date || !pan_no || !pan_front || !pan_back) {
+    if (!name || !pan_no || !pan_front || !pan_back) {
       this.setState({ errorMessage: "Please fill in all fields" });
       setTimeout(() => {
         this.setState({ errorMessage: null });
@@ -33,7 +32,6 @@ class PanCard extends Component {
         pan_front,
         pan_back,
         name,
-        mfd_date,
         pan_no,
       });
     }
@@ -89,12 +87,6 @@ class PanCard extends Component {
     return (
       <Block style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
-          <Block middle>
-            <Image
-              source={require("../../assets/images/avatar.png")}
-              style={styles.avatar}
-            />
-          </Block>
           <Block flex card shadow shadowColor="gray" style={styles.card}>
             {this.renderError()}
             {message ? (
@@ -152,10 +144,10 @@ class PanCard extends Component {
               </Block>
             </Block>
             <Text size={20} color="#00ccff">
-              Name on Pan
+              Enter Name
             </Text>
             <Input
-              placeholder="Name on Pan"
+              placeholder="Enter Your Name"
               placeholderTextColor={Theme.COLORS.PRIMARY}
               icon="pencil"
               family="Entypo"
@@ -170,7 +162,7 @@ class PanCard extends Component {
               Pan Card No
             </Text>
             <Input
-              placeholder="Pan Card No"
+              placeholder="Enter Pan Card No"
               placeholderTextColor={Theme.COLORS.PRIMARY}
               icon="pencil"
               family="Entypo"
@@ -185,43 +177,7 @@ class PanCard extends Component {
               }
               maxLength={10}
             />
-            <Text size={18} color="#00ccff">
-              Issue Date
-            </Text>
-            {/**  <Input
-              type="calendar"
-              placeholder="Issue Date"
-              placeholderTextColor={Theme.COLORS.PRIMARY}
-              icon="calendar"
-              family="Entypo"
-              iconColor="red"
-              left
-              value={this.props.mfd_date}
-              onChangeText={(number) =>
-                this.props.uploadDocumentValue({
-                  prop: "mfd_date",
-                  value: number,
-                })
-              }
-              maxLength={8}
-            />*/}
-            <Block row style={styles.calendar}>
-              <Icon name="calendar" family="Entypo" color="red" />
-              <TextInputMask
-                style={styles.calendarinput}
-                type={"datetime"}
-                options={{
-                  format: "DD-MM-YYYY",
-                }}
-                value={this.props.mfd_date}
-                onChangeText={(number) =>
-                  this.props.uploadDocumentValue({
-                    prop: "mfd_date",
-                    value: number,
-                  })
-                }
-              />
-            </Block>
+
             <Button
               round
               middle
@@ -253,6 +209,7 @@ const styles = StyleSheet.create({
     padding: 10,
     margin: 20,
     justifyContent: "space-evenly",
+    marginTop: 100,
   },
   image: {
     justifyContent: "space-around",

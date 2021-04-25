@@ -35,6 +35,7 @@ import RcDocument from "../screens/Upload/RcDocument";
 import TaxiInsurance from "../screens/Upload/TaxiInsurance";
 import AccountDetail from "../screens/Upload/AccountDetail";
 import FitnessCertificate from "../screens/Upload/FitnessCertificate";
+import Taxiphoto from "../screens/Upload/TaxiPhoto";
 
 //naviagtor
 const Stack = createStackNavigator();
@@ -196,6 +197,7 @@ function DocumentStack(props) {
             <Header
               transparent
               white
+              back
               title="Aadhar Upload"
               scene={scene}
               navigation={navigation}
@@ -211,6 +213,7 @@ function DocumentStack(props) {
             <Header
               transparent
               white
+              back
               title="Driving Licence Upload"
               scene={scene}
               navigation={navigation}
@@ -226,6 +229,7 @@ function DocumentStack(props) {
             <Header
               transparent
               white
+              back
               title="Rc Document Upload"
               scene={scene}
               navigation={navigation}
@@ -241,6 +245,7 @@ function DocumentStack(props) {
             <Header
               transparent
               white
+              back
               title="Pancard Document Upload"
               scene={scene}
               navigation={navigation}
@@ -256,6 +261,7 @@ function DocumentStack(props) {
             <Header
               transparent
               white
+              back
               title="Taxi Insurance Document Upload"
               scene={scene}
               navigation={navigation}
@@ -271,7 +277,24 @@ function DocumentStack(props) {
             <Header
               transparent
               white
+              back
               title="Fitness Certificate Detail"
+              scene={scene}
+              navigation={navigation}
+            />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="Taxi Photo"
+        component={Taxiphoto}
+        options={{
+          header: ({ scene, navigation }) => (
+            <Header
+              transparent
+              white
+              back
+              title="Taxi Photo Upload"
               scene={scene}
               navigation={navigation}
             />
@@ -285,6 +308,7 @@ function DocumentStack(props) {
           header: ({ scene, navigation }) => (
             <Header
               transparent
+              back
               white
               headerMode="Documentation"
               title="Account Detail"

@@ -67,6 +67,7 @@ export default (state = INITIAL_STATE, action) => {
         license_no: "",
         mfd_date: "",
         xpi_date: "",
+        exp_date: "",
         rc_no: "",
         bank_name: "",
         account_type: "",
@@ -74,7 +75,7 @@ export default (state = INITIAL_STATE, action) => {
         account_no: "",
         mobile_no: "",
       };
-      case REFRESH_MESSAGE:
+    case REFRESH_MESSAGE:
       return { ...state, ...INITIAL_STATE };
     default:
       return state;

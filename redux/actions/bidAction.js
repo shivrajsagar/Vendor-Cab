@@ -1,16 +1,8 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import {
-  SAVE_BID_SUCCESS,
-  BID_ERROR,
-  REFRESH_MESSAGE,
-  OPEN_MODAL,
-  CLOSE_MODAL,
-} from "./types";
+import { SAVE_BID_SUCCESS, BID_ERROR, REFRESH_MESSAGE, OPEN_MODAL, CLOSE_MODAL } from "./types";
 
-export const saveBidData = ({ book_id, booking_id, amount }) => async (
-  dispatch
-) => {
+export const saveBidData = ({ book_id, booking_id, amount }) => async (dispatch) => {
   const driver_id = await AsyncStorage.getItem("driver_id");
 
   const myHeaders = new Headers();
@@ -23,7 +15,6 @@ export const saveBidData = ({ book_id, booking_id, amount }) => async (
     amount: amount,
   });
 
-  
   const requestOptions = {
     method: "POST",
     headers: myHeaders,
@@ -31,10 +22,7 @@ export const saveBidData = ({ book_id, booking_id, amount }) => async (
     redirect: "follow",
   };
 
-  fetch(
-    "http://demo.expresscab.in/expressc_api/expressc/api/booking/savebid.php",
-    requestOptions
-  )
+  fetch("https://expresscab.in/CarDriving/api/booking/savebid.php", requestOptions)
     .then((response) => response.json())
     .then((result) => [
       //dispatch({ type: SAVE_BID, payload: result.message }),

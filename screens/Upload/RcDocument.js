@@ -82,12 +82,9 @@ class RcDocument extends Component {
     return (
       <Block style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
-          <Block middle>
-            <Image
-              source={require("../../assets/images/avatar.png")}
-              style={styles.avatar}
-            />
-          </Block>
+          {/* <Block middle>
+            <Image source={require("../../assets/images/avatar.png")} style={styles.avatar} />
+          </Block> */}
           <Block flex card shadow shadowColor="gray" style={styles.card}>
             {this.renderError()}
             {message ? (
@@ -140,10 +137,10 @@ class RcDocument extends Component {
               </Block>
             </Block>
             <Text size={20} color="#00ccff">
-              Name on Licence
+              Enter Name
             </Text>
             <Input
-              placeholder="Name on Licence"
+              placeholder="Enter Your Name"
               placeholderTextColor={Theme.COLORS.PRIMARY}
               icon="pencil"
               family="Entypo"
@@ -155,10 +152,10 @@ class RcDocument extends Component {
               }
             />
             <Text size={18} color="#00ccff">
-              Licence Card No
+              Enter RC No
             </Text>
             <Input
-              placeholder="Rc No"
+              placeholder="Enter RC No"
               placeholderTextColor={Theme.COLORS.PRIMARY}
               icon="pencil"
               family="Entypo"
@@ -176,25 +173,11 @@ class RcDocument extends Component {
             <Text size={18} color="#00ccff">
               Issue Date
             </Text>
-            {/**<Input
-              placeholder="Issue Date"
-              placeholderTextColor={Theme.COLORS.PRIMARY}
-              icon="calendar"
-              family="Entypo"
-              iconColor="red"
-              left
-              value={this.props.mfd_date}
-              onChangeText={(number) =>
-                this.props.uploadDocumentValue({
-                  prop: "mfd_date",
-                  value: number,
-                })
-              }
-              maxLength={9}
-            />*/}
+
             <Block row style={styles.calendar}>
               <Icon name="calendar" family="Entypo" color="red" />
               <TextInputMask
+                placeholder="Enter Issue Date"
                 style={styles.calendarinput}
                 type={"datetime"}
                 options={{
@@ -239,6 +222,7 @@ const styles = StyleSheet.create({
     backgroundColor: Theme.COLORS.WHITE,
     padding: 10,
     margin: 20,
+    marginTop: 100,
     justifyContent: "space-evenly",
   },
   image: {

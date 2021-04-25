@@ -9,18 +9,14 @@ import Theme from "../constants/Theme";
 export default class SplashScreen extends Component {
   componentDidMount() {
     setTimeout(() => {
-      this.props.navigation.navigate("Onboarding");
+      this.props.navigation.replace("Onboarding");
     }, 3000);
   }
 
   render() {
     return (
       <Block flex middle style={styles.container}>
-        <Image
-          source={require("../assets/icon.png")}
-          resizeMode={'contain'}
-          style={styles.image}
-        />
+        <Image source={require("../assets/icon.png")} resizeMode={"contain"} style={styles.image} />
         <Text center h2 color="white">
           Express Cab
         </Text>

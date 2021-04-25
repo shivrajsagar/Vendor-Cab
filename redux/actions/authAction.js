@@ -53,18 +53,19 @@ export const loginUser = ({ mobile, password }) => async (dispatch) => {
     response.data.error == true
       ? loginUserFail(dispatch)
       : loginUserSuccess(dispatch, response.data);
-    RootNavigation.navigate("App");
     await AsyncStorage.setItem("Name", response.data.driver.name);
     const jsonValue = JSON.stringify(response.data.driver.id);
     await AsyncStorage.setItem("book_id", jsonValue);
     await AsyncStorage.setItem("driver_id", jsonValue);
     await AsyncStorage.setItem("driver", JSON.stringify(response.data.driver));
+    RootNavigation.navigate("App");
   } catch (err) {
     loginUserFail(dispatch);
   }
 };
 
 export const registerUser = ({
+  profileimage,
   name,
   mobile,
   vehicle_no,
@@ -74,7 +75,7 @@ export const registerUser = ({
   try {
     dispatch({ type: REGISTER_USER });
     var formdata = new FormData();
-    formdata.append("image", "");
+    formdata.append("profileimage", `${profileimage}`);
     formdata.append("name", `${name}`);
     formdata.append("vehicle_name", `${vehicle_name}`);
     formdata.append("vehicle_no", `${vehicle_no}`);
@@ -105,14 +106,10 @@ export const registerUser = ({
   }
 };
 
-export const logout = () => async (dispatch) => {
-  await AsyncStorage.removeItem("Name");
-  await AsyncStorage.removeItem("book_id");
-  await AsyncStorage.removeItem("driver");
-  await AsyncStorage.removeItem("driver_id");
+export const logout = (navigation) => async (dispatch) => {
   await AsyncStorage.clear();
   dispatch({ type: LOGOUT });
-  RootNavigation.navigate("LoginFlow");
+  navigation.replace("LoginFlow");
 };
 
 const loginUserFail = (dispatch, error) => {

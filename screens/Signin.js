@@ -38,6 +38,8 @@ class Signin extends Component {
   render() {
     const { navigation, password, mobile, user, error } = this.props;
 
+    console.log(user);
+
     return (
       <Block middle style={styles.container}>
         <Text size={20} color="white">
@@ -54,6 +56,11 @@ class Signin extends Component {
               {this.state.errorMessage}
             </Text>
           ) : null}
+          {user != null && (
+            <Text size={20} color="green" center>
+              {user.message}
+            </Text>
+          )}
           <Input
             type="number-pad"
             placeholder="Enter Mobile"

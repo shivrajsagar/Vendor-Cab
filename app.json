@@ -2,7 +2,7 @@
   "expo": {
     "name": "Vendor",
     "slug": "Vendor",
-    "version": "1.0.0",
+    "version": "1.0.8",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -18,13 +18,15 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "vendor.express"
+      "bundleIdentifier": "vendor.expresscab"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "android": {
-      "package": "vendor.express"
+      "permissions":[ "CAMERA", "WRITE_EXTERNAL_STORAGE", "CAMERA_ROLL" ],
+      "package": "vendor.expresscab",
+      "versionCode":8
     }
   }
 }

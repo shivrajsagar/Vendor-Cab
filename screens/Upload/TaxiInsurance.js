@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { StyleSheet, ScrollView, Image, Dimensions } from "react-native";
+import { StyleSheet, ScrollView, Image, Dimensions, Alert } from "react-native";
 import { Block, Button, Icon, Input, Text } from "galio-framework";
 import * as ImagePicker from "expo-image-picker";
+import { TextInputMask } from "react-native-masked-text";
 
 import Theme from "../../constants/Theme";
 import { connect } from "react-redux";
@@ -9,7 +10,6 @@ import {
   uploadTaxiInsurance,
   uploadDocumentValue,
 } from "../../redux/actions/documentAction";
-
 
 class TaxiInsurance extends Component {
   state = {
@@ -19,19 +19,27 @@ class TaxiInsurance extends Component {
   };
 
   onSubmit() {
-    const { name, Issue_Date } = this.props;
+    const { name, mfd_date, exp_date, insurance_no } = this.props;
     const { insurance_front, insurance_back } = this.state;
-    if (!name || !Issue_Date || !insurance_back||!insurance_front) {
+    if (
+      !name ||
+      !mfd_date ||
+      !exp_date ||
+      !insurance_no ||
+      !insurance_back ||
+      !insurance_front
+    ) {
       this.setState({ errorMessage: "Please fill in all fields" });
       setTimeout(() => {
         this.setState({ errorMessage: null });
       }, 3000);
     } else {
-      this.props.uploadAadhar({
+      this.props.uploadTaxiInsurance({
         insurance_front,
         insurance_back,
         name,
-        Issue_Date,
+        mfd_date,
+        exp_date,
         insurance_no,
       });
     }
@@ -83,16 +91,24 @@ class TaxiInsurance extends Component {
   }
 
   render() {
-    const { message } = this.props;
+    const {
+      message,
+      loading,
+      name,
+      insurance_back,
+      uploadDocumentValue,
+      mfd_date,
+      exp_date,
+    } = this.props;
     return (
       <Block style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
-          <Block middle>
+          {/* <Block middle>
             <Image
               source={require("../../assets/images/avatar.png")}
               style={styles.avatar}
             />
-          </Block>
+          </Block> */}
           <Block flex card shadow shadowColor="gray" style={styles.card}>
             {this.renderError()}
             {message ? (
@@ -150,25 +166,25 @@ class TaxiInsurance extends Component {
               </Block>
             </Block>
             <Text size={20} color="#00ccff">
-              Name on Card
+              Enter Name
             </Text>
             <Input
-              placeholder="Name on Card"
+              placeholder="Enter Your Name "
               placeholderTextColor={Theme.COLORS.PRIMARY}
               icon="pencil"
               family="Entypo"
               iconColor="red"
               left
-              value={this.props.name}
+              value={name}
               onChangeText={(text) =>
-                this.props.uploadDocumentValue({ prop: "name", value: text })
+                uploadDocumentValue({ prop: "name", value: text })
               }
             />
             <Text size={18} color="#00ccff">
-              Card No
+              Insurance No
             </Text>
             <Input
-              placeholder=" Card No"
+              placeholder="Enter Insurance No"
               placeholderTextColor={Theme.COLORS.PRIMARY}
               icon="pencil"
               family="Entypo"
@@ -186,23 +202,46 @@ class TaxiInsurance extends Component {
             <Text size={18} color="#00ccff">
               Issue Date
             </Text>
-            <Input
-              type="calendar"
-              placeholder="Issue Date"
-              placeholderTextColor={Theme.COLORS.PRIMARY}
-              icon="calendar"
-              family="Entypo"
-              iconColor="red"
-              left
-              value={this.props.Issue_Date}
-              onChangeText={(number) =>
-                this.props.uploadDocumentValue({
-                  prop: "Issue_Date",
-                  value: number,
-                })
-              }
-              maxLength={8}
-            />
+            <Block row style={styles.calendar}>
+              <Icon name="calendar" family="Entypo" color="red" />
+              <TextInputMask
+                placeholder="Enter Issue Date"
+                style={styles.calendarinput}
+                type={"datetime"}
+                options={{
+                  format: "DD-MM-YYYY",
+                }}
+                value={mfd_date}
+                onChangeText={(number) =>
+                  this.props.uploadDocumentValue({
+                    prop: "mfd_date",
+                    value: number,
+                  })
+                }
+              />
+            </Block>
+            <Text size={18} color="#00ccff" style={{ marginTop: 5 }}>
+              Expiry Date
+            </Text>
+            <Block row style={styles.calendar}>
+              <Icon name="calendar" family="Entypo" color="red" />
+              <TextInputMask
+                placeholder="Enter Expiry Date"
+                style={styles.calendarinput}
+                type={"datetime"}
+                options={{
+                  format: "DD-MM-YYYY",
+                }}
+                value={exp_date}
+                onChangeText={(number) =>
+                  this.props.uploadDocumentValue({
+                    prop: "exp_date",
+                    value: number,
+                  })
+                }
+              />
+            </Block>
+
             <Button
               round
               middle
@@ -234,15 +273,31 @@ const styles = StyleSheet.create({
     padding: 10,
     margin: 20,
     justifyContent: "space-evenly",
+    marginTop: 100,
   },
   image: {
     justifyContent: "space-around",
+  },
+  calendar: {
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: "grey",
+    height: Theme.SIZES.BASE * 2.5,
+    alignItems: "center",
+    paddingLeft: Theme.SIZES.BASE,
+  },
+  calendarinput: {
+    justifyContent: "center",
+    borderColor: "grey",
+    width: "100%",
+    paddingLeft: Theme.SIZES.BASE,
   },
 });
 
 const mapStateToProps = (state) => ({
   name: state.document.name,
   mfd_date: state.document.mfd_date,
+  exp_date: state.document.exp_date,
   insurance_no: state.document.insurance_no,
   loading: state.document.documentloading,
   message: state.document.message,

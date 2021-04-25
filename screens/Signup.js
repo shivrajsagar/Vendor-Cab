@@ -1,21 +1,34 @@
 import React, { Component } from "react";
-import { Dimensions, StyleSheet, Alert } from "react-native";
-import { Block, Button, Text, Input, theme, Icon } from "galio-framework";
+import { StyleSheet, Alert, Image } from "react-native";
+import { Block, Button, Text, Input, Icon } from "galio-framework";
+import * as ImagePicker from "expo-image-picker";
 
 import Theme from "../constants/Theme";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { connect } from "react-redux";
 import { registerUserValue, registerUser } from "../redux/actions/authAction";
-const { width, height } = Dimensions.get("screen");
+
+import defaultImage from "../assets/images/avatar.png";
+
+const ImageUri = Image.resolveAssetSource(defaultImage).uri;
 
 class Signup extends Component {
   state = {
+    profileimage: null,
     errorMessage: null,
   };
 
   onSubmit() {
     const { name, mobile, vehicle_no, vehicle_name, password } = this.props;
-    if (!name || !mobile || !vehicle_name || !vehicle_no || !password) {
+    const { profileimage } = this.state;
+    if (
+      !profileimage ||
+      !name ||
+      !mobile ||
+      !vehicle_name ||
+      !vehicle_no ||
+      !password
+    ) {
       console.log("mesage");
       this.setState({ errorMessage: "Please insert in all fields" });
       setTimeout(() => {
@@ -23,12 +36,33 @@ class Signup extends Component {
       }, 3000);
     } else {
       this.props.registerUser({
+        profileimage,
         name,
         mobile,
         vehicle_no,
         vehicle_name,
         password,
       });
+    }
+  }
+
+  profileImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: false,
+      quality: 1,
+    });
+
+    if (!result.cancelled) {
+      this.setState({ profileimage: result.uri });
+    }
+  };
+  async componentDidMount() {
+    if (Platform.OS !== "web") {
+      const { status } = await ImagePicker.requestCameraRollPermissionsAsync();
+      if (status !== "granted") {
+        alert("Sorry, we need camera roll permissions to make this work!");
+      }
     }
   }
 
@@ -47,27 +81,40 @@ class Signup extends Component {
     }
   }
 
-  renderSuccess() {}
   render() {
-    const { navigation ,error} = this.props;
+    const { navigation, error } = this.props;
+    const { profileimage, errorMessage } = this.state;
     return (
       <Block middle style={styles.container}>
         <Text h5 color="white">
           New Around Here ?
         </Text>
         <Block card shadow shadowColor="gray" middle style={styles.card}>
-          {this.state.errorMessage ? (
+          {errorMessage && (
             <Text size={20} center color="red">
-              {this.state.errorMessage}
+              {errorMessage}
             </Text>
-          ) : null}
-           {error ? (
+          )}
+          {error ? (
             <Text color="red" center>
               {error}
             </Text>
           ) : null}
+
+          <Block row style={styles.image}>
+            <Block middle>
+              <TouchableOpacity onPress={this.profileImage}>
+                <Image
+                  source={{
+                    uri: profileimage != null ? profileimage : ImageUri,
+                  }}
+                  style={{ width: 100, height: 100, borderRadius: 100 }}
+                />
+              </TouchableOpacity>
+            </Block>
+          </Block>
           <Input
-            placeholder="Name"
+            placeholder="Enter Name"
             left
             icon="man"
             family="Entypo"
@@ -159,6 +206,9 @@ const styles = StyleSheet.create({
     margin: 10,
     padding: 10,
     backgroundColor: Theme.COLORS.WHITE,
+  },
+  image: {
+    justifyContent: "space-around",
   },
 });
 

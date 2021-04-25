@@ -22,8 +22,16 @@ class FitnessCertificate extends Component {
   };
 
   onSubmit() {
-    const { name, mfd_date, certificate_no } = this.props;
+    const { name, mfd_date, xpi_date, certificate_no } = this.props;
     const { certificate_front, certificate_back } = this.state;
+    // this.props.uploadFitnessCertificate({
+    //   certificate_front,
+    //   certificate_back,
+    //   name,
+    //   mfd_date,
+    //   xpi_date,
+    //   certificate_no,
+    // });
 
     if (
       !name ||
@@ -32,18 +40,17 @@ class FitnessCertificate extends Component {
       !certificate_back ||
       !certificate_front
     ) {
-      this.setState({ errorMessage: "Please fill in al fields" });
+      this.setState({ errorMessage: "Please fill in all fields" });
       setTimeout(() => {
-        this.setState({
-          errorMessage: null,
-        });
-      }, 3000);
+        this.setState({ errorMessage: null });
+      }, 2000);
     } else {
       this.props.uploadFitnessCertificate({
         certificate_front,
         certificate_back,
         name,
         mfd_date,
+        xpi_date,
         certificate_no,
       });
     }
@@ -97,21 +104,22 @@ class FitnessCertificate extends Component {
   render() {
     const {
       message,
+      loading,
       name,
       certificate_no,
+      uploadDocumentValue,
       mfd_date,
       xpi_date,
-      loading,
     } = this.props;
     return (
       <Block style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
-          <Block middle>
+          {/* <Block middle>
             <Image
               source={require("../../assets/images/avatar.png")}
               style={styles.avatar}
             />
-          </Block>
+          </Block> */}
           <Block flex card shadow shadowColor="gray" style={styles.card}>
             {this.renderError()}
             {message ? (
@@ -120,7 +128,7 @@ class FitnessCertificate extends Component {
               </Text>
             ) : null}
             {this.state.errorMessage ? (
-              <Text size={20} color="red" center>
+              <Text size={20} center color="red">
                 {this.state.errorMessage}
               </Text>
             ) : null}
@@ -169,10 +177,10 @@ class FitnessCertificate extends Component {
               </Block>
             </Block>
             <Text size={20} color="#00ccff">
-              Name on Card
+              Enter Name
             </Text>
             <Input
-              placeholder="Name on Card"
+              placeholder="Enter Your Name"
               placeholderTextColor={Theme.COLORS.PRIMARY}
               icon="pencil"
               family="Entypo"
@@ -180,24 +188,24 @@ class FitnessCertificate extends Component {
               left
               value={name}
               onChangeText={(text) =>
-                this.props.uploadDocumentValue({ prop: "name", value: text })
+                uploadDocumentValue({ prop: "name", value: text })
               }
             />
             <Text size={18} color="#00ccff">
-              Card No
+              Certificate No
             </Text>
             <Input
-              placeholder="Card No"
+              placeholder="Enter Certificate No"
               placeholderTextColor={Theme.COLORS.PRIMARY}
               icon="pencil"
               family="Entypo"
               iconColor="red"
               left
               value={certificate_no}
-              onChangeText={(number) =>
+              onChangeText={(text) =>
                 this.props.uploadDocumentValue({
                   prop: "certificate_no",
-                  value: number,
+                  value: text,
                 })
               }
               maxLength={12}
@@ -205,33 +213,16 @@ class FitnessCertificate extends Component {
             <Text size={18} color="#00ccff">
               Issue Date
             </Text>
-            {/** <Input
-              type="phone-pad"
-              placeholder="Issue Date"
-              placeholderTextColor={Theme.COLORS.PRIMARY}
-              icon="calendar"
-              family="Entypo"
-              iconColor="red"
-              left
-              value={mfd_date}
-              onChangeText={(number) =>
-                this.props.uploadDocumentValue({
-                  prop: "mfd_date",
-                  value: number,
-                })
-              }
-              maxLength={8}
-            />
-            */}
             <Block row style={styles.calendar}>
               <Icon name="calendar" family="Entypo" color="red" />
               <TextInputMask
+                placeholder="Enter Issue Date"
                 style={styles.calendarinput}
                 type={"datetime"}
                 options={{
                   format: "DD-MM-YYYY",
                 }}
-                value={this.props.mfd_date}
+                value={mfd_date}
                 onChangeText={(number) =>
                   this.props.uploadDocumentValue({
                     prop: "mfd_date",
@@ -240,35 +231,19 @@ class FitnessCertificate extends Component {
                 }
               />
             </Block>
-
-            <Text size={18} color="#00ccff">
+            <Text size={18} color="#00ccff" style={{ marginTop: 5 }}>
               Expiry Date
             </Text>
-            {/**<Input
-              placeholder="Issue Date"
-              placeholderTextColor={Theme.COLORS.PRIMARY}
-              icon="calendar"
-              family="Entypo"
-              iconColor="red"
-              left
-              value={xpi_date}
-              onChangeText={(number) =>
-                this.props.uploadDocumentValue({
-                  prop: "xpi_date",
-                  value: number,
-                })
-              }
-              maxLength={8}
-            />*/}
             <Block row style={styles.calendar}>
               <Icon name="calendar" family="Entypo" color="red" />
               <TextInputMask
+                placeholder="Enter Expiry Date"
                 style={styles.calendarinput}
                 type={"datetime"}
                 options={{
                   format: "DD-MM-YYYY",
                 }}
-                value={this.props.xpi_date}
+                value={xpi_date}
                 onChangeText={(number) =>
                   this.props.uploadDocumentValue({
                     prop: "xpi_date",
@@ -277,11 +252,13 @@ class FitnessCertificate extends Component {
                 }
               />
             </Block>
+
             <Button
               round
               middle
               color="#009688"
               onPress={this.onSubmit.bind(this)}
+              loading={this.props.loading}
             >
               Submit
             </Button>
@@ -307,6 +284,7 @@ const styles = StyleSheet.create({
     padding: 10,
     margin: 20,
     justifyContent: "space-evenly",
+    marginTop: 100,
   },
   image: {
     justifyContent: "space-around",
@@ -326,12 +304,11 @@ const styles = StyleSheet.create({
     paddingLeft: Theme.SIZES.BASE,
   },
 });
-
 const mapStateToProps = (state) => ({
   name: state.document.name,
   mfd_date: state.document.mfd_date,
   xpi_date: state.document.xpi_date,
-  certificate_no: state.certificate_no,
+  certificate_no: state.document.certificate_no,
   loading: state.document.documentloading,
   message: state.document.message,
   error: state.document.error,

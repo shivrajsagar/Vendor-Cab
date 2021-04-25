@@ -49,24 +49,6 @@ class Profile extends Component {
             </Text>
             <Text style={styles.text}>{data.vehicle_no}</Text>
           </Block>
-          <Block>
-            <Text h6 style={styles.heading}>
-              Aadhar NO.
-            </Text>
-            <Text style={styles.text}>12345</Text>
-          </Block>
-          <Block>
-            <Text h6 style={styles.heading}>
-              Pan No.
-            </Text>
-            <Text style={styles.text}>12345</Text>
-          </Block>
-          <Block>
-            <Text h6 style={styles.heading}>
-              Driving Licence No
-            </Text>
-            <Text style={styles.text}>12345</Text>
-          </Block>
         </Block>
         <Block middle>
           <Button

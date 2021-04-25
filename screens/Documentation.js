@@ -13,12 +13,13 @@ export default class Documentation extends Component {
     return (
       <ScrollView showsVerticalScrollIndicator={false}>
         <Block flex safe style={styles.container} scrollbehaviour>
+          {/* 
           <Block middle>
             <Image
               source={require("../assets/images/avatar.png")}
               style={styles.image}
             />
-          </Block>
+          </Block> */}
           <Block style={styles.cards}>
             <Block card shadow shadowColor="#233545">
               <Block middle row>

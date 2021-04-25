@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { StyleSheet } from "react-native";
+import { StyleSheet, BackHandler } from "react-native";
 
 import { Block, Button, Text } from "galio-framework";
 import { connect } from "react-redux";
@@ -9,6 +9,15 @@ import { logout } from "../redux/actions/authAction";
 import Theme from "../constants/Theme";
 
 class Logout extends Component {
+  componentWillMount() {
+    BackHandler.addEventListener(
+      "hardwareBackPress",
+      function () {
+        BackHandler.exitApp();
+        return true;
+      }.bind(this)
+    );
+  }
   render() {
     const { navigation } = this.props;
     return (
@@ -17,16 +26,10 @@ class Logout extends Component {
           Are you sure want to logout
         </Text>
         <Block row>
-          <Button
-            color={materialTheme.COLORS.SUCCESS}
-            onPress={() => this.props.logout()}
-          >
+          <Button color={materialTheme.COLORS.SUCCESS} onPress={() => this.props.logout(navigation)}>
             Logout
           </Button>
-          <Button
-            color={materialTheme.COLORS.ERROR}
-            onPress={() => navigation.goBack()}
-          >
+          <Button color={materialTheme.COLORS.ERROR} onPress={() => navigation.goBack()}>
             Dismiss
           </Button>
         </Block>

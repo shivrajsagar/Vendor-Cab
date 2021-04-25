@@ -1,26 +1,26 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Animated, Dimensions ,StatusBar,Image,TouchableOpacity} from "react-native";
-import { Block,Text, Button ,theme} from "galio-framework";
+import { StyleSheet, Animated, Dimensions, StatusBar, Image, TouchableOpacity } from "react-native";
+import { Block, Text, Button, theme } from "galio-framework";
 import Theme from "../constants/Theme";
-
 
 const { width, height } = Dimensions.get("screen");
 
 const onBoardings = [
   {
-    title: "Vendor",
+    title: "INNOVA OR EQUIVALENT",
     description: "vendor app appiliction",
-    img: "https://source.unsplash.com/840x840/?car",
+
+    img: require("../assets/images/innova.jpg"),
   },
   {
-    title: "Vendor2",
+    title: "XCEANT OR EQUIVALENT",
     description: "vendor app appiliction",
-    img:"https://source.unsplash.com/840x840/?bike",
+    img: require("../assets/images/osgd7sa.jpg"),
   },
   {
-    title: "Vendor3",
+    title: "HATCHBAK OR EQUIVALENT",
     description: "vendor app appiliction",
-    img:"https://source.unsplash.com/840x840/?auto",
+    img: require("../assets/images/wagonr.jpg"),
   },
 ];
 
@@ -48,28 +48,20 @@ const Onboarding = ({ navigation }) => {
         scrollEventThrottle={16}
         snapToAlignment="center"
         showsHorizontalScrollIndicator={false}
-        onScroll={Animated.event(
-          [{ nativeEvent: { contentOffset: { x: scrollX } } }],
-          { useNativeDriver: false }
-        )}
+        onScroll={Animated.event([{ nativeEvent: { contentOffset: { x: scrollX } } }], { useNativeDriver: false })}
       >
         {onBoardings.map((item, index) => (
           <Block flex key={`img-${index}`} style={styles.imageAndTextContainer}>
-            <Block
-              middle
-              shadow
-              shadowColor="green"
-              style={styles.imageContainer}
-            >
-              <Image
-                source={{ uri: item.img }}
-                resizeMode="cover"
-                style={styles.image}
-              />
+            <Block middle shadow shadowColor="green" style={styles.imageContainer}>
+              <Image source={item.img} resizeMode="cover" style={styles.image} />
             </Block>
             <Block middle style={styles.textContainer}>
-              <Text h2 color="white" >{item.title}</Text>
-              <Text h6 color="white" >{item.description}</Text>
+              <Text h4 color="white">
+                {item.title}
+              </Text>
+              {/* <Text h6 color="white">
+                {item.description}
+              </Text> */}
             </Block>
             {/* Button */}
             <TouchableOpacity
@@ -148,7 +140,7 @@ const styles = StyleSheet.create({
     marginTop: 100,
   },
   image: {
-    width: width/2,
+    width: width / 2,
     height: height / 4,
     borderRadius: width / 2,
   },

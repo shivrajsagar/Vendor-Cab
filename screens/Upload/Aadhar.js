@@ -23,16 +23,10 @@ class Aadhar extends Component {
   };
 
   onSubmit() {
-    const { name, Issue_Date, driver_id, aadhar_no } = this.props;
+    const { name, driver_id, aadhar_no } = this.props;
     const { aadhar_front_image, aadhar_back_image } = this.state;
 
-    if (
-      !name ||
-      !Issue_Date ||
-      !aadhar_no ||
-      !aadhar_back_image ||
-      !aadhar_front_image
-    ) {
+    if (!name || !aadhar_no || !aadhar_back_image || !aadhar_front_image) {
       this.setState({ errorMessage: "Please insert in all fields" });
       setTimeout(() => {
         this.setState({ errorMessage: null });
@@ -42,7 +36,6 @@ class Aadhar extends Component {
         aadhar_front_image,
         aadhar_back_image,
         name,
-        Issue_Date,
         driver_id,
         aadhar_no,
       });
@@ -51,7 +44,7 @@ class Aadhar extends Component {
 
   frontImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: false,
       quality: 1,
     });
@@ -63,7 +56,7 @@ class Aadhar extends Component {
 
   backImage = async () => {
     let result2 = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: false,
       quality: 1,
     });
@@ -99,12 +92,9 @@ class Aadhar extends Component {
     return (
       <Block style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
-          <Block middle>
-            <Image
-              source={require("../../assets/images/avatar.png")}
-              style={styles.avatar}
-            />
-          </Block>
+          {/* <Block middle>
+            <Image source={require("../../assets/images/avatar.png")} style={styles.avatar} />
+          </Block> */}
           <Block flex card shadow shadowColor="gray" style={styles.card}>
             {this.renderError()}
             {message ? (
@@ -162,10 +152,10 @@ class Aadhar extends Component {
               </Block>
             </Block>
             <Text size={20} color="#00ccff">
-              Name on Aadhar
+              Enter Your Name
             </Text>
             <Input
-              placeholder="Name on Aadhar"
+              placeholder="Enter Your Name"
               placeholderTextColor={Theme.COLORS.PRIMARY}
               icon="pencil"
               family="Entypo"
@@ -195,27 +185,11 @@ class Aadhar extends Component {
               }
               maxLength={12}
             />
-            <Text size={18} color="#00ccff">
+            {/* <Text size={18} color="#00ccff">
               Issue Date
-            </Text>
-            {/**<Input
-              type="number-pad"
-              placeholder="Issue Date"
-              placeholderTextColor={Theme.COLORS.PRIMARY}
-              icon="calendar"
-              family="Entypo"
-              iconColor="red"
-              left
-              value={this.props.Issue_Date}
-              onChangeText={(number) =>
-                this.props.uploadDocumentValue({
-                  prop: "Issue_Date",
-                  value: number,
-                })
-              }
-              maxLength={8}
-            />*/}
-            <Block row style={styles.calendar}>
+            </Text> */}
+
+            {/* <Block row style={styles.calendar}>
               <Icon name="calendar" family="Entypo" color="red" />
               <TextInputMask
                 style={styles.calendarinput}
@@ -231,12 +205,13 @@ class Aadhar extends Component {
                   })
                 }
               />
-            </Block>
+            </Block> */}
             <Button
               round
               middle
               color="#009688"
               onPress={this.onSubmit.bind(this)}
+              loading={loading}
             >
               Submit
             </Button>
@@ -261,7 +236,8 @@ const styles = StyleSheet.create({
     backgroundColor: Theme.COLORS.WHITE,
     padding: 10,
     margin: 20,
-    justifyContent: "space-evenly",
+    marginTop: 100,
+    justifyContent: "center",
   },
   image: {
     justifyContent: "space-around",

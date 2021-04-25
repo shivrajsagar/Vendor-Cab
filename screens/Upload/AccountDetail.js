@@ -90,12 +90,12 @@ class AccountDetail extends Component {
     return (
       <Block style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
-          <Block middle>
+          {/* <Block middle>
             <Image
               source={require("../../assets/images/avatar.png")}
               style={styles.avatar}
             />
-          </Block>
+          </Block> */}
           <Block flex card shadow shadowColor="gray" style={styles.card}>
             {message ? (
               <Text size={20} color="green">
@@ -113,10 +113,10 @@ class AccountDetail extends Component {
               </Text>
             ) : null}
             <Text size={20} color="#00ccff">
-              Name
+              Enter Your Name
             </Text>
             <Input
-              placeholder="Account Name"
+              placeholder="Enter Your Name"
               placeholderTextColor={Theme.COLORS.PRIMARY}
               icon="pencil"
               family="Entypo"
@@ -128,10 +128,10 @@ class AccountDetail extends Component {
               }
             />
             <Text size={20} color="#00ccff">
-              Bank Name
+              Enter Bank Name
             </Text>
             <Input
-              placeholder="Bank Name"
+              placeholder="Enter Bank Name"
               placeholderTextColor={Theme.COLORS.PRIMARY}
               icon="pencil"
               family="Entypo"
@@ -149,7 +149,7 @@ class AccountDetail extends Component {
               Account Type
             </Text>
             <Input
-              placeholder="Account Type"
+              placeholder="Enter Account Type"
               placeholderTextColor={Theme.COLORS.PRIMARY}
               icon="pencil"
               family="Entypo"
@@ -168,7 +168,7 @@ class AccountDetail extends Component {
             </Text>
             <Input
               type="numeric"
-              placeholder="Bank IFSC"
+              placeholder="Enter Bank IFSC Code"
               placeholderTextColor={Theme.COLORS.PRIMARY}
               icon="pencil"
               family="Entypo"
@@ -186,7 +186,7 @@ class AccountDetail extends Component {
               Account Number
             </Text>
             <Input
-              placeholder="Account Number"
+              placeholder="Enter Account Number"
               placeholderTextColor={Theme.COLORS.PRIMARY}
               icon="pencil"
               family="Entypo"
@@ -205,7 +205,7 @@ class AccountDetail extends Component {
               Mobile Number
             </Text>
             <Input
-              placeholder="Mobile Number"
+              placeholder="Enter Mobile Number"
               placeholderTextColor={Theme.COLORS.PRIMARY}
               icon="pencil"
               family="Entypo"
@@ -251,6 +251,7 @@ const styles = StyleSheet.create({
     padding: 10,
     margin: 20,
     justifyContent: "space-evenly",
+    marginTop: 80,
   },
   image: {
     justifyContent: "space-around",
