@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { StyleSheet, ScrollView, Image } from "react-native";
 import { Block, Button, Icon, Input, Text } from "galio-framework";
 import * as ImagePicker from "expo-image-picker";
-import { TextInputMask } from "react-native-masked-text";
 import Theme from "../../constants/Theme";
 import { connect } from "react-redux";
 import {

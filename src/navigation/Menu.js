@@ -32,7 +32,7 @@ export default function CustomDrawerContent({
 
   useEffect(() => {
     retrieveData();
-  }, [name,retrieveData]);
+  }, [name, retrieveData]);
 
   const retrieveData = async () => {
     try {

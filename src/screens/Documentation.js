@@ -108,7 +108,9 @@ export default class Documentation extends Component {
                   />
                 </Block>
               </TouchableOpacity>
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => navigation.navigate("Taxi Photo")}
+              >
                 <Block row space="between" style={styles.border}>
                   <Text color="white" size={20}>
                     Taxi Photos

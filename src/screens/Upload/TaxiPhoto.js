@@ -1,15 +1,10 @@
 import React, { Component } from "react";
 import { StyleSheet, Alert, Image } from "react-native";
-import { Block, Button, Text, Input, Icon } from "galio-framework";
+import { Block, Button, Text } from "galio-framework";
 import * as ImagePicker from "expo-image-picker";
 
 import Theme from "../../constants/Theme";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { connect } from "react-redux";
-import {
-  registerUserValue,
-  registerUser,
-} from "../../redux/actions/documentAction";
 
 import defaultImage from "../../assets/images/avatar.png";
 const ImageUri = Image.resolveAssetSource(defaultImage).uri;
@@ -92,7 +87,7 @@ class Taxiphoto extends Component {
                 source={{
                   uri: TexiImage != null ? TexiImage : ImageUri,
                 }}
-                style={{ width: 300, height: 300, borderRadius: 100 }}
+                style={{ width: 300, height: 300, borderRadius: 300 }}
               />
             </TouchableOpacity>
           </Block>

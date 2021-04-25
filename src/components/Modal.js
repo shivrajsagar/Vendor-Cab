@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import { Dimensions, Modal, StyleSheet, TouchableOpacity } from "react-native";
-import { Block, Button, Text, Icon, Input, Toast } from "galio-framework";
+import { Block, Button, Text, Icon, Input } from "galio-framework";
 
-import { withNavigation } from "@react-navigation/compat";
 import Theme from "../constants/Theme";
 
 const { width } = Dimensions.get("screen");
