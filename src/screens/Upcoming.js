@@ -130,6 +130,31 @@ const Card = ({ item, openModal }) => {
           </Button>
         </Block>
       </Block>
+
+      <Block row space="around" style={styles.text}>
+        <Block row>
+          <Icon name="calendar" family="Entypo" size={20} color="#007acc" />
+          <Text color="blue">Amount</Text>
+        </Block>
+        <Block>
+          <Text>{item.amount}</Text>
+        </Block>
+      </Block>
+
+      <Block row style={styles.text}>
+        {item.amount != 0 ? (
+          <Block flex middle>
+            <Button
+              middle
+              round
+              color="#009688"
+              onPress={() => openModal(item.id, item.booking_id)}
+            >
+              Edit Bid Amount
+            </Button>
+          </Block>
+        ) : null}
+      </Block>
     </Block>
   );
 };

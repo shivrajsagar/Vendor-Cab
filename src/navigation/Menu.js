@@ -29,6 +29,7 @@ export default function CustomDrawerContent({
     "Pay Commision",
     "Documentation",
     "Help",
+    "Change Password",
   ];
 
   useEffect(() => {

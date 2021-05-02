@@ -64,7 +64,7 @@ class ModalComponent extends Component {
                 type="number-pad"
                 style={{ borderBottomColor: "red" }}
                 color="gray"
-                help="Please enter valid number"
+                help="Please Enter Amount"
                 bottomHelp
                 value={amount}
                 onChangeText={(number) => this.setState({ amount: number })}
@@ -76,7 +76,7 @@ class ModalComponent extends Component {
                 color={Theme.COLORS.BUTTON2}
                 onPress={this.onSubmit}
               >
-                Send
+                Save
               </Button>
             </Block>
           </Block>

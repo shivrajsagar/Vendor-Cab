@@ -20,6 +20,7 @@ class Profile extends Component {
   render() {
     const { navigation } = this.props;
     const { data } = this.state;
+    //console.log(data.document_approve);
     return (
       <ScrollView style={styles.container}>
         <Block row>
@@ -36,21 +37,28 @@ class Profile extends Component {
             </Text>
           </Block>
         </Block>
-        <Block card style={styles.card}>
-          <Block>
-            <Text h6 style={styles.heading}>
-              Vehicle Name
+
+        <Block style={styles.card}>
+          <Block row style={styles.row}>
+            <Text style={styles.heading}>
+              Document {"\n"}Verification Status
             </Text>
+            {data.document_approve == 1 ? (
+              <Text style={styles.text1}>Verified</Text>
+            ) : (
+              <Text style={styles.text1}>Not Verified</Text>
+            )}
+          </Block>
+          <Block row style={styles.row}>
+            <Text style={styles.heading}>Vehicle Name</Text>
             <Text style={styles.text}>{data.vehicle_name}</Text>
           </Block>
-          <Block>
-            <Text h6 style={styles.heading}>
-              Vehicle No
-            </Text>
+          <Block row style={styles.row}>
+            <Text style={styles.heading}>Vehicle No</Text>
             <Text style={styles.text}>{data.vehicle_no}</Text>
           </Block>
         </Block>
-        <Block middle>
+        {/* <Block middle>
           <Button
             color={Theme.COLORS.BUTTON}
             onPress={() => navigation.navigate("Password")}
@@ -58,7 +66,7 @@ class Profile extends Component {
           >
             Reset Password
           </Button>
-        </Block>
+        </Block> */}
       </ScrollView>
     );
   }
@@ -84,10 +92,16 @@ const styles = StyleSheet.create({
   heading: {
     color: "white",
     margin: 10,
-    marginBottom: 5,
+    fontSize: 19,
   },
   text: {
-    textAlign: "left",
+    marginLeft: 10,
+    marginTop: 15,
+    fontSize: 18,
+    color: "white",
+  },
+  text1: {
+    marginTop: 25,
     marginLeft: 10,
     fontSize: 18,
     color: "white",
@@ -97,6 +111,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     margin: 10,
     padding: 10,
+  },
+  row: {
+    justifyContent: "space-between",
   },
 });
 

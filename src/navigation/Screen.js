@@ -343,6 +343,27 @@ function HelpStack(props) {
     </Stack.Navigator>
   );
 }
+function ChangePasswordStack(props) {
+  return (
+    <Stack.Navigator mode="card" headerMode="screen">
+      <Stack.Screen
+        name="Change Password"
+        component={PasswordReset}
+        options={{
+          header: ({ scene, navigation }) => (
+            <Header
+              title="Change Password"
+              transparent
+              white
+              scene={scene}
+              navigation={navigation}
+            />
+          ),
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
 
 function LogoutStack() {
   return (
@@ -430,6 +451,15 @@ function AppStack(props) {
           drawerIcon: () => <Icon name="help" family="Entypo" size={16} />,
         }}
       />
+
+      <Drawer.Screen
+        name="Change Password"
+        component={ChangePasswordStack}
+        options={{
+          drawerIcon: () => <Icon name="key" family="Entypo" size={16} />,
+        }}
+      />
+
       <Drawer.Screen
         name="Logout"
         component={LogoutStack}
