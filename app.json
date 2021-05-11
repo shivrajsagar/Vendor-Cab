@@ -2,7 +2,7 @@
   "expo": {
     "name": "Vendor",
     "slug": "Vendor",
-    "version": "1.0.8",
+    "version": "1.0.9",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -10,8 +10,10 @@
       "resizeMode": "contain",
       "backgroundColor": "#233545"
     },
-    "updates": {
-      "fallbackToCacheTimeout": 0
+    "updates": { 
+      "enabled": true, 
+      "checkAutomatically": "ON_LOAD",   
+      "fallbackToCacheTimeout": 0 
     },
     "assetBundlePatterns": [
       "**/*"
@@ -26,7 +28,7 @@
     "android": {
       "permissions":[ "CAMERA", "WRITE_EXTERNAL_STORAGE", "CAMERA_ROLL" ],
       "package": "vendor.expresscab",
-      "versionCode":8
+      "versionCode":9
     }
   }
 }

@@ -14,14 +14,14 @@ const { height } = Dimensions.get("screen");
 
 class Current extends Component {
   componentDidMount() {
-    this.props.fetchCurrentData();
+    //this.props.fetchCurrentData();
   }
 
   render() {
     const { item, loading } = this.props;
     return (
       <ScrollView showsVerticalScrollIndicator={false}>
-        {loading === true ? (
+        {loading === false ? (
           <Block flex middle style={styles.loading}>
             <ActivityIndicator animating={true} color="#efeved" />
           </Block>

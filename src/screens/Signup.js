@@ -103,6 +103,9 @@ class Signup extends Component {
 
           <Block row style={styles.image}>
             <Block middle>
+              <Text color="black" style={{ marginBottom: 5 }}>
+                Please Upload image
+              </Text>
               <TouchableOpacity onPress={this.profileImage}>
                 <Image
                   source={{

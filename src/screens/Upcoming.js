@@ -1,27 +1,105 @@
-import React, { useEffect, useState } from "react";
-import { StyleSheet, Dimensions, FlatList } from "react-native";
-import { Block, Icon, Button, Text } from "galio-framework";
+import React, { useEffect, useState, useCallback } from "react";
+import {
+  StyleSheet,
+  Dimensions,
+  FlatList,
+  Modal,
+  TouchableOpacity,
+} from "react-native";
+import { Block, Icon, Button, Text, Input } from "galio-framework";
 import Theme from "../constants/Theme";
 import { connect } from "react-redux";
+import { BidAmountData } from "../redux/actions/BidAmountAction";
 import { fetchUpcomingData } from "../redux/actions/upcomingAction";
 import { openModal, closeModal } from "../redux/actions/bidAction";
 import { ScrollView } from "react-native-gesture-handler";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ModalComponent } from "../components";
+import axios from "axios";
 
 const { width } = Dimensions.get("window");
 
 const Upcoming = ({
-  item,
+  item2,
   fetchUpcomingData,
+  BidAmountData,
+
   showModal,
   openModal,
   closeModal,
   message,
+  driver_id,
 }) => {
-  useEffect(() => {
-    fetchUpcomingData();
-  }, []);
+  const [item, setItem] = useState([]);
+  const [data, setData] = useState([]);
+
+  const [visible, setVisible] = useState(false);
+  const [reload, setReload] = useState(true);
+  const [book_id, setBook_id] = useState("");
+  const [booking_id, setBooking_id] = useState("");
+
+  const reloadFunction = (childData) => {
+    console.log(childData + " book id function");
+    setVisible(childData);
+    setVisible(false);
+    setReload(!reload);
+  };
+  const callbackFunction = (childData, bookid, bookingid) => {
+    setVisible(childData);
+    setBook_id(bookid);
+    setBooking_id(bookingid);
+  };
+
+  const getbiddata = async () => {
+    const driver_id = await AsyncStorage.getItem("driver_id");
+
+    const requestOptions = {
+      method: "Get",
+      redirect: "follow",
+    };
+
+    fetch(
+      `https://expresscab.in/CarDriving/api/booking/BidAmount.php?uid=${driver_id}`,
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((result) => {
+        if (result.message === "No found.") {
+        } else {
+          setData(result.UPComing_Ride_list);
+          console.log(result.UPComing_Ride_list);
+          console.log(data.length + "bid");
+        }
+      })
+      .catch((error) => console.log("Error==" + error));
+  };
+
+  const Upcomingdata = async () => {
+    const requestOptions = {
+      method: "GET",
+      redirect: "follow",
+    };
+
+    fetch(
+      "https://expresscab.in/CarDriving/api/booking/upcomingread.php",
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((result) => {
+        setItem(result.UPComing_Ride_list);
+        console.log(item.length + "card");
+      })
+      .catch((error) => console.log(error));
+  };
+
+  useEffect(
+    () => {
+      Upcomingdata();
+      getbiddata();
+    },
+    [reload],
+    1000
+  );
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
@@ -34,7 +112,9 @@ const Upcoming = ({
               showModal={showModal}
               openModal={openModal}
               closeModal={closeModal}
+              parentcallback={callbackFunction}
               key={index}
+              data={data}
             />
           )}
           keyExtractor={(_, index) => index.toString()}
@@ -46,12 +126,26 @@ const Upcoming = ({
           item={item}
           message={message}
         />
+        <BidAmountSubmit
+          visible={visible}
+          parentcallback={reloadFunction}
+          book_id={book_id}
+          booking_id={booking_id}
+        />
       </Block>
     </ScrollView>
   );
 };
 
-const Card = ({ item, openModal }) => {
+const Card = ({ parentcallback, item, openModal, data }) => {
+  const GetAmount = (item) => {
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].bookingID === item.booking_id) {
+        return (item.amount = data[i].amount);
+      }
+    }
+    return 0;
+  };
   return (
     <Block
       flex
@@ -118,43 +212,172 @@ const Card = ({ item, openModal }) => {
           </Text>
         </Block>
       </Block>
-      <Block row style={styles.text}>
-        <Block flex middle>
-          <Button
-            middle
-            round
-            color="#009688"
-            onPress={() => openModal(item.id, item.booking_id)}
-          >
-            Bid To accept
-          </Button>
-        </Block>
-      </Block>
-
-      <Block row space="around" style={styles.text}>
-        <Block row>
-          <Icon name="calendar" family="Entypo" size={20} color="#007acc" />
-          <Text color="blue">Amount</Text>
-        </Block>
+      {GetAmount(item) == 0 ? (
         <Block>
-          <Text>{item.amount}</Text>
+          <Block row style={styles.text}>
+            <Block flex middle>
+              <Button
+                middle
+                round
+                color="#009688"
+                onPress={() => [
+                  console.log(item.id + "card  s"),
+                  parentcallback(true, item.id, item.booking_id),
+                ]}
+              >
+                Bid To accept
+              </Button>
+            </Block>
+          </Block>
         </Block>
-      </Block>
+      ) : (
+        <>
+          <Block row space="around" style={styles.text}>
+            <Block row>
+              <Icon
+                name="wallet"
+                family="antdesign"
+                size={18}
+                color="#007acc"
+              />
+              <Text color="blue" style={{ marginLeft: 3 }}>
+                Amount
+              </Text>
+            </Block>
+            <Block>
+              <Text>{item.amount}</Text>
+            </Block>
+          </Block>
 
-      <Block row style={styles.text}>
-        {item.amount != 0 ? (
-          <Block flex middle>
+          <Block row style={styles.text}>
+            <Block flex middle>
+              <Button
+                middle
+                round
+                color="#009688"
+                onPress={() => [
+                  console.log(item.id + "card  s"),
+                  parentcallback(true, item.id, item.booking_id),
+                ]}
+              >
+                Edit Bid Amount
+              </Button>
+            </Block>
+          </Block>
+        </>
+      )}
+    </Block>
+  );
+};
+
+const BidAmountSubmit = ({
+  visible,
+  parentcallback,
+  book_id,
+  booking_id,
+  reloadVal,
+}) => {
+  const [amount, setAmount] = useState("");
+  const [errormessage, setMessage] = useState("");
+  const [loading, setLoaging] = useState(false);
+  const onSubmit = () => {
+    setLoaging(true);
+    console.log(amount + " Amount bid");
+    saveBid(book_id, booking_id);
+  };
+  const onDecline = () => {
+    console.log("Decline");
+    parentcallback(!reloadVal);
+  };
+
+  const saveBid = async () => {
+    try {
+      const driver_id = await AsyncStorage.getItem("driver_id");
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+      var formdata = new FormData();
+      formdata.append("amount", amount);
+      formdata.append("book_id", book_id);
+      formdata.append("booking_id", booking_id);
+      formdata.append("vendor_id", driver_id);
+
+      axios
+        .post(
+          "https://expresscab.in/CarDriving/driver_Info.php?apicall=bidinsert",
+          formdata,
+          myHeaders
+        )
+        .then((res) => {
+          if (res.data.error != true) {
+            console.log(res.data.message + " success");
+            setAmount("");
+            parentcallback(false);
+            setMessage(res.data.message);
+            setLoaging(false);
+            setInterval(() => {
+              setMessage("");
+            }, 3000);
+          } else {
+            setMessage(res.data.error);
+          }
+        });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  return (
+    <Block>
+      <Modal visible={visible} transparent>
+        <Block flex middle style={{ backgroundColor: "rgba(0,0,0,.1)" }}>
+          <Block
+            card
+            shadow
+            shadowColor="gray"
+            style={{ backgroundColor: "white", width: width, padding: 10 }}
+          >
+            <Block style={styles.close}>
+              <TouchableOpacity onPress={onDecline}>
+                <Icon
+                  name="cross"
+                  family="Entypo"
+                  size={40}
+                  color="red"
+                  right
+                />
+              </TouchableOpacity>
+            </Block>
+            <Block>
+              <Text size={20} center bold color="green">
+                {errormessage}
+              </Text>
+              <Text h5 left>
+                Enter You best Price
+              </Text>
+            </Block>
+            <Input
+              type="number"
+              placeholder="Amount"
+              type="number-pad"
+              style={{ borderBottomColor: "red" }}
+              color="gray"
+              help="Please Enter Amount"
+              bottomHelp
+              value={amount}
+              onChangeText={(number) => setAmount(number)}
+              maxLength={5}
+            />
             <Button
-              middle
               round
-              color="#009688"
-              onPress={() => openModal(item.id, item.booking_id)}
+              color={Theme.COLORS.BUTTON2}
+              loading={loading}
+              onPress={onSubmit}
             >
-              Edit Bid Amount
+              Save
             </Button>
           </Block>
-        ) : null}
-      </Block>
+        </Block>
+      </Modal>
     </Block>
   );
 };
@@ -187,16 +410,22 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     fontSize: 25,
   },
+  close: {
+    marginRight: 1,
+    alignItems: "flex-end",
+  },
 });
 
 const mapStateToProps = (state) => ({
   item: state.upcoming.upcomingitem,
   message: state.savebid.message,
   showModal: state.savebid.showModal,
+  data: state.BIDAMOUNT.Bidamount,
 });
 
 export default connect(mapStateToProps, {
   fetchUpcomingData,
+  BidAmountData,
   closeModal,
   openModal,
 })(Upcoming);

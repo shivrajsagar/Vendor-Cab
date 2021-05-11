@@ -11,6 +11,7 @@ export const fetchUpcomingData = () => async (dispatch) => {
     dispatch({
       type: FETCH_UPCOMING_DATA,
       payload: response.data.UPComing_Ride_list,
+      loading: false,
     });
   } catch (e) {
     throw e;

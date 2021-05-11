@@ -16,7 +16,7 @@ class Completed extends Component {
     return (
       <ScrollView showsVerticalScrollIndicator={false}>
         <Block flex style={styles.container}>
-          {item.map((item, index) => (
+          {/* {item.map((item, index) => (
             <Card
               item={item}
               date
@@ -26,7 +26,7 @@ class Completed extends Component {
               status
               key={index}
             />
-          ))}
+          ))} */}
         </Block>
       </ScrollView>
     );

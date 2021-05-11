@@ -16,26 +16,26 @@ export const saveBidData = ({ book_id, booking_id, amount }) => async (
   const driver_id = await AsyncStorage.getItem("driver_id");
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
-  const raw = JSON.stringify({
-    book_id: book_id,
-    booking_id: booking_id,
-    vendor_id: driver_id,
-    amount: amount,
-  });
+  var formdata = new FormData();
+  formdata.append("book_id", book_id);
+  formdata.append("booking_id", booking_id);
+  formdata.append("vendor_id", driver_id);
+  formdata.append("amount", amount);
   const requestOptions = {
     method: "POST",
     headers: myHeaders,
-    body: raw,
+    body: formdata,
     redirect: "follow",
   };
+
   fetch(
-    "https://expresscab.in/CarDriving/api/booking/savebid.php",
+    "https://expresscab.in/CarDriving/driver_Info.php?apicall=bidinsert",
     requestOptions
   )
     .then((response) => response.json())
     .then((result) => [
       bidSuccess(dispatch, result.message),
-      //console.log(result),
+      console.log(result.biddata.amount),
     ])
     .catch((error) => bidError(dispatch, error));
 };

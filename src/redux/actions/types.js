@@ -33,6 +33,7 @@ export const SAVE_BID_SUCCESS = "SAVE_BID_SUCCESS";
 export const REFRESH_MESSAGE = "REFRESH_MESSAGE";
 export const CLOSE_MODAL = "CLOSE_MODAL";
 export const OPEN_MODAL = "OPEN_MODAL";
+export const BID_AMOUNT = "BID_AMOUNT";
 
 //document
 export const UPLOAD_DOCUMENT = "UPLOAD_DOCUMENT";
