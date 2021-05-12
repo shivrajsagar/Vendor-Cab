@@ -16,6 +16,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ModalComponent } from "../components";
 import axios from "axios";
+import BidAmountdataitem from "../components/BidAmountdataitem";
 
 const { width } = Dimensions.get("window");
 
@@ -39,12 +40,12 @@ const Upcoming = ({
   const [booking_id, setBooking_id] = useState("");
 
   const reloadFunction = (childData) => {
-    console.log(childData + " book id function");
     setVisible(childData);
     setVisible(false);
     setReload(!reload);
   };
   const callbackFunction = (childData, bookid, bookingid) => {
+    console.log(bookid + " book id function");
     setVisible(childData);
     setBook_id(bookid);
     setBooking_id(bookingid);
@@ -52,26 +53,69 @@ const Upcoming = ({
 
   const getbiddata = async () => {
     const driver_id = await AsyncStorage.getItem("driver_id");
+    var axios = require("axios");
+    var FormData = require("form-data");
+    var data = new FormData();
 
-    const requestOptions = {
-      method: "Get",
-      redirect: "follow",
+    var config = {
+      method: "GET",
+      url: `https://expresscab.in/CarDriving/api/booking/BidAmount.php?uid=${driver_id}`,
+
+      data: data,
     };
 
-    fetch(
-      `https://expresscab.in/CarDriving/api/booking/BidAmount.php?uid=${driver_id}`,
-      requestOptions
-    )
-      .then((response) => response.json())
-      .then((result) => {
-        if (result.message === "No found.") {
-        } else {
-          setData(result.UPComing_Ride_list);
-          console.log(result.UPComing_Ride_list);
-          console.log(data.length + "bid");
-        }
+    axios(config)
+      .then(function (response) {
+        setData(response.data.UPComing_Ride_list);
+        console.log(JSON.stringify(response.data.UPComing_Ride_list));
+        console.log(response.data.UPComing_Ride_list.length + "===");
       })
-      .catch((error) => console.log("Error==" + error));
+      .catch(function (error) {
+        console.log(error);
+      });
+    // var requestOptions = {
+    //   method: "GET",
+    //   redirect: "follow",
+    // };
+
+    // fetch(
+    //   `https://expresscab.in/CarDriving/api/booking/BidAmount.php?uid=${driver_id}`,
+    //   requestOptions
+    // )
+    //   .then((response) => response.json())
+    //   .then((response) => {
+    //     console.log("FATCH==" + JSON.stringify(response));
+
+    //     //setData(response.UPComing_Ride_list);
+    //     // if (result.message === "No found.") {
+    //     //   console.log(result.message);
+    //     // } else {
+    //     //   setData(result.UPComing_Ride_list);
+    //     // }
+    //   })
+    //   .catch((error) => console.log("error", error));
+
+    // const requestOptions = {
+    //   method: "GET",
+    //   redirect: "follow",
+    // };
+    // const myHeaders = {
+    //   "X-Server-Cache": "false",
+    // };
+    // console.log(driver_id + "driver_id");
+    // fetch(
+    //   `https://expresscab.in/CarDriving/api/booking/BidAmount.php?uid=` +
+    //     driver_id,
+    //   requestOptions,
+    //   myHeaders
+    // )
+    //   .then((response) => response.json())
+    //   .then((result) => {
+    //     setData(result.UPComing_Ride_list);
+    //     console.log(result.UPComing_Ride_list);
+    //     console.log(data.length);
+    //   })
+    //   .catch((error) => console.log("Error==" + error));
   };
 
   const Upcomingdata = async () => {
@@ -92,14 +136,10 @@ const Upcoming = ({
       .catch((error) => console.log(error));
   };
 
-  useEffect(
-    () => {
-      Upcomingdata();
-      getbiddata();
-    },
-    [reload],
-    1000
-  );
+  useEffect(() => {
+    Upcomingdata();
+    getbiddata();
+  }, [reload]);
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
@@ -119,13 +159,13 @@ const Upcoming = ({
           )}
           keyExtractor={(_, index) => index.toString()}
         />
-        <ModalComponent
+        {/* <ModalComponent
           visible={showModal}
           onDecline={() => closeModal()}
           // onSubmit={this.onSubmit}
           item={item}
           message={message}
-        />
+        /> */}
         <BidAmountSubmit
           visible={visible}
           parentcallback={reloadFunction}

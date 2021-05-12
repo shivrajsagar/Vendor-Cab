@@ -14,7 +14,7 @@ export const BidAmountData = () => async (dispatch) => {
 
     dispatch({
       type: BID_AMOUNT,
-      payload: response.data.records,
+      payload: response.data.UPComing_Ride_list,
       loading: false,
     });
   } catch (e) {

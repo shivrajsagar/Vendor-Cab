@@ -1,10 +1,11 @@
 {
   "scripts": {
-    "start": "react-native start",
+    "start": "adb reverse tcp:8081 tcp:8081 && react-native start",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "web": "expo start --web",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "rn-start": "adb reverse tcp:8081 tcp:8081 && expo start"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.13.1",
