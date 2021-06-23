@@ -36,6 +36,8 @@ import TaxiInsurance from "../screens/Upload/TaxiInsurance";
 import AccountDetail from "../screens/Upload/AccountDetail";
 import FitnessCertificate from "../screens/Upload/FitnessCertificate";
 import Taxiphoto from "../screens/Upload/TaxiPhoto";
+import DocumentView from "../screens/DocumentView";
+import ViewAadhar from "../screens/DocumentView/ViewAadhar";
 
 //naviagtor
 const Stack = createStackNavigator();
@@ -322,6 +324,28 @@ function DocumentStack(props) {
   );
 }
 
+function DocumentViewStack(props) {
+  return (
+    <Stack.Navigator mode="card" headerMode="screen">
+      <Stack.Screen
+        name="View Document"
+        component={DocumentView}
+        options={{
+          header: ({ scene, navigation }) => (
+            <Header
+              title="View Document"
+              transparent
+              white
+              scene={scene}
+              navigation={navigation}
+            />
+          ),
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
+
 function HelpStack(props) {
   return (
     <Stack.Navigator mode="card" headerMode="screen">
@@ -445,6 +469,13 @@ function AppStack(props) {
         }}
       />
       <Drawer.Screen
+        name="View Document"
+        component={DocumentViewStack}
+        options={{
+          drawerIcon: () => <Icon name="documents" family="Entypo" size={16} />,
+        }}
+      />
+      <Drawer.Screen
         name="Help"
         component={HelpStack}
         options={{
@@ -503,6 +534,8 @@ export default function OnboardingStack() {
           gestureEnabled: false,
         }}
       />
+
+      <Stack.Screen name="ViewAadhar" component={ViewAadhar} />
     </Stack.Navigator>
   );
 }

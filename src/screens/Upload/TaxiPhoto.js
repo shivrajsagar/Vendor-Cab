@@ -17,12 +17,13 @@ const { height } = Dimensions.get("window");
 class Taxiphoto extends Component {
   state = {
     TexiImage: null,
+    Texiback: null,
     errorMessage: null,
   };
 
   onSubmit() {
-    const { TexiImage } = this.state;
-    if (!TexiImage) {
+    const { TexiImage, Texiback } = this.state;
+    if (!TexiImage || !Texiback) {
       console.log("mesage");
       this.setState({ errorMessage: "Please insert in all fields" });
       setTimeout(() => {
@@ -31,6 +32,7 @@ class Taxiphoto extends Component {
     } else {
       this.props.TaxiPhoto({
         TexiImage,
+        Texiback,
       });
     }
   }
@@ -46,6 +48,18 @@ class Taxiphoto extends Component {
       this.setState({ TexiImage: result.uri });
     }
   };
+  backImage = async () => {
+    let result2 = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: false,
+      quality: 1,
+    });
+
+    if (!result2.cancelled) {
+      this.setState({ Texiback: result2.uri });
+    }
+  };
+
   async componentDidMount() {
     if (Platform.OS !== "web") {
       const { status } = await ImagePicker.requestCameraRollPermissionsAsync();
@@ -72,7 +86,7 @@ class Taxiphoto extends Component {
 
   render() {
     const { navigation, error, message, loading } = this.props;
-    const { TexiImage, errorMessage } = this.state;
+    const { TexiImage, errorMessage, Texiback } = this.state;
     return (
       <Block style={styles.container}>
         <Block style={styles.card}>
@@ -93,10 +107,28 @@ class Taxiphoto extends Component {
           ) : null}
           <Block row style={styles.image}>
             <Block middle>
+              <Text size={20} style={{ marginBottom: 10 }}>
+                Taxi Front Image
+              </Text>
               <TouchableOpacity onPress={this.Texiphoto}>
                 <Image
                   source={{
                     uri: TexiImage != null ? TexiImage : ImageUri,
+                  }}
+                  style={{ width: 200, height: 200, borderRadius: 200 }}
+                />
+              </TouchableOpacity>
+            </Block>
+          </Block>
+          <Block row style={styles.image}>
+            <Block middle>
+              <Text size={20} style={{ marginBottom: 10, marginTop: 10 }}>
+                Taxi Back Image
+              </Text>
+              <TouchableOpacity onPress={this.backImage}>
+                <Image
+                  source={{
+                    uri: Texiback != null ? Texiback : ImageUri,
                   }}
                   style={{ width: 200, height: 200, borderRadius: 200 }}
                 />
@@ -130,7 +162,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     backgroundColor: Theme.COLORS.WHITE,
     borderRadius: 20,
-    height: height * 0.45,
+    height: height * 0.8,
     justifyContent: "space-between",
   },
   image: {

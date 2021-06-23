@@ -14,16 +14,16 @@ const { height } = Dimensions.get("screen");
 
 class Current extends Component {
   componentDidMount() {
-    //this.props.fetchCurrentData();
+    this.props.fetchCurrentData();
   }
 
   render() {
     const { item, loading } = this.props;
     return (
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView showsVerticalScrollIndicator={true}>
         {loading === false ? (
           <Block flex middle style={styles.loading}>
-            <ActivityIndicator animating={true} color="#efeved" />
+            <ActivityIndicator animating={false} color="#efeved" />
           </Block>
         ) : (
           <Block safe flex style={styles.container}>

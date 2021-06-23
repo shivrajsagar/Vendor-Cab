@@ -8,7 +8,7 @@ const initialState = {
 export default function (state = initialState, action) {
   switch (action.type) {
     case LOADING:
-      return { ...state, currentloading: true };
+      return { ...state, currentloading: false };
     case FETCH_CURRENT_DATA:
       return { ...state, currentitem: action.payload, currentloading: false };
     default:

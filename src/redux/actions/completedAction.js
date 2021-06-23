@@ -9,7 +9,9 @@ export const fetchCompleteData = () => async (dispatch) => {
     );
     dispatch({
       type: FETCH_COMPLETED_DATA,
-      payload: response.data.complete_Rides_list,
+      payload: response.data.complete_Rides_list
+        ? response.data.complete_Rides_list
+        : [],
       loading: false,
     });
   } catch (e) {

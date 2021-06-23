@@ -19,7 +19,8 @@ class Signup extends Component {
   };
 
   onSubmit() {
-    const { name, mobile, vehicle_no, vehicle_name, password } = this.props;
+    const { name, mobile, vehicle_no, vehicle_name, password, city_name } =
+      this.props;
     const { profileimage } = this.state;
     if (
       !profileimage ||
@@ -27,7 +28,8 @@ class Signup extends Component {
       !mobile ||
       !vehicle_name ||
       !vehicle_no ||
-      !password
+      !password ||
+      !city_name
     ) {
       console.log("mesage");
       this.setState({ errorMessage: "Please insert in all fields" });
@@ -42,6 +44,7 @@ class Signup extends Component {
         vehicle_no,
         vehicle_name,
         password,
+        city_name,
       });
     }
   }
@@ -170,6 +173,21 @@ class Signup extends Component {
             }
           />
           <Input
+            placeholder="Enter City Name"
+            left
+            icon="location-pin"
+            family="entypo"
+            iconColor="#9900ff"
+            placeholderTextColor={Theme.COLORS.BUTTON2}
+            value={this.props.city_name}
+            onChangeText={(text) =>
+              this.props.userValue({
+                prop: "city_name",
+                value: text,
+              })
+            }
+          />
+          <Input
             placeholder="Enter Password"
             left
             icon="key"
@@ -222,6 +240,7 @@ const mapStateToProps = (state) => ({
   vehicle_name: state.auth.vehicle_name,
   vehicle_no: state.auth.vehicle_no,
   password: state.auth.password,
+  city_name: state.auth.city_name,
   message: state.auth.message,
   error: state.auth.error,
   loading: state.auth.authloading,

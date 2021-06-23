@@ -46,7 +46,7 @@ class Profile extends Component {
             {data.document_approve == 1 ? (
               <Text style={styles.text1}>Verified</Text>
             ) : (
-              <Text style={styles.text1}>Not Verified</Text>
+              <Text style={styles.text2}>Not Verified</Text>
             )}
           </Block>
           <Block row style={styles.row}>
@@ -99,12 +99,20 @@ const styles = StyleSheet.create({
     marginTop: 15,
     fontSize: 18,
     color: "white",
+    textAlign: "center",
+  },
+  text2: {
+    marginTop: 25,
+    marginLeft: 10,
+    fontSize: 18,
+    color: "yellow",
+    textAlign: "center",
   },
   text1: {
     marginTop: 25,
     marginLeft: 10,
     fontSize: 18,
-    color: "white",
+    color: "green",
   },
   button: {
     justifyContent: "center",

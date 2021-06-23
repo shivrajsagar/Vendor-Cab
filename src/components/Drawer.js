@@ -26,6 +26,8 @@ class DrawerItem extends Component {
         return (
           <Icon name="documents" family="Entypo" size={20} color="white" />
         );
+      case "View Document":
+        return <Icon name="document" family="Entypo" size={20} color="white" />;
       case "Help":
         return <Icon name="help" family="Entypo" size={20} color="white" />;
       case "Change Password":

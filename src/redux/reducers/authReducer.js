@@ -16,6 +16,7 @@ const INITIAL_STATE = {
   vehicle_name: "",
   vehicle_no: "",
   password: "",
+  city_name: "",
   user: null,
   error: "",
   authloading: false,

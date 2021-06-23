@@ -191,16 +191,16 @@ class DrivingLicence extends Component {
                   value: number,
                 })
               }
-              maxLength={12}
+              // maxLength={12}
             />
-            <Text size={18} color="#00ccff">
-              Issue Date
+            <Text size={18} color="#00ccff" style={{ marginBottom: 5 }}>
+              Expiry Date
             </Text>
 
             <Block row style={styles.calendar}>
               <Icon name="calendar" family="Entypo" color="red" />
               <TextInputMask
-                placeholder="Enter Issue Date"
+                placeholder="Enter Expiry Date"
                 style={styles.calendarinput}
                 type={"datetime"}
                 options={{

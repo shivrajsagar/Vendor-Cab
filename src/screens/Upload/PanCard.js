@@ -22,7 +22,7 @@ class PanCard extends Component {
   onSubmit() {
     const { name, pan_no } = this.props;
     const { pan_front, pan_back } = this.state;
-    if (!name || !pan_no || !pan_front || !pan_back) {
+    if (!name || !pan_no || !pan_front) {
       this.setState({ errorMessage: "Please fill in all fields" });
       setTimeout(() => {
         this.setState({ errorMessage: null });
@@ -30,7 +30,7 @@ class PanCard extends Component {
     } else {
       this.props.uploadPan({
         pan_front,
-        pan_back,
+
         name,
         pan_no,
       });
@@ -107,7 +107,7 @@ class PanCard extends Component {
                 <Icon
                   name="image"
                   family="Entypo"
-                  size={30}
+                  size={50}
                   color="purple"
                   onPress={this.frontImage}
                 />
@@ -116,12 +116,12 @@ class PanCard extends Component {
                 {this.state.pan_front && (
                   <Image
                     source={{ uri: this.state.pan_front }}
-                    style={{ width: 50, height: 50 }}
+                    style={{ width: 100, height: 100 }}
                   />
                 )}
               </Block>
             </Block>
-            <Text size={18} color="#00ccff">
+            {/* <Text size={18} color="#00ccff">
               Back Image
             </Text>
             <Block row style={styles.image}>
@@ -142,7 +142,7 @@ class PanCard extends Component {
                   />
                 )}
               </Block>
-            </Block>
+            </Block> */}
             <Text size={20} color="#00ccff">
               Enter Name
             </Text>

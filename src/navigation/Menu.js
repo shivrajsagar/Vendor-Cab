@@ -28,6 +28,7 @@ export default function CustomDrawerContent({
     "Transaction History",
     "Pay Commision",
     "Documentation",
+    "View Document",
     "Help",
     "Change Password",
   ];

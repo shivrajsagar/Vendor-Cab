@@ -64,58 +64,14 @@ const Upcoming = ({
       data: data,
     };
 
-    axios(config)
+    await axios(config)
       .then(function (response) {
         setData(response.data.UPComing_Ride_list);
-        console.log(JSON.stringify(response.data.UPComing_Ride_list));
-        console.log(response.data.UPComing_Ride_list.length + "===");
+        //console.log(JSON.stringify(response));
       })
       .catch(function (error) {
         console.log(error);
       });
-    // var requestOptions = {
-    //   method: "GET",
-    //   redirect: "follow",
-    // };
-
-    // fetch(
-    //   `https://expresscab.in/CarDriving/api/booking/BidAmount.php?uid=${driver_id}`,
-    //   requestOptions
-    // )
-    //   .then((response) => response.json())
-    //   .then((response) => {
-    //     console.log("FATCH==" + JSON.stringify(response));
-
-    //     //setData(response.UPComing_Ride_list);
-    //     // if (result.message === "No found.") {
-    //     //   console.log(result.message);
-    //     // } else {
-    //     //   setData(result.UPComing_Ride_list);
-    //     // }
-    //   })
-    //   .catch((error) => console.log("error", error));
-
-    // const requestOptions = {
-    //   method: "GET",
-    //   redirect: "follow",
-    // };
-    // const myHeaders = {
-    //   "X-Server-Cache": "false",
-    // };
-    // console.log(driver_id + "driver_id");
-    // fetch(
-    //   `https://expresscab.in/CarDriving/api/booking/BidAmount.php?uid=` +
-    //     driver_id,
-    //   requestOptions,
-    //   myHeaders
-    // )
-    //   .then((response) => response.json())
-    //   .then((result) => {
-    //     setData(result.UPComing_Ride_list);
-    //     console.log(result.UPComing_Ride_list);
-    //     console.log(data.length);
-    //   })
-    //   .catch((error) => console.log("Error==" + error));
   };
 
   const Upcomingdata = async () => {
@@ -130,8 +86,10 @@ const Upcoming = ({
     )
       .then((response) => response.json())
       .then((result) => {
-        setItem(result.UPComing_Ride_list);
-        console.log(item.length + "card");
+        if (!result.message) {
+          setItem(result.UPComing_Ride_list);
+         // console.log(item.length + "card");
+        }
       })
       .catch((error) => console.log(error));
   };
@@ -179,11 +137,12 @@ const Upcoming = ({
 
 const Card = ({ parentcallback, item, openModal, data }) => {
   const GetAmount = (item) => {
-    for (let i = 0; i < data.length; i++) {
-      if (data[i].bookingID === item.booking_id) {
-        return (item.amount = data[i].amount);
+    if (data)
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].bookingID === item.booking_id) {
+          return (item.amount = data[i].amount);
+        }
       }
-    }
     return 0;
   };
   return (
