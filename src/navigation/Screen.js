@@ -38,6 +38,13 @@ import FitnessCertificate from "../screens/Upload/FitnessCertificate";
 import Taxiphoto from "../screens/Upload/TaxiPhoto";
 import DocumentView from "../screens/DocumentView";
 import ViewAadhar from "../screens/DocumentView/ViewAadhar";
+import ViewAccount from "../screens/DocumentView/ViewAccount";
+import ViewPan from "../screens/DocumentView/ViewPan";
+import ViewTaxiphoto from "../screens/DocumentView/ViewTaxiphoto";
+import ViewRC from "../screens/DocumentView/ViewRC";
+import ViewLicence from "../screens/DocumentView/ViewLicence";
+import ViewInsurance from "../screens/DocumentView/ViewInsurance";
+import ViewFitnessCertificate from "../screens/DocumentView/ViewFitnessCertificate";
 
 //naviagtor
 const Stack = createStackNavigator();
@@ -342,6 +349,134 @@ function DocumentViewStack(props) {
           ),
         }}
       />
+      <Stack.Screen
+        name="ViewAadhar"
+        component={ViewAadhar}
+        options={{
+          header: ({ scene, navigation }) => (
+            <Header
+              transparent
+              white
+              back
+              title="Aadhar Card"
+              scene={scene}
+              navigation={navigation}
+            />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="ViewAccount"
+        component={ViewAccount}
+        options={{
+          header: ({ scene, navigation }) => (
+            <Header
+              transparent
+              white
+              back
+              title="Account"
+              scene={scene}
+              navigation={navigation}
+            />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="ViewLicence"
+        component={ViewLicence}
+        options={{
+          header: ({ scene, navigation }) => (
+            <Header
+              transparent
+              white
+              back
+              title="Driving Licence"
+              scene={scene}
+              navigation={navigation}
+            />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="ViewRC"
+        component={ViewRC}
+        options={{
+          header: ({ scene, navigation }) => (
+            <Header
+              transparent
+              white
+              back
+              title="RC Document"
+              scene={scene}
+              navigation={navigation}
+            />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="ViewInsurance"
+        component={ViewInsurance}
+        options={{
+          header: ({ scene, navigation }) => (
+            <Header
+              transparent
+              white
+              back
+              title="Insurance"
+              scene={scene}
+              navigation={navigation}
+            />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="ViewFitnessCertificate"
+        component={ViewFitnessCertificate}
+        options={{
+          header: ({ scene, navigation }) => (
+            <Header
+              transparent
+              white
+              back
+              title="Fitness Certificate"
+              scene={scene}
+              navigation={navigation}
+            />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="ViewPan"
+        component={ViewPan}
+        options={{
+          header: ({ scene, navigation }) => (
+            <Header
+              transparent
+              white
+              back
+              title="Pan Card"
+              scene={scene}
+              navigation={navigation}
+            />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="ViewTaxiphoto"
+        component={ViewTaxiphoto}
+        options={{
+          header: ({ scene, navigation }) => (
+            <Header
+              transparent
+              white
+              back
+              title="Taxi Photo"
+              scene={scene}
+              navigation={navigation}
+            />
+          ),
+        }}
+      />
     </Stack.Navigator>
   );
 }
@@ -534,8 +669,6 @@ export default function OnboardingStack() {
           gestureEnabled: false,
         }}
       />
-
-      <Stack.Screen name="ViewAadhar" component={ViewAadhar} />
     </Stack.Navigator>
   );
 }

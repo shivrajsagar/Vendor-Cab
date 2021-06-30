@@ -40,3 +40,6 @@ export const UPLOAD_DOCUMENT = "UPLOAD_DOCUMENT";
 export const UPLOAD_DOCUMENT_FAIL = "UPLOAD_DOCUMENT_FAIL";
 export const UPLOAD_DOCUMENT_SUCCESS = "UPLOAD_DOCUMENT_SUCCESSS";
 export const LOGOUT = "LOGOUT";
+
+//View
+export const VIEW_LOADING = "view_loading";

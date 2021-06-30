@@ -17,43 +17,68 @@ import * as Updates from "expo-updates";
 enableScreens();
 
 const App = () => {
+  // const openPlayStore = () => {
+  //   return Alert.alert("Are you sure to send request ?", "", [
+  //     {
+  //       text: "Cancel",
+  //       onPress: () => console.log("Cancel Pressed"),
+  //       style: "cancel",
+  //       color: "#900",
+  //     },
+  //     {
+  //       text: "Update",
+  //       onPress: () =>
+  //         "https://play.google.com/store/apps/details?id=vendor.expresscab",
+  //       color: "#900",
+  //     },
+  //   ]);
+  //   // return Alert.alert(
+  //   //   "APP UPDATE",
+  //   //   "Do you want to Update App to Continue?",
+  //   //   [{ text: "OK", onPress: () => BackHandler.exitApp() }],
+  //   //   { cancelable: false }
+  //   // );
+  // };
+
+  // const updateversion = async () => {
+  //   try {
+  //     const update = await Updates.checkForUpdateAsync();
+  //     if (update.isAvailable) {
+  //       // dlUpdate = await Updates.fetchUpdateAsync();
+  //       // if (dlUpdate.isNew) {
+  //       //   Updates.reloadAsync();
+  //       //   openPlayStore();
+  //       // }
+  //       await Updates.fetchUpdateAsync();
+  //       // ... notify user of update ...
+
+  //       Updates.reloadFromCache();
+  //       openPlayStore();
+  //     }
+  //     props.onFinish();
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // };
+
   const openPlayStore = () => {
-    return Alert.alert("Are you sure to send request ?", "", [
-      {
-        text: "Cancel",
-        onPress: () => console.log("Cancel Pressed"),
-        style: "cancel",
-        color: "#900",
-      },
-      {
-        text: "Update",
-        onPress: () =>
-          "https://play.google.com/store/apps/details?id=vendor.expresscab",
-        color: "#900",
-      },
-    ]);
-    // return Alert.alert(
-    //   "APP UPDATE",
-    //   "Do you want to Update App to Continue?",
-    //   [{ text: "OK", onPress: () => BackHandler.exitApp() }],
-    //   { cancelable: false }
-    // );
+    return Alert.alert(
+      "APP UPDATE",
+      "Do you want to Update App to Continue?",
+      [{ text: "UPDATE", onPress: () => BackHandler.exitApp() }],
+      { cancelable: false }
+    );
   };
 
   const updateversion = async () => {
     try {
       const update = await Updates.checkForUpdateAsync();
       if (update.isAvailable) {
-        dlUpdate = await Updates.fetchUpdateAsync();
-        if (dlUpdate.isNew) {
-          Updates.reloadAsync();
-          openPlayStore();
-        }
-        // await Updates.fetchUpdateAsync();
-        // // ... notify user of update ...
-
-        // Updates.reloadFromCache();
-        // openPlayStore();
+        await Updates.fetchUpdateAsync();
+        // ... notify user of update ...
+        Updates.reloadFromCache();
+        await Updates.reloadAsync();
+        openPlayStore();
       }
       props.onFinish();
     } catch (e) {

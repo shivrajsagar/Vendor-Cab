@@ -6,6 +6,7 @@ import bidReducer from "./bidReducer";
 import authReducer from "./authReducer";
 import documentReducer from "./documentReducer";
 import BidAmountReducer from "./BidAmountReducer";
+import ViewReducer from "./ViewReducer";
 
 export default combineReducers({
   current: currentReducer,
@@ -15,4 +16,5 @@ export default combineReducers({
   auth: authReducer,
   document: documentReducer,
   BIDAMOUNT: BidAmountReducer,
+  Viewdocs: ViewReducer,
 });
