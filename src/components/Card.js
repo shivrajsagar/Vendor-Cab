@@ -95,6 +95,17 @@ class Card extends Component {
             </Block>
           </Block>
         ) : null}
+        {name ? (
+          <Block row space="around" style={styles.text}>
+            <Block row>
+              <Icon name="man" family="Entypo" size={20} color="#007acc" />
+              <Text color="blue">Customer Name</Text>
+            </Block>
+            <Block>
+              <Text>{item.customer_name}</Text>
+            </Block>
+          </Block>
+        ) : null}
 
         {mobile ? (
           <Block row space="around" style={styles.text}>

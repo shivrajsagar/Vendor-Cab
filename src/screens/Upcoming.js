@@ -88,7 +88,7 @@ const Upcoming = ({
       .then((result) => {
         if (!result.message) {
           setItem(result.UPComing_Ride_list);
-         // console.log(item.length + "card");
+          // console.log(item.length + "card");
         }
       })
       .catch((error) => console.log(error));
@@ -209,6 +209,15 @@ const Card = ({ parentcallback, item, openModal, data }) => {
           <Text>
             {item.drop_date}::{item.drop_time}
           </Text>
+        </Block>
+      </Block>
+      <Block row space="around" style={styles.text}>
+        <Block row>
+          <Icon name="car" family="AntDesign" size={19} color="#007acc" />
+          <Text color="blue">Booking Type</Text>
+        </Block>
+        <Block>
+          <Text>Hourly</Text>
         </Block>
       </Block>
       {GetAmount(item) == 0 ? (
