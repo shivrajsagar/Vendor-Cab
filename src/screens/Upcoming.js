@@ -200,7 +200,7 @@ const Card = ({ parentcallback, item, openModal, data }) => {
           </Text>
         </Block>
       </Block>
-      <Block row space="around" style={styles.text}>
+      {/* <Block row space="around" style={styles.text}>
         <Block row>
           <Icon name="calendar" family="Entypo" size={20} color="#007acc" />
           <Text color="blue">Drop Date & Time</Text>
@@ -210,14 +210,14 @@ const Card = ({ parentcallback, item, openModal, data }) => {
             {item.drop_date}::{item.drop_time}
           </Text>
         </Block>
-      </Block>
+      </Block> */}
       <Block row space="around" style={styles.text}>
         <Block row>
-          <Icon name="car" family="AntDesign" size={19} color="#007acc" />
-          <Text color="blue">Booking Type</Text>
+          <Icon name="car" family="AntDesign" size={18} color="#007acc" />
+          <Text color="blue"> Booking Type</Text>
         </Block>
         <Block>
-          <Text>Hourly</Text>
+          <Text>{item.bookingType}</Text>
         </Block>
       </Block>
       {GetAmount(item) == 0 ? (

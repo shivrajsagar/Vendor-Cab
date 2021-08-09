@@ -20,7 +20,7 @@ class Profile extends Component {
   render() {
     const { navigation } = this.props;
     const { data } = this.state;
-    //console.log(data.document_approve);
+    
     return (
       <ScrollView style={styles.container}>
         <Block row>

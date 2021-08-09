@@ -35,6 +35,7 @@ class Current extends Component {
                 mobile
                 pickupaddress
                 dropaddress
+                bookingType
                 status
                 key={index}
               />

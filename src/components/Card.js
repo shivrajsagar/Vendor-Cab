@@ -33,6 +33,7 @@ class Card extends Component {
       dropdatetime,
       amount,
       payment,
+      bookingType,
       status,
       bid,
       message,
@@ -95,14 +96,14 @@ class Card extends Component {
             </Block>
           </Block>
         ) : null}
-        {name ? (
+        {bookingType ? (
           <Block row space="around" style={styles.text}>
             <Block row>
               <Icon name="man" family="Entypo" size={20} color="#007acc" />
               <Text color="blue">Customer Name</Text>
             </Block>
             <Block>
-              <Text>{item.customer_name}</Text>
+              <Text>{item.bookingType}</Text>
             </Block>
           </Block>
         ) : null}
